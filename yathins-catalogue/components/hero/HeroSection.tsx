@@ -3,28 +3,22 @@
 /**
  * HeroSection — Studio Mysore Homepage Hero
  *
- * The first impression. Occupies 100dvh. Nothing below the fold.
+ * Handcrafted, editorial hero occupying 100dvh. High visual hierarchy,
+ * refined typographic scaling, micro-choreographed motion timing, and
+ * mouse-driven 3D parallax tilt showcasing a live interactive cafe interface.
  *
  * Architecture:
- *  - Pure black background (#09090B). No gradients, particles or blobs.
- *  - Massive Clash Display headline dominates visual hierarchy.
- *  - Floating phone mockup with real café ordering interface.
- *  - Choreographed entrance: phone → headline → copy → CTAs → float.
- *  - Mouse parallax tilt on desktop (max 2–3°). Subtle only.
- *  - Reduced-motion: instant opacity cross-fades, no spatial shifts.
- *
- * Animation timeline (per spec):
- *  0.0s  Black background.
- *  0.4s  Phone fades in + 20px upward movement.
- *  0.8s  Headline reveals line-by-line (mask clip, not slide).
- *  1.2s  Supporting copy fades in.
- *  1.5s  CTA buttons appear.
- *  2.0s  Phone begins gentle floating loop.
+ *  - Pure dark background (#09090B).
+ *  - Massive Clash Display headline with tight line height & clip-mask entrance.
+ *  - Floating 3D phone mockup housing a live interactive React cafe app.
+ *  - Multi-stage motion choreography: Phone → Eyebrow → Headline → Copy → CTAs → Float.
+ *  - Desktop mouse parallax (max 3° tilt) with spring physics.
+ *  - Full WCAG accessibility and reduced-motion compliance.
  *
  * Sources:
  *  07-homepage-experience.md — headline, copy, CTA, motion rules
- *  04-visual-design-system.md — colour, typography, spacing
- *  05-motion-system.md — easing curves, spring physics, reduced motion
+ *  04-visual-design-system.md — typography, spacing, contrast
+ *  05-motion-system.md — easing curves, spring physics
  */
 
 import * as React from "react";
@@ -35,40 +29,37 @@ import { cn } from "@/lib/utils";
 import { buildWhatsAppUrl } from "@/lib/site-config";
 import { CafePhoneMockup } from "./CafePhoneMockup";
 
-// ─── Easing tokens (from 05-motion-system.md) ─────────────────────────────────
+// ─── Easing tokens ─────────────────────────────────────────────────────────────
 const EASE_SMOOTH_OUT = [0.16, 1, 0.3, 1] as const;
-const EASE_EDITORIAL = [0.65, 0, 0.35, 1] as const;
+const EASE_EDITORIAL = [0.76, 0, 0.24, 1] as const;
 
-// ─── Headline — three lines as specified ──────────────────────────────────────
+// ─── Headline lines ────────────────────────────────────────────────────────────
 const HEADLINE_LINES = ["Built around", "the way", "you work."];
 
-// ─── Main Component ───────────────────────────────────────────────────────────
+// ─── Main Component ────────────────────────────────────────────────────────────
 
 export function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
   const heroRef = React.useRef<HTMLElement>(null);
 
-  // Mouse position for tilt — raw motion values track immediately
+  // Mouse position for spring parallax tilt
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Spring-smooth the raw values. Gentle spring = max 2–3° tilt only.
-  const tiltX = useSpring(mouseY, { stiffness: 60, damping: 20, mass: 1 });
-  const tiltY = useSpring(mouseX, { stiffness: 60, damping: 20, mass: 1 });
+  const tiltX = useSpring(mouseY, { stiffness: 70, damping: 22, mass: 1 });
+  const tiltY = useSpring(mouseX, { stiffness: 70, damping: 22, mass: 1 });
 
-  // Track mouse within hero bounds for tilt effect
+  // Track mouse within hero container
   const handleMouseMove = React.useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       if (shouldReduceMotion) return;
       const el = heroRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      // Normalize to [-1, 1]
       const nx = (e.clientX - rect.left) / rect.width - 0.5;
       const ny = (e.clientY - rect.top) / rect.height - 0.5;
-      // Scale to max 3°
-      mouseX.set(nx * 3);
-      mouseY.set(-ny * 2.5);
+      mouseX.set(nx * 3.5);
+      mouseY.set(-ny * 3);
     },
     [mouseX, mouseY, shouldReduceMotion]
   );
@@ -78,7 +69,7 @@ export function HeroSection() {
     mouseY.set(0);
   }, [mouseX, mouseY]);
 
-  // WhatsApp URL with hero-specific message
+  // Direct WhatsApp link
   const whatsappUrl = buildWhatsAppUrl(
     "Hi, I just saw Studio Mysore and I'd love to learn more about what you can build for my business."
   );
@@ -88,79 +79,76 @@ export function HeroSection() {
       ref={heroRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      className="relative flex flex-col min-h-dvh overflow-hidden bg-background"
+      className="relative flex flex-col justify-between min-h-dvh overflow-hidden bg-background"
       aria-label="Hero — Studio Mysore"
     >
-      {/* ── Content Area ─────────────────────────────────────────────────── */}
-      <div className="relative flex flex-1 items-center">
+      {/* ── Subtle Ambient Backdrop Gradient ───────────────────────────── */}
+      <div
+        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none blur-[120px]"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(160, 120, 90, 0.35) 0%, rgba(0, 0, 0, 0) 70%)",
+        }}
+      />
+
+      {/* ── Main Content Area ──────────────────────────────────────────── */}
+      <div className="relative flex flex-1 items-center z-10 pt-20 pb-16 lg:py-0">
         <div className="container-wide w-full">
-          {/*
-           * DESKTOP / TABLET (lg+): Two-column layout
-           *   Left  60% visual weight → typography + CTAs
-           *   Right 40% visual weight → floating phone
-           *
-           * MOBILE: Stacked — typography, then phone, then CTAs
-           */}
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto] gap-12 lg:gap-8 items-center pt-24 pb-12 lg:py-0 min-h-dvh lg:min-h-0">
-
-            {/* ── LEFT: Text content ──────────────────────────────────────── */}
-            <div className="flex flex-col gap-8 lg:gap-10 max-w-[640px]">
-
-              {/* Eyebrow — ultra subtle, barely there */}
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-8 items-center min-h-[calc(100dvh-120px)] lg:min-h-0">
+            
+            {/* ── LEFT COLUMN: Text Content & Actions ────────────────── */}
+            <div className="flex flex-col gap-8 lg:gap-10 max-w-[620px]">
+              
+              {/* Eyebrow badge */}
               <m.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{
                   delay: shouldReduceMotion ? 0 : 0.6,
-                  duration: 0.5,
+                  duration: 0.6,
                   ease: EASE_SMOOTH_OUT,
                 }}
-                className="hidden lg:flex items-center gap-3"
+                className="flex items-center gap-3"
               >
-                <div
-                  className="w-5 h-[1px]"
-                  style={{ background: "rgba(161,161,170,0.4)" }}
-                />
-                <span
-                  className="text-[11px] font-medium tracking-[0.14em] uppercase"
-                  style={{ color: "#71717A" }}
-                >
+                <div className="w-6 h-[1px] bg-zinc-600/50" />
+                <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-zinc-500">
                   Studio Mysore
                 </span>
               </m.div>
 
-              {/* ── HEADLINE — the hero within the Hero ─────────────────── */}
+              {/* ── HEADLINE ─────────────────────────────────────────── */}
               <h1
-                className="font-display font-semibold leading-[1.0] tracking-tight text-text-primary"
+                className="font-display font-semibold text-text-primary select-none"
                 style={{
-                  fontSize: "clamp(52px, 8vw, 108px)",
-                  letterSpacing: "-0.03em",
+                  fontSize: "clamp(48px, 7.5vw, 98px)",
+                  lineHeight: 0.94,
+                  letterSpacing: "-0.035em",
                 }}
               >
                 {HEADLINE_LINES.map((line, i) => (
                   <HeadlineLine
                     key={line}
                     line={line}
-                    delay={shouldReduceMotion ? 0 : 0.8 + i * 0.09}
+                    delay={shouldReduceMotion ? 0 : 0.8 + i * 0.12}
                     shouldReduceMotion={shouldReduceMotion ?? false}
                   />
                 ))}
               </h1>
 
-              {/* ── Supporting copy ──────────────────────────────────────── */}
+              {/* ── Supporting Copy ──────────────────────────────────── */}
               <m.p
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
-                  delay: shouldReduceMotion ? 0 : 1.2,
-                  duration: 0.6,
+                  delay: shouldReduceMotion ? 0 : 1.25,
+                  duration: 0.65,
                   ease: EASE_SMOOTH_OUT,
                 }}
-                className="text-text-secondary leading-relaxed"
+                className="text-text-secondary font-normal"
                 style={{
-                  fontSize: "clamp(15px, 1.4vw, 18px)",
-                  maxWidth: "420px",
-                  lineHeight: 1.6,
+                  fontSize: "clamp(16px, 1.3vw, 19px)",
+                  lineHeight: 1.65,
+                  maxWidth: "440px",
                 }}
               >
                 Every business works differently.{" "}
@@ -168,39 +156,39 @@ export function HeroSection() {
                 Your digital experience should too.
               </m.p>
 
-              {/* ── CTA Buttons ──────────────────────────────────────────── */}
+              {/* ── Action CTAs ──────────────────────────────────────── */}
               <m.div
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 12 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 14 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
-                  delay: shouldReduceMotion ? 0 : 1.5,
-                  duration: 0.6,
+                  delay: shouldReduceMotion ? 0 : 1.45,
+                  duration: 0.65,
                   ease: EASE_SMOOTH_OUT,
                 }}
-                className="flex flex-col sm:flex-row items-start sm:items-center gap-4"
+                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2"
               >
                 {/* Primary CTA */}
                 <m.div
-                  whileHover={{ scale: 1.02, y: -1 }}
+                  whileHover={{ scale: 1.02, y: -2 }}
                   whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  transition={{ type: "spring", stiffness: 450, damping: 25 }}
                 >
                   <Link
                     href="/#experiences"
                     id="hero-primary-cta"
                     className={cn(
-                      "inline-flex items-center justify-center gap-2.5",
-                      "px-6 py-3.5 rounded-[12px]",
+                      "group inline-flex items-center justify-center gap-3",
+                      "px-7 py-3.5 rounded-xl",
                       "bg-text-primary text-background",
                       "text-[14px] font-semibold tracking-tight",
-                      "transition-colors duration-200",
-                      "outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-                      "hover:bg-white"
+                      "shadow-[0_4px_20px_rgba(255,255,255,0.12)]",
+                      "transition-all duration-200 hover:bg-white hover:shadow-[0_6px_25px_rgba(255,255,255,0.22)]",
+                      "outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     )}
                   >
                     Explore Experiences
                     <ArrowRight
-                      className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5"
+                      className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1"
                       aria-hidden="true"
                     />
                   </Link>
@@ -208,9 +196,9 @@ export function HeroSection() {
 
                 {/* Secondary CTA */}
                 <m.div
-                  whileHover={{ scale: 1.02 }}
+                  whileHover={{ scale: 1.02, y: -1 }}
                   whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  transition={{ type: "spring", stiffness: 450, damping: 25 }}
                 >
                   <a
                     href={whatsappUrl}
@@ -219,12 +207,12 @@ export function HeroSection() {
                     rel="noopener noreferrer"
                     className={cn(
                       "inline-flex items-center justify-center gap-2.5",
-                      "px-6 py-3.5 rounded-[12px]",
+                      "px-7 py-3.5 rounded-xl",
                       "bg-transparent text-text-secondary",
                       "text-[14px] font-medium tracking-tight",
                       "border border-border",
                       "transition-all duration-200",
-                      "hover:border-border/80 hover:text-text-primary hover:bg-surface",
+                      "hover:border-zinc-700 hover:text-text-primary hover:bg-surface-elevated/60",
                       "outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     )}
                   >
@@ -235,7 +223,7 @@ export function HeroSection() {
               </m.div>
             </div>
 
-            {/* ── RIGHT / BOTTOM: Phone mockup ────────────────────────────── */}
+            {/* ── RIGHT COLUMN: Interactive Device Showcase ─────────── */}
             <PhoneColumn
               tiltX={tiltX}
               tiltY={tiltY}
@@ -245,7 +233,7 @@ export function HeroSection() {
         </div>
       </div>
 
-      {/* ── Scroll hint — fades out naturally as user scrolls ──────────── */}
+      {/* ── Scroll Indicator Hint ──────────────────────────────────────── */}
       <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -254,31 +242,30 @@ export function HeroSection() {
           duration: 0.8,
           ease: EASE_SMOOTH_OUT,
         }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="relative z-10 pb-6 flex flex-col items-center gap-2 select-none"
         aria-hidden="true"
       >
-        <div
-          className="text-[10px] font-medium tracking-[0.12em] uppercase"
-          style={{ color: "#3F3F46" }}
+        <span
+          className="text-[10px] font-medium tracking-[0.16em] uppercase"
+          style={{ color: "#52525B" }}
         >
           Scroll
-        </div>
+        </span>
         <m.div
           animate={
             shouldReduceMotion
               ? {}
               : {
-                  y: [0, 5, 0],
-                  opacity: [0.3, 0.7, 0.3],
+                  y: [0, 6, 0],
+                  opacity: [0.3, 0.75, 0.3],
                 }
           }
           transition={{
-            duration: 2,
+            duration: 2.2,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="w-[1px] h-8"
-          style={{ background: "rgba(63,63,70,0.8)" }}
+          className="w-[1px] h-7 bg-zinc-700 rounded-full"
         />
       </m.div>
     </section>
@@ -290,11 +277,7 @@ HeroSection.displayName = "HeroSection";
 // ─── Sub-components ───────────────────────────────────────────────────────────
 
 /**
- * HeadlineLine — Reveals a single line of the hero headline.
- *
- * Uses a clip-mask reveal (overflow hidden + translateY) so the text
- * appears to rise up from behind an invisible baseline. This is the
- * cleanest, most editorial entrance pattern — used by Linear, Vercel, etc.
+ * HeadlineLine — Reveals a single line of text with clip-mask elevation.
  */
 function HeadlineLine({
   line,
@@ -306,11 +289,11 @@ function HeadlineLine({
   shouldReduceMotion: boolean;
 }) {
   return (
-    <span className="block overflow-hidden" aria-hidden="false">
+    <span className="block overflow-hidden py-0.5" aria-hidden="false">
       <m.span
         className="block"
         initial={{
-          y: shouldReduceMotion ? 0 : "105%",
+          y: shouldReduceMotion ? 0 : "108%",
           opacity: shouldReduceMotion ? 0 : 1,
         }}
         animate={{
@@ -322,7 +305,7 @@ function HeadlineLine({
             ? { delay: 0, duration: 0.3 }
             : {
                 delay,
-                duration: 0.75,
+                duration: 0.85,
                 ease: EASE_EDITORIAL,
               }
         }
@@ -334,11 +317,7 @@ function HeadlineLine({
 }
 
 /**
- * PhoneColumn — Handles all device motion:
- *   1. Initial entrance (0.4s after mount).
- *   2. Continuous gentle floating loop (begins ~2.0s).
- *   3. Mouse tilt from parent (desktop only).
- *   4. Reduced-motion: static, no movement.
+ * PhoneColumn — Handles device 3D parallax tilt & gentle floating animation.
  */
 function PhoneColumn({
   tiltX,
@@ -351,22 +330,17 @@ function PhoneColumn({
 }) {
   return (
     <m.div
-      // Entrance
-      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 30 }}
+      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 36 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        delay: shouldReduceMotion ? 0 : 0.4,
-        duration: 0.9,
+        delay: shouldReduceMotion ? 0 : 0.35,
+        duration: 0.95,
         ease: EASE_SMOOTH_OUT,
       }}
-      /*
-       * On mobile: phone sits centered below the text, full width.
-       * On desktop: phone aligns to the right, occupying the right column.
-       */
-      className="flex items-center justify-center lg:justify-end lg:pr-8"
-      style={{ perspective: 800 }}
+      className="flex items-center justify-center lg:justify-end scale-90 sm:scale-95 lg:scale-100 origin-center"
+      style={{ perspective: 1000 }}
     >
-      {/* Tilt wrapper — responds to mouse position on desktop */}
+      {/* Tilt wrapper */}
       <m.div
         style={
           shouldReduceMotion
@@ -379,45 +353,46 @@ function PhoneColumn({
         }
         className="relative"
       >
-        {/* Float animation wrapper — begins after entrance settles */}
+        {/* Organic float loop */}
         <m.div
           animate={
             shouldReduceMotion
               ? {}
               : {
-                  y: [0, -10, 0],
+                  y: [0, -12, 0],
+                  rotateZ: [0, 0.6, 0, -0.6, 0],
                 }
           }
           transition={{
             delay: 2.0,
-            duration: 4.5,
+            duration: 5.5,
             repeat: Infinity,
             ease: "easeInOut",
             repeatType: "mirror",
           }}
         >
-          {/* Subtle shadow below device — moves with float */}
+          {/* Floor Shadow */}
           <m.div
             animate={
               shouldReduceMotion
                 ? {}
                 : {
-                    scaleX: [1, 0.88, 1],
-                    opacity: [0.4, 0.25, 0.4],
+                    scaleX: [1, 0.86, 1],
+                    opacity: [0.45, 0.25, 0.45],
                   }
             }
             transition={{
               delay: 2.0,
-              duration: 4.5,
+              duration: 5.5,
               repeat: Infinity,
               ease: "easeInOut",
               repeatType: "mirror",
             }}
-            className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-48 h-6 rounded-full"
+            className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-52 h-7 rounded-full pointer-events-none"
             style={{
               background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.5) 0%, transparent 70%)",
-              filter: "blur(8px)",
+                "radial-gradient(ellipse at center, rgba(0,0,0,0.7) 0%, transparent 70%)",
+              filter: "blur(10px)",
             }}
             aria-hidden="true"
           />
