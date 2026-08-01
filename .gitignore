@@ -1,0 +1,26 @@
+# dependencies
+node_modules/
+yathins-catalogue/node_modules/
+
+# next.js
+.next/
+yathins-catalogue/.next/
+out/
+yathins-catalogue/out/
+
+# production
+build/
+
+# misc
+.DS_Store
+*.pem
+*.log
+
+# env files
+.env*
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo

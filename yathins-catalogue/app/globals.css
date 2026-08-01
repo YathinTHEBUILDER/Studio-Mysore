@@ -1,0 +1,380 @@
+/**
+ * globals.css — Yathin's Catalogue
+ *
+ * This is the single CSS entry point.
+ *
+ * Structure:
+ *  1.  Tailwind v4 import
+ *  2.  @theme — Design tokens mapped into Tailwind utilities
+ *  3.  :root — CSS custom properties (consumed by components + tokens)
+ *  4.  Base styles — typography, reset, scrollbar, focus, selection
+ *  5.  Reduced motion — disable all movement for accessibility
+ *
+ * Source of truth for all values:
+ *   04-visual-design-system.md (colours, spacing, radius, containers)
+ *   05-motion-system.md        (easing, duration)
+ *   02-technical-architecture.md (Tailwind, fonts)
+ */
+
+@import "tailwindcss";
+
+/* ============================================================
+   1. DESIGN TOKENS — @theme (Tailwind v4 CSS-first config)
+   All colours, fonts, spacing, radius, and timing defined here
+   become Tailwind utility classes automatically.
+   ============================================================ */
+
+@theme {
+  /* ------------------------------------------------------------------
+     COLOURS — Foundation palette (04-visual-design-system.md)
+     ------------------------------------------------------------------ */
+
+  /* Background layers */
+  --color-background:      #09090B;
+  --color-surface:         #111111;
+  --color-surface-elevated:#18181B;
+  --color-border:          #27272A;
+
+  /* Text hierarchy */
+  --color-text-primary:    #FAFAFA;
+  --color-text-secondary:  #A1A1AA;
+  --color-text-muted:      #71717A;
+
+  /* Functional — status only, never decorative */
+  --color-success:         #22C55E;
+  --color-warning:         #F59E0B;
+  --color-error:           #EF4444;
+
+  /* Industry accent colours — one per experience */
+  --color-cafe-primary:        #A0785A;
+  --color-cafe-muted:          #6B4E37;
+  --color-restaurant-primary:  #8B1A4A;
+  --color-restaurant-muted:    #5C1232;
+  --color-dental-primary:      #3B82F6;
+  --color-dental-muted:        #1D4ED8;
+  --color-medical-primary:     #14B8A6;
+  --color-medical-muted:       #0F766E;
+  --color-gym-primary:         #6366F1;
+  --color-gym-muted:           #4338CA;
+
+  /* ------------------------------------------------------------------
+     TYPOGRAPHY — Fonts (04-visual-design-system.md)
+     Font variables are injected by next/font into <body>.
+     These @theme entries make font-display and font-body utilities.
+     ------------------------------------------------------------------ */
+
+  --font-display: var(--font-clash-display), system-ui, sans-serif;
+  --font-body:    var(--font-inter), system-ui, sans-serif;
+  --font-sans:    var(--font-inter), system-ui, sans-serif;
+  --font-mono:    ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
+
+  /* ------------------------------------------------------------------
+     BORDER RADIUS — (04-visual-design-system.md)
+     sm=10px | md=16px | lg=24px — Avoid exaggerated rounding.
+     ------------------------------------------------------------------ */
+
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  /* Tailwind-named aliases */
+  --radius-sm:     10px;
+  --radius-md:     16px;
+  --radius-lg:     24px;
+  --radius-none:   0px;
+  --radius-full:   9999px;
+
+  /* ------------------------------------------------------------------
+     SPACING EXTENSIONS — (04-visual-design-system.md)
+     Tailwind's default 4px scale covers 4–64. Add 96 and 128.
+     ------------------------------------------------------------------ */
+
+  --spacing-24: 96px;
+  --spacing-32: 128px;
+
+  /* ------------------------------------------------------------------
+     TRANSITION DURATIONS — (05-motion-system.md)
+     micro / quick / standard / extended
+     ------------------------------------------------------------------ */
+
+  --duration-micro:    120ms;
+  --duration-quick:    250ms;
+  --duration-standard: 500ms;
+  --duration-extended: 900ms;
+
+  /* ------------------------------------------------------------------
+     EASING FUNCTIONS — (05-motion-system.md)
+     Smooth Out: quintic out — entrance default
+     Editorial:  cubic in-out — hero / page transitions
+     ------------------------------------------------------------------ */
+
+  --ease-smooth-out:      cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-editorial-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in:              cubic-bezier(0.4, 0, 1, 1);
+
+  /* ------------------------------------------------------------------
+     Z-INDEX SCALE
+     ------------------------------------------------------------------ */
+
+  --z-base:    0;
+  --z-content: 10;
+  --z-sticky:  100;
+  --z-overlay: 200;
+  --z-modal:   300;
+  --z-toast:   400;
+
+  /* ------------------------------------------------------------------
+     CONTAINER WIDTHS — (04-visual-design-system.md)
+     ------------------------------------------------------------------ */
+
+  --container-narrow:   680px;
+  --container-standard: 1100px;
+  --container-wide:     1400px;
+}
+
+/* ============================================================
+   2. CSS CUSTOM PROPERTIES
+   Available as var(--...) in all component CSS and inline styles.
+   ============================================================ */
+
+:root {
+  /* Colour aliases — shorthand for component use */
+  --bg:              #09090B;
+  --surface:         #111111;
+  --surface-elevated:#18181B;
+  --border:          #27272A;
+  --text:            #FAFAFA;
+  --text-2:          #A1A1AA;
+  --text-muted:      #71717A;
+
+  /* Font variables — populated by next/font in the root layout */
+  --font-inter:          '';
+  --font-clash-display:  '';
+}
+
+/* ============================================================
+   3. BASE — Typography, Image defaults, Element resets
+   ============================================================ */
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Smooth scrolling handled by Lenis — do NOT set scroll-behavior here */
+  scroll-behavior: auto;
+}
+
+body {
+  background-color: #09090B; /* --color-background */
+  color: #FAFAFA;             /* --color-text-primary */
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 1rem;
+  line-height: 1.65;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* Prevent horizontal overflow on mobile */
+  overflow-x: hidden;
+}
+
+/* Images — performant defaults (Next.js Image handles the rest) */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Button reset — appearance handled entirely by component classes */
+button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Link reset */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* List reset — used sparingly; semantic lists retain styles via component classes */
+ul,
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================================================
+   4. SELECTION — Muted tint of text primary
+   ============================================================ */
+
+::selection {
+  background-color: rgba(161, 161, 170, 0.2); /* text-secondary at 20% */
+  color: #FAFAFA;
+}
+
+::-moz-selection {
+  background-color: rgba(161, 161, 170, 0.2);
+  color: #FAFAFA;
+}
+
+/* ============================================================
+   5. SCROLLBAR — Subtle, thin, matches the surface palette
+   ============================================================ */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #111111; /* surface */
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272A; /* border */
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3F3F46; /* slightly brighter on hover */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #27272A #111111;
+}
+
+/* ============================================================
+   6. FOCUS — High-contrast, WCAG-compliant focus ring
+   Per 04-visual-design-system.md + 06-ui-system.md accessibility
+   ============================================================ */
+
+:focus-visible {
+  outline: 2px solid #FAFAFA;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Remove focus ring for mouse users — only show for keyboard */
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* ============================================================
+   7. REDUCED MOTION — Disable all movement
+   Per 05-motion-system.md: "Replace movement with simple instant
+   opacity cross-fades or static displays."
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   8. TYPOGRAPHY UTILITIES — Base type styles
+   Full type scale is applied via Tailwind classes (lib/typography.ts).
+   These are fallback base styles only.
+   ============================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-clash-display), system-ui, sans-serif;
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: #FAFAFA;
+}
+
+p {
+  margin: 0;
+  color: #A1A1AA;
+}
+
+/* ============================================================
+   9. UTILITY LAYER — Shared component utilities
+   ============================================================ */
+
+@layer utilities {
+  /* Glassmorphism — navigation scroll state (06-ui-system.md) */
+  .glass {
+    background-color: rgba(9, 9, 11, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid #27272A;
+  }
+
+  /* GPU-acceleration hint — applied to actively animating elements */
+  .will-animate {
+    will-change: transform, opacity;
+  }
+
+  /* Remove after animation completes */
+  .animation-complete {
+    will-change: auto;
+  }
+
+  /* Container utilities */
+  .container-narrow {
+    max-width: 680px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+
+  .container-standard {
+    max-width: 1100px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+
+  .container-wide {
+    max-width: 1400px;
+    margin-inline: auto;
+    padding-inline: 20px;
+  }
+
+  @media (min-width: 768px) {
+    .container-narrow,
+    .container-standard,
+    .container-wide {
+      padding-inline: 32px;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .container-narrow,
+    .container-standard,
+    .container-wide {
+      padding-inline: 48px;
+    }
+  }
+
+  /* Visually hidden — accessible text for screen readers */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+}
