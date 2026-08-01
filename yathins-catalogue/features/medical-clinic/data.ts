@@ -1,0 +1,48 @@
+import { MedicalDoctorProfile } from "./types";
+
+export const MEDICAL_DOCTORS: MedicalDoctorProfile[] = [
+  {
+    id: "med-doc-1",
+    name: "Dr. Evelyn Vance, MD",
+    department: "general_medicine",
+    title: "Senior Consultant Internist",
+    qualifications: "MD (Johns Hopkins), FACP",
+    experience: "15+ Years",
+    consultationFee: 75,
+    image: "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=800&auto=format&fit=crop",
+    nextAvailable: "Today, 4:00 PM",
+  },
+  {
+    id: "med-doc-2",
+    name: "Dr. Jonathan Reyes, MD",
+    department: "cardiology",
+    title: "Chief of Cardiology",
+    qualifications: "MD, FACC (Harvard Medical)",
+    experience: "18+ Years",
+    consultationFee: 120,
+    image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?q=80&w=800&auto=format&fit=crop",
+    nextAvailable: "Tomorrow, 11:30 AM",
+  },
+  {
+    id: "med-doc-3",
+    name: "Dr. Priya Sharma, DNB",
+    department: "dermatology",
+    title: "Dermatologist & Laser Surgeon",
+    qualifications: "DNB Dermatology, Fellowship (London)",
+    experience: "10+ Years",
+    consultationFee: 85,
+    image: "https://images.unsplash.com/photo-1594824813566-88855ce78964?q=80&w=800&auto=format&fit=crop",
+    nextAvailable: "Today, 5:30 PM",
+  },
+  {
+    id: "med-doc-4",
+    name: "Dr. Michael Chen, MD",
+    department: "pediatrics",
+    title: "Pediatric Specialist",
+    qualifications: "MD Pediatrics (Stanford)",
+    experience: "12+ Years",
+    consultationFee: 80,
+    image: "https://images.unsplash.com/photo-1537368910025-700350fe46c7?q=80&w=800&auto=format&fit=crop",
+    nextAvailable: "Tomorrow, 9:00 AM",
+  },
+];

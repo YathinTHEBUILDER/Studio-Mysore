@@ -65,7 +65,7 @@ export const INDUSTRIES: Industry[] = [
 // Navigation Links
 // ---------------------------------------------------------------------------
 export const NAV_LINKS: NavLink[] = [
-  { label: "Experiences", href: "/#experiences" },
+  { label: "Experiences", href: "/experiences" },
   { label: "How It Works", href: "/#how-it-works" },
   { label: "About", href: "/#about" },
 ] as const;

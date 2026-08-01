@@ -51,8 +51,8 @@ export const NavLinks: React.FC<NavLinksProps> = ({
       {NAV_LINKS.map((link: NavLink) => {
         const isActive =
           pathname === link.href ||
-          activeHash === link.href.replace("/", "") ||
-          (activeHash === "" && link.href === "/#experiences");
+          (link.href === "/experiences" && pathname.startsWith("/experiences")) ||
+          (activeHash !== "" && activeHash === link.href.replace("/", ""));
 
         return (
           <Link

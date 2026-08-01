@@ -12,3 +12,5 @@ export type { WhatsAppCTAProps } from "./WhatsAppCTA";
 
 export { MobileDrawer } from "./MobileDrawer";
 export type { MobileDrawerProps } from "./MobileDrawer";
+
+export { Footer } from "./Footer";

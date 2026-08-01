@@ -13,6 +13,7 @@
  */
 
 import * as React from "react";
+import Link from "next/link";
 import { m, AnimatePresence } from "framer-motion";
 import { INDUSTRIES } from "@/lib/constants";
 import type { IndustryId } from "@/types/experience";
@@ -245,14 +246,20 @@ export function ExperienceSwitcher() {
 
               {/* Action Buttons */}
               <div className="pt-2 flex flex-wrap items-center gap-4">
+                <Link
+                  href={`/experiences/${activeId === "medical" ? "medical-clinic" : activeId}`}
+                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-white text-zinc-950 text-sm font-semibold hover:bg-zinc-100 transition-all shadow-md active:scale-98"
+                >
+                  <span>Launch Full {activeConfig.label} Website</span>
+                </Link>
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-white text-zinc-950 text-sm font-semibold hover:bg-zinc-100 transition-all shadow-md active:scale-98"
+                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-200 text-sm font-medium hover:bg-zinc-800 transition-all shadow-md active:scale-98"
                 >
-                  <MessageCircle className="w-4 h-4 text-emerald-600" />
-                  <span>Discuss {activeConfig.label} Solution</span>
+                  <MessageCircle className="w-4 h-4 text-emerald-500" />
+                  <span>Discuss Solution</span>
                 </a>
               </div>
             </div>

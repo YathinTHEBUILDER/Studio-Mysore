@@ -4,3 +4,4 @@
 
 export { ExperienceSwitcher } from "./ExperienceSwitcher";
 export { IndustryPhotographyCard } from "./IndustryPhotographyCard";
+export { IndustryCatalogue } from "./IndustryCatalogue";
