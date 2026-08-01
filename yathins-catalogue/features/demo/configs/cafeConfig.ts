@@ -1,0 +1,95 @@
+import { DemoItem, WorkflowStepConfig } from "../types";
+
+export const CAFE_CATEGORIES = ["All", "Coffees", "Teas", "Bites"] as const;
+export type CafeCategory = (typeof CAFE_CATEGORIES)[number];
+
+export const CAFE_MENU_ITEMS: DemoItem[] = [
+  {
+    id: "c1",
+    category: "Coffees",
+    name: "Flat White",
+    desc: "Double ristretto & velvet microfoam",
+    price: 220,
+    priceFormatted: "₹220",
+    tag: "Popular",
+    color: "#4A3628",
+  },
+  {
+    id: "c2",
+    category: "Coffees",
+    name: "Cold Brew",
+    desc: "16-hr slow steep, citrus & cocoa notes",
+    price: 260,
+    priceFormatted: "₹260",
+    tag: "Single Origin",
+    color: "#2C1D11",
+  },
+  {
+    id: "c3",
+    category: "Coffees",
+    name: "Cortado",
+    desc: "Equal parts espresso & steamed oat milk",
+    price: 200,
+    priceFormatted: "₹200",
+    color: "#3F2E21",
+  },
+  {
+    id: "c4",
+    category: "Coffees",
+    name: "Vanilla Latte",
+    desc: "Madagascar vanilla bean & espresso",
+    price: 280,
+    priceFormatted: "₹280",
+    tag: "Bestseller",
+    color: "#5E4331",
+  },
+  {
+    id: "t1",
+    category: "Teas",
+    name: "Masala Chai",
+    desc: "Slow-brewed cardamom & Assam tea",
+    price: 120,
+    priceFormatted: "₹120",
+    tag: "Classic",
+    color: "#6E3B1E",
+  },
+  {
+    id: "t2",
+    category: "Teas",
+    name: "Matcha Latte",
+    desc: "Ceremonial grade Uji matcha with oat milk",
+    price: 290,
+    priceFormatted: "₹290",
+    tag: "Organic",
+    color: "#2D4A27",
+  },
+  {
+    id: "b1",
+    category: "Bites",
+    name: "Butter Croissant",
+    desc: "Flaky 81-layer French butter pastry",
+    price: 180,
+    priceFormatted: "₹180",
+    tag: "Fresh Baked",
+    color: "#7A4E1D",
+  },
+  {
+    id: "b2",
+    category: "Bites",
+    name: "Almond Biscotti",
+    desc: "Twice-baked almond & orange zest biscuit",
+    price: 140,
+    priceFormatted: "₹140",
+    color: "#63411F",
+  },
+];
+
+export const CAFE_WORKFLOW_STEPS: WorkflowStepConfig[] = [
+  { id: "menu", label: "1. Menu", description: "Browse menu categories and search" },
+  { id: "coffee", label: "2. Coffee", description: "Select Coffee category filter" },
+  { id: "latte", label: "3. Latte", description: "Select Vanilla Latte item details" },
+  { id: "cart", label: "4. Add to Cart", description: "Tactile item add & quantity update" },
+  { id: "cart", label: "5. Cart Updates", description: "Live price counter & breakdown" },
+  { id: "checkout", label: "6. Checkout", description: "One-tap payment review & submit" },
+  { id: "confirmed", label: "7. Order Confirmed", description: "Celebratory success animation" },
+];

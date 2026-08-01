@@ -4,21 +4,8 @@
  * HeroSection — Studio Mysore Homepage Hero
  *
  * Handcrafted, editorial hero occupying 100dvh. High visual hierarchy,
- * refined typographic scaling, micro-choreographed motion timing, and
+ * dominant typographic scaling, micro-choreographed motion timing, and
  * mouse-driven 3D parallax tilt showcasing a live interactive cafe interface.
- *
- * Architecture:
- *  - Pure dark background (#09090B).
- *  - Massive Clash Display headline with tight line height & clip-mask entrance.
- *  - Floating 3D phone mockup housing a live interactive React cafe app.
- *  - Multi-stage motion choreography: Phone → Eyebrow → Headline → Copy → CTAs → Float.
- *  - Desktop mouse parallax (max 3° tilt) with spring physics.
- *  - Full WCAG accessibility and reduced-motion compliance.
- *
- * Sources:
- *  07-homepage-experience.md — headline, copy, CTA, motion rules
- *  04-visual-design-system.md — typography, spacing, contrast
- *  05-motion-system.md — easing curves, spring physics
  */
 
 import * as React from "react";
@@ -31,7 +18,7 @@ import { CafePhoneMockup } from "./CafePhoneMockup";
 
 // ─── Easing tokens ─────────────────────────────────────────────────────────────
 const EASE_SMOOTH_OUT = [0.16, 1, 0.3, 1] as const;
-const EASE_EDITORIAL = [0.76, 0, 0.24, 1] as const;
+const EASE_EDITORIAL = [0.65, 0, 0.35, 1] as const;
 
 // ─── Headline lines ────────────────────────────────────────────────────────────
 const HEADLINE_LINES = ["Built around", "the way", "you work."];
@@ -42,14 +29,14 @@ export function HeroSection() {
   const shouldReduceMotion = useReducedMotion();
   const heroRef = React.useRef<HTMLElement>(null);
 
-  // Mouse position for spring parallax tilt
+  // Mouse position for spring parallax tilt (strictly bounded to ±2deg)
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  const tiltX = useSpring(mouseY, { stiffness: 70, damping: 22, mass: 1 });
-  const tiltY = useSpring(mouseX, { stiffness: 70, damping: 22, mass: 1 });
+  const tiltX = useSpring(mouseY, { stiffness: 90, damping: 26, mass: 1 });
+  const tiltY = useSpring(mouseX, { stiffness: 90, damping: 26, mass: 1 });
 
-  // Track mouse within hero container
+  // Track mouse within hero container — max ±2° tilt
   const handleMouseMove = React.useCallback(
     (e: React.MouseEvent<HTMLElement>) => {
       if (shouldReduceMotion) return;
@@ -58,8 +45,10 @@ export function HeroSection() {
       const rect = el.getBoundingClientRect();
       const nx = (e.clientX - rect.left) / rect.width - 0.5;
       const ny = (e.clientY - rect.top) / rect.height - 0.5;
-      mouseX.set(nx * 3.5);
-      mouseY.set(-ny * 3);
+      const targetY = Math.max(-2, Math.min(2, nx * 4));
+      const targetX = Math.max(-2, Math.min(2, -ny * 4));
+      mouseX.set(targetY);
+      mouseY.set(targetX);
     },
     [mouseX, mouseY, shouldReduceMotion]
   );
@@ -82,54 +71,45 @@ export function HeroSection() {
       className="relative flex flex-col justify-between min-h-dvh overflow-hidden bg-background"
       aria-label="Hero — Studio Mysore"
     >
-      {/* ── Subtle Ambient Backdrop Gradient ───────────────────────────── */}
-      <div
-        className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[500px] rounded-full opacity-20 pointer-events-none blur-[120px]"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(160, 120, 90, 0.35) 0%, rgba(0, 0, 0, 0) 70%)",
-        }}
-      />
-
       {/* ── Main Content Area ──────────────────────────────────────────── */}
-      <div className="relative flex flex-1 items-center z-10 pt-20 pb-16 lg:py-0">
+      <div className="relative flex flex-1 items-center z-10 pt-20 pb-12 lg:py-0">
         <div className="container-wide w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-8 items-center min-h-[calc(100dvh-120px)] lg:min-h-0">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-10 lg:gap-14 items-center">
             
             {/* ── LEFT COLUMN: Text Content & Actions ────────────────── */}
-            <div className="flex flex-col gap-8 lg:gap-10 max-w-[620px]">
+            <div className="flex flex-col gap-8 lg:gap-10 max-w-[640px]">
               
               {/* Eyebrow badge */}
               <m.div
                 initial={{ opacity: 0, x: -10 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{
-                  delay: shouldReduceMotion ? 0 : 0.6,
-                  duration: 0.6,
+                  delay: shouldReduceMotion ? 0 : 0.2,
+                  duration: 0.5,
                   ease: EASE_SMOOTH_OUT,
                 }}
                 className="flex items-center gap-3"
               >
-                <div className="w-6 h-[1px] bg-zinc-600/50" />
-                <span className="text-[11px] font-semibold tracking-[0.18em] uppercase text-zinc-500">
+                <div className="w-6 h-[1px] bg-zinc-700" />
+                <span className="text-xs font-mono font-medium tracking-[0.25em] uppercase text-zinc-400">
                   Studio Mysore
                 </span>
               </m.div>
 
               {/* ── HEADLINE ─────────────────────────────────────────── */}
               <h1
-                className="font-display font-semibold text-text-primary select-none"
+                className="font-display font-semibold text-white select-none"
                 style={{
-                  fontSize: "clamp(48px, 7.5vw, 98px)",
+                  fontSize: "clamp(52px, 8vw, 110px)",
                   lineHeight: 0.94,
-                  letterSpacing: "-0.035em",
+                  letterSpacing: "-0.04em",
                 }}
               >
                 {HEADLINE_LINES.map((line, i) => (
                   <HeadlineLine
                     key={line}
                     line={line}
-                    delay={shouldReduceMotion ? 0 : 0.8 + i * 0.12}
+                    delay={shouldReduceMotion ? 0 : 0.35 + i * 0.1}
                     shouldReduceMotion={shouldReduceMotion ?? false}
                   />
                 ))}
@@ -137,18 +117,17 @@ export function HeroSection() {
 
               {/* ── Supporting Copy ──────────────────────────────────── */}
               <m.p
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 14 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
-                  delay: shouldReduceMotion ? 0 : 1.25,
-                  duration: 0.65,
+                  delay: shouldReduceMotion ? 0 : 0.65,
+                  duration: 0.55,
                   ease: EASE_SMOOTH_OUT,
                 }}
-                className="text-text-secondary font-normal"
+                className="text-zinc-400 font-normal leading-relaxed"
                 style={{
-                  fontSize: "clamp(16px, 1.3vw, 19px)",
-                  lineHeight: 1.65,
-                  maxWidth: "440px",
+                  fontSize: "clamp(16px, 1.2vw, 19px)",
+                  maxWidth: "460px",
                 }}
               >
                 Every business works differently.{" "}
@@ -158,32 +137,32 @@ export function HeroSection() {
 
               {/* ── Action CTAs ──────────────────────────────────────── */}
               <m.div
-                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 14 }}
+                initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
-                  delay: shouldReduceMotion ? 0 : 1.45,
-                  duration: 0.65,
+                  delay: shouldReduceMotion ? 0 : 0.8,
+                  duration: 0.55,
                   ease: EASE_SMOOTH_OUT,
                 }}
-                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2"
+                className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-1"
               >
                 {/* Primary CTA */}
                 <m.div
-                  whileHover={{ scale: 1.02, y: -2 }}
+                  whileHover={{ scale: 1.02, y: -1 }}
                   whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                  transition={{ type: "spring", stiffness: 450, damping: 28 }}
                 >
                   <Link
                     href="/#experiences"
                     id="hero-primary-cta"
                     className={cn(
-                      "group inline-flex items-center justify-center gap-3",
+                      "group inline-flex items-center justify-center gap-2.5",
                       "px-7 py-3.5 rounded-xl",
-                      "bg-text-primary text-background",
-                      "text-[14px] font-semibold tracking-tight",
-                      "shadow-[0_4px_20px_rgba(255,255,255,0.12)]",
-                      "transition-all duration-200 hover:bg-white hover:shadow-[0_6px_25px_rgba(255,255,255,0.22)]",
-                      "outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      "bg-white text-zinc-950",
+                      "text-sm font-semibold tracking-tight",
+                      "shadow-md",
+                      "transition-all duration-200 hover:bg-zinc-100",
+                      "outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     )}
                   >
                     Explore Experiences
@@ -198,7 +177,7 @@ export function HeroSection() {
                 <m.div
                   whileHover={{ scale: 1.02, y: -1 }}
                   whileTap={{ scale: 0.98 }}
-                  transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                  transition={{ type: "spring", stiffness: 450, damping: 28 }}
                 >
                   <a
                     href={whatsappUrl}
@@ -208,15 +187,15 @@ export function HeroSection() {
                     className={cn(
                       "inline-flex items-center justify-center gap-2.5",
                       "px-7 py-3.5 rounded-xl",
-                      "bg-transparent text-text-secondary",
-                      "text-[14px] font-medium tracking-tight",
-                      "border border-border",
+                      "bg-zinc-900/60 text-zinc-300",
+                      "text-sm font-medium tracking-tight",
+                      "border border-zinc-800",
                       "transition-all duration-200",
-                      "hover:border-zinc-700 hover:text-text-primary hover:bg-surface-elevated/60",
-                      "outline-none focus-visible:ring-2 focus-visible:ring-text-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                      "hover:border-zinc-700 hover:text-white hover:bg-zinc-800/80",
+                      "outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                     )}
                   >
-                    <MessageCircle className="h-4 w-4" aria-hidden="true" />
+                    <MessageCircle className="h-4 w-4 text-emerald-400" aria-hidden="true" />
                     Chat on WhatsApp
                   </a>
                 </m.div>
@@ -238,17 +217,14 @@ export function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{
-          delay: shouldReduceMotion ? 0 : 2.2,
-          duration: 0.8,
+          delay: shouldReduceMotion ? 0 : 1.0,
+          duration: 0.6,
           ease: EASE_SMOOTH_OUT,
         }}
         className="relative z-10 pb-6 flex flex-col items-center gap-2 select-none"
         aria-hidden="true"
       >
-        <span
-          className="text-[10px] font-medium tracking-[0.16em] uppercase"
-          style={{ color: "#52525B" }}
-        >
+        <span className="text-[10px] font-mono font-medium tracking-[0.2em] uppercase text-zinc-500">
           Scroll
         </span>
         <m.div
@@ -256,16 +232,16 @@ export function HeroSection() {
             shouldReduceMotion
               ? {}
               : {
-                  y: [0, 6, 0],
-                  opacity: [0.3, 0.75, 0.3],
+                  y: [0, 5, 0],
+                  opacity: [0.35, 0.8, 0.35],
                 }
           }
           transition={{
-            duration: 2.2,
+            duration: 2.0,
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="w-[1px] h-7 bg-zinc-700 rounded-full"
+          className="w-[1px] h-6 bg-zinc-700 rounded-full"
         />
       </m.div>
     </section>
@@ -305,7 +281,7 @@ function HeadlineLine({
             ? { delay: 0, duration: 0.3 }
             : {
                 delay,
-                duration: 0.85,
+                duration: 0.75,
                 ease: EASE_EDITORIAL,
               }
         }
@@ -330,11 +306,11 @@ function PhoneColumn({
 }) {
   return (
     <m.div
-      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 36 }}
+      initial={{ opacity: 0, y: shouldReduceMotion ? 0 : 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        delay: shouldReduceMotion ? 0 : 0.35,
-        duration: 0.95,
+        delay: shouldReduceMotion ? 0 : 0.05,
+        duration: 0.75,
         ease: EASE_SMOOTH_OUT,
       }}
       className="flex items-center justify-center lg:justify-end scale-90 sm:scale-95 lg:scale-100 origin-center"
@@ -359,13 +335,13 @@ function PhoneColumn({
             shouldReduceMotion
               ? {}
               : {
-                  y: [0, -12, 0],
-                  rotateZ: [0, 0.6, 0, -0.6, 0],
+                  y: [0, -8, 0],
+                  rotateZ: [0, 0.4, 0, -0.4, 0],
                 }
           }
           transition={{
-            delay: 2.0,
-            duration: 5.5,
+            delay: 1.2,
+            duration: 6.0,
             repeat: Infinity,
             ease: "easeInOut",
             repeatType: "mirror",
@@ -377,23 +353,18 @@ function PhoneColumn({
               shouldReduceMotion
                 ? {}
                 : {
-                    scaleX: [1, 0.86, 1],
-                    opacity: [0.45, 0.25, 0.45],
+                    scaleX: [1, 0.9, 1],
+                    opacity: [0.35, 0.2, 0.35],
                   }
             }
             transition={{
-              delay: 2.0,
-              duration: 5.5,
+              delay: 1.2,
+              duration: 6.0,
               repeat: Infinity,
               ease: "easeInOut",
               repeatType: "mirror",
             }}
-            className="absolute -bottom-7 left-1/2 -translate-x-1/2 w-52 h-7 rounded-full pointer-events-none"
-            style={{
-              background:
-                "radial-gradient(ellipse at center, rgba(0,0,0,0.7) 0%, transparent 70%)",
-              filter: "blur(10px)",
-            }}
+            className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-48 h-4 rounded-full pointer-events-none bg-black/70 blur-md"
             aria-hidden="true"
           />
 
@@ -403,3 +374,5 @@ function PhoneColumn({
     </m.div>
   );
 }
+
+

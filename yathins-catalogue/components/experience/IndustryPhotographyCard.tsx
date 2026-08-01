@@ -3,15 +3,13 @@
 /**
  * IndustryPhotographyCard — Editorial Visual & Photography Showcase
  *
- * Displays rich, dark-mode photography and visual atmosphere for each industry.
- * Dynamically changes photography, feature highlights, and color atmosphere
- * when the active experience changes.
+ * Displays rich, dark-mode visual atmosphere for each industry.
+ * Dynamically updates visual theme, feature highlights, and business metrics.
  */
 
 import * as React from "react";
 import { m, AnimatePresence } from "framer-motion";
 import type { IndustryId } from "@/types/experience";
-import { Sparkles, ArrowUpRight, CheckCircle2 } from "lucide-react";
 
 interface IndustryPhotographyCardProps {
   industryId: IndustryId;
@@ -32,7 +30,7 @@ const PHOTOGRAPHY_DATA: Record<IndustryId, PhotographyData> = {
     title: "Artisanal Coffee & Bakery Workflow",
     subtitle: "Built to handle morning rushes with zero table friction.",
     badge: "Cafe & Bakery",
-    imageBg: "radial-gradient(ellipse at top left, #3D261A 0%, #170E0A 50%, #09090B 100%)",
+    imageBg: "radial-gradient(ellipse at top left, #2D1C13 0%, #140C08 50%, #09090B 100%)",
     highlights: [
       "Table QR Ordering",
       "Real-Time Kitchen Display",
@@ -47,7 +45,7 @@ const PHOTOGRAPHY_DATA: Record<IndustryId, PhotographyData> = {
     title: "Fine Dining & Hospitality Workflow",
     subtitle: "Designed to build anticipation from booking to final dessert.",
     badge: "Restaurant & Dining",
-    imageBg: "radial-gradient(ellipse at top left, #4A0E27 0%, #1F0510 50%, #09090B 100%)",
+    imageBg: "radial-gradient(ellipse at top left, #360B1C 0%, #17040C 50%, #09090B 100%)",
     highlights: [
       "Frictionless Table Booking",
       "Digital Tasting Menus",
@@ -62,7 +60,7 @@ const PHOTOGRAPHY_DATA: Record<IndustryId, PhotographyData> = {
     title: "Modern Clinical Trust Workflow",
     subtitle: "Reassuring patient journeys that turn one-time visits into lifelong care.",
     badge: "Dental Clinic",
-    imageBg: "radial-gradient(ellipse at top left, #0D2C54 0%, #051329 50%, #09090B 100%)",
+    imageBg: "radial-gradient(ellipse at top left, #0B2242 0%, #040E1D 50%, #09090B 100%)",
     highlights: [
       "Self-Service 24/7 Booking",
       "Interactive Care Overviews",
@@ -77,7 +75,7 @@ const PHOTOGRAPHY_DATA: Record<IndustryId, PhotographyData> = {
     title: "Streamlined Care & Triage Workflow",
     subtitle: "Calm, transparent consultation scheduling for patients and staff.",
     badge: "Medical Clinic",
-    imageBg: "radial-gradient(ellipse at top left, #0E3D38 0%, #051A18 50%, #09090B 100%)",
+    imageBg: "radial-gradient(ellipse at top left, #0A2E2A 0%, #041412 50%, #09090B 100%)",
     highlights: [
       "In-Person & Telehealth Triage",
       "Lobby Digital QR Check-in",
@@ -92,7 +90,7 @@ const PHOTOGRAPHY_DATA: Record<IndustryId, PhotographyData> = {
     title: "Boutique Athletic Community Workflow",
     subtitle: "High-energy member onboarding that drives retention and class fill-rates.",
     badge: "Gym & Fitness Studio",
-    imageBg: "radial-gradient(ellipse at top left, #23225C 0%, #0E0D28 50%, #09090B 100%)",
+    imageBg: "radial-gradient(ellipse at top left, #1B1A47 0%, #0A0A1F 50%, #09090B 100%)",
     highlights: [
       "1-Tap Class Spot Reservation",
       "Turnstile QR Entry Pass",
@@ -112,7 +110,7 @@ export function IndustryPhotographyCard({
   const data = PHOTOGRAPHY_DATA[industryId];
 
   return (
-    <div className="relative w-full h-full min-h-[380px] rounded-3xl overflow-hidden p-6 sm:p-8 flex flex-col justify-between border border-white/10 shadow-2xl transition-all">
+    <div className="relative w-full rounded-2xl overflow-hidden p-6 sm:p-8 flex flex-col justify-between border border-zinc-800/80 bg-zinc-900/40 shadow-xl transition-all">
       {/* Background Animated Gradient Backdrop */}
       <AnimatePresence mode="wait">
         <m.div
@@ -126,20 +124,11 @@ export function IndustryPhotographyCard({
         />
       </AnimatePresence>
 
-      {/* Decorative Photorealistic Mesh Pattern Overlay */}
-      <div
-        className="absolute inset-0 z-0 pointer-events-none opacity-20"
-        style={{
-          backgroundImage: `radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)`,
-          backgroundSize: "24px 24px",
-        }}
-      />
-
       {/* Card Content Top */}
       <div className="relative z-10 space-y-4">
         {/* Industry Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-bold tracking-wider uppercase bg-white/10 backdrop-blur-md text-white border border-white/15">
-          <span className="w-2 h-2 rounded-full" style={{ background: accentHex }} />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono font-medium tracking-widest uppercase bg-zinc-900/80 text-zinc-300 border border-zinc-800">
+          <span className="w-1.5 h-1.5 rounded-full" style={{ background: accentHex }} />
           {data.badge}
         </div>
 
@@ -147,16 +136,16 @@ export function IndustryPhotographyCard({
         <AnimatePresence mode="wait">
           <m.div
             key={industryId}
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
-            className="space-y-2"
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.28 }}
+            className="space-y-1.5"
           >
             <h3 className="text-xl sm:text-2xl font-bold font-display text-white tracking-tight leading-snug">
               {data.title}
             </h3>
-            <p className="text-sm text-zinc-300 leading-relaxed max-w-md">
+            <p className="text-sm text-zinc-400 leading-relaxed max-w-md">
               {data.subtitle}
             </p>
           </m.div>
@@ -164,7 +153,7 @@ export function IndustryPhotographyCard({
       </div>
 
       {/* Card Content Bottom: Feature Highlights & Metrics */}
-      <div className="relative z-10 space-y-6 pt-6 border-t border-white/10">
+      <div className="relative z-10 space-y-5 pt-6 mt-6 border-t border-zinc-800/80">
         {/* Workflow Feature Chips */}
         <AnimatePresence mode="wait">
           <m.div
@@ -172,19 +161,18 @@ export function IndustryPhotographyCard({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, delay: 0.1 }}
+            transition={{ duration: 0.25 }}
             className="space-y-2"
           >
-            <span className="text-[10px] font-bold uppercase tracking-widest text-zinc-400 block">
+            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">
               Core Business Workflow
             </span>
             <div className="flex flex-wrap gap-2">
               {data.highlights.map((feat) => (
                 <div
                   key={feat}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 text-xs font-semibold text-zinc-200"
+                  className="inline-flex items-center px-3 py-1.5 rounded-lg bg-zinc-900/80 border border-zinc-800 text-xs font-medium text-zinc-300"
                 >
-                  <CheckCircle2 className="w-3.5 h-3.5" style={{ color: accentHex }} />
                   <span>{feat}</span>
                 </div>
               ))}
@@ -193,16 +181,16 @@ export function IndustryPhotographyCard({
         </AnimatePresence>
 
         {/* Business Metrics */}
-        <div className="grid grid-cols-2 gap-4 pt-2">
-          {data.metrics.map((m, i) => (
+        <div className="grid grid-cols-2 gap-3 pt-1">
+          {data.metrics.map((m) => (
             <div
               key={m.label}
-              className="p-3 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-sm"
+              className="p-3.5 rounded-xl bg-zinc-900/60 border border-zinc-800/80"
             >
-              <div className="text-lg sm:text-xl font-extrabold text-white tracking-tight" style={{ color: accentHex }}>
+              <div className="text-lg sm:text-xl font-bold font-display text-white tracking-tight">
                 {m.value}
               </div>
-              <div className="text-[11px] font-medium text-zinc-400">
+              <div className="text-[11px] font-mono text-zinc-500 tracking-wide mt-0.5">
                 {m.label}
               </div>
             </div>
@@ -214,3 +202,4 @@ export function IndustryPhotographyCard({
 }
 
 IndustryPhotographyCard.displayName = "IndustryPhotographyCard";
+

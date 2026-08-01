@@ -17,8 +17,7 @@ export interface NavLinksProps {
 /**
  * NavLinks — Desktop & Mobile Navigation Menu Items
  *
- * Implements sliding active line indicator using Framer Motion layoutId="activeNav"
- * per 05-motion-system.md specification.
+ * Implements smooth sliding active indicator using Framer Motion layoutId="activeNav"
  */
 export const NavLinks: React.FC<NavLinksProps> = ({
   className,
@@ -29,7 +28,6 @@ export const NavLinks: React.FC<NavLinksProps> = ({
   const [activeHash, setActiveHash] = React.useState<string>("");
 
   React.useEffect(() => {
-    // Keep track of hash in window location for anchor scrolling
     const handleHashChange = () => {
       setActiveHash(window.location.hash || "");
     };
@@ -46,7 +44,7 @@ export const NavLinks: React.FC<NavLinksProps> = ({
       aria-label="Main Navigation"
       className={cn(
         "flex",
-        isHorizontal ? "items-center gap-1" : "flex-col items-start gap-2 w-full",
+        isHorizontal ? "items-center gap-1.5" : "flex-col items-start gap-2 w-full",
         className
       )}
     >
@@ -65,39 +63,39 @@ export const NavLinks: React.FC<NavLinksProps> = ({
               if (onLinkClick) onLinkClick();
             }}
             className={cn(
-              "relative px-3.5 py-2 text-sm font-medium transition-colors duration-200 outline-none rounded-md group focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
-              isHorizontal ? "inline-flex items-center" : "flex w-full items-center justify-between text-base py-2.5",
+              "relative px-4 py-2 text-xs uppercase tracking-widest font-mono font-medium transition-colors duration-200 outline-none rounded-lg group focus-visible:ring-2 focus-visible:ring-zinc-400",
+              isHorizontal
+                ? "inline-flex items-center"
+                : "flex w-full items-center justify-between text-sm py-2.5",
               isActive
-                ? "text-text-primary font-semibold"
-                : "text-text-secondary hover:text-text-primary"
+                ? "text-white"
+                : "text-zinc-400 hover:text-zinc-200"
             )}
           >
             <span className="relative z-10">{link.label}</span>
 
-            {/* Active Indicator for Horizontal Desktop Nav */}
+            {/* Active Pill Indicator for Desktop Nav */}
             {isHorizontal && isActive && (
               <m.div
                 layoutId="activeNav"
-                className="absolute inset-0 rounded-md bg-surface-elevated border border-border/80"
+                className="absolute inset-0 rounded-lg bg-zinc-800/80 border border-zinc-700/60"
                 transition={{
                   type: "spring",
                   stiffness: 380,
-                  damping: 30,
+                  damping: 32,
                 }}
-              >
-                <div className="absolute bottom-0 inset-x-2 h-[2px] bg-primary rounded-full" />
-              </m.div>
+              />
             )}
 
-            {/* Indicator for Vertical Mobile Nav */}
+            {/* Active Indicator for Mobile Nav */}
             {!isHorizontal && isActive && (
               <m.div
                 layoutId="activeNavMobile"
-                className="w-1.5 h-6 bg-primary rounded-full"
+                className="w-1.5 h-5 bg-zinc-200 rounded-full"
                 transition={{
                   type: "spring",
                   stiffness: 380,
-                  damping: 30,
+                  damping: 32,
                 }}
               />
             )}
@@ -109,3 +107,4 @@ export const NavLinks: React.FC<NavLinksProps> = ({
 };
 
 NavLinks.displayName = "NavLinks";
+

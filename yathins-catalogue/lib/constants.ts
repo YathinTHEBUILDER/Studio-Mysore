@@ -54,7 +54,7 @@ export const INDUSTRIES: Industry[] = [
     id: "gym",
     label: "Gym & Fitness",
     slug: "gym",
-    emoji: "🏋️",
+    emoji: "💪",
     accentColor: "gym-primary",
     description:
       "An energetic showcase that communicates your culture and converts visitors into members.",

@@ -13,10 +13,10 @@ export interface WhatsAppCTAProps {
 }
 
 /**
- * WhatsAppCTA — Primary Conversion Action Button
+ * WhatsAppCTA — Direct Conversion Action Button
  *
- * Direct conversion anchor specified across all Studio Mysore specs
- * (01-master-prd.md, 06-ui-system.md, 07-homepage-experience.md).
+ * Designed with Studio Mysore dark-first editorial aesthetic:
+ * Sleek monochromatic border, subtle emerald icon accent, and refined typography.
  */
 export const WhatsAppCTA: React.FC<WhatsAppCTAProps> = ({
   className,
@@ -33,10 +33,10 @@ export const WhatsAppCTA: React.FC<WhatsAppCTAProps> = ({
         target="_blank"
         rel="noopener noreferrer"
         onClick={onClick}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
+        whileHover={{ scale: 1.04 }}
+        whileTap={{ scale: 0.96 }}
         className={cn(
-          "inline-flex items-center justify-center p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60",
+          "inline-flex items-center justify-center p-2.5 rounded-xl bg-zinc-900 text-emerald-400 border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-zinc-400",
           className
         )}
         aria-label="Chat on WhatsApp"
@@ -54,17 +54,17 @@ export const WhatsAppCTA: React.FC<WhatsAppCTAProps> = ({
       onClick={onClick}
       whileHover={{ scale: 1.02, y: -1 }}
       whileTap={{ scale: 0.98 }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      transition={{ type: "spring", stiffness: 400, damping: 28 }}
       className={cn(
-        "inline-flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-lg transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        "inline-flex items-center justify-center gap-2.5 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-xl transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400",
         variant === "primary"
-          ? "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/30 border border-emerald-400/30"
-          : "bg-surface hover:bg-surface-elevated text-emerald-400 border border-emerald-500/30",
+          ? "bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-700/80 shadow-sm"
+          : "bg-transparent hover:bg-zinc-900/60 text-zinc-300 border border-zinc-800 hover:border-zinc-700",
         className
       )}
       aria-label="Chat on WhatsApp"
     >
-      <WhatsAppIcon className="h-4 w-4 fill-current shrink-0" />
+      <WhatsAppIcon className="h-4 w-4 fill-emerald-400 shrink-0" />
       <span>Chat on WhatsApp</span>
     </m.a>
   );
@@ -85,3 +85,4 @@ function WhatsAppIcon({ className }: { className?: string }) {
     </svg>
   );
 }
+

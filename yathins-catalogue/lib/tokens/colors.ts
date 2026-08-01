@@ -68,7 +68,7 @@ export const industryAccents = {
     primary: "#14B8A6",
     muted: "#0F766E",
   },
-  /** 🏋️ Gym & Fitness — slate blue */
+  /** 💪 Gym & Fitness — slate blue */
   gym: {
     primary: "#6366F1",
     muted: "#4338CA",

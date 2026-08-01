@@ -16,8 +16,7 @@ export interface MobileDrawerProps {
 /**
  * MobileDrawer — Accessible Mobile Navigation Drawer
  *
- * Implements spring physics (damping: 25), backdrop blur, and body scroll lock
- * per 05-motion-system.md & 06-ui-system.md specifications.
+ * Implements spring physics, backdrop blur, and body scroll lock.
  */
 export const MobileDrawer: React.FC<MobileDrawerProps> = ({
   isOpen,
@@ -57,7 +56,7 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2, ease: "easeInOut" }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/80 backdrop-blur-md"
             aria-hidden="true"
           />
 
@@ -66,21 +65,21 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
             initial={{ x: "100%" }}
             animate={{ x: 0 }}
             exit={{ x: "100%" }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            className="relative w-full max-w-xs h-full bg-background/95 border-l border-border/80 p-6 flex flex-col justify-between shadow-2xl z-10 backdrop-blur-md overflow-y-auto"
+            transition={{ type: "spring", stiffness: 320, damping: 30 }}
+            className="relative w-full max-w-xs h-full bg-zinc-950 border-l border-zinc-800 p-6 flex flex-col justify-between shadow-2xl z-10 overflow-y-auto"
             role="dialog"
             aria-modal="true"
             aria-label="Mobile Navigation Menu"
           >
             {/* Header / Top Row */}
             <div>
-              <div className="flex items-center justify-between pb-6 border-b border-border/60 mb-6">
+              <div className="flex items-center justify-between pb-6 border-b border-zinc-800 mb-6">
                 <Logo onClick={onClose} />
 
                 {/* Accessible Close Button */}
                 <button
                   onClick={onClose}
-                  className="p-2 rounded-lg text-text-secondary hover:text-text-primary hover:bg-surface-elevated transition-colors outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
+                  className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-zinc-400"
                   aria-label="Close menu"
                 >
                   <X className="h-5 w-5" />
@@ -92,10 +91,10 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
             </div>
 
             {/* Bottom Section with WhatsApp CTA & Tagline */}
-            <div className="pt-6 border-t border-border/60 space-y-4">
+            <div className="pt-6 border-t border-zinc-800 space-y-4">
               <WhatsAppCTA className="w-full text-center" onClick={onClose} />
 
-              <p className="text-xs text-text-tertiary text-center leading-relaxed">
+              <p className="text-xs font-mono text-zinc-500 text-center leading-relaxed">
                 {siteConfig.name} — {siteConfig.tagline}
               </p>
             </div>
@@ -107,3 +106,4 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
 };
 
 MobileDrawer.displayName = "MobileDrawer";
+
