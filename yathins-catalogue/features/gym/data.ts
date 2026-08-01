@@ -46,7 +46,7 @@ export const GYM_TRAINERS: GymTrainer[] = [
     name: "Alex 'Apex' Mercer",
     role: "Head Strength & Conditioning Coach",
     specialty: "Powerlifting & Hypertrophy",
-    bio: "Former Olympic weightlifting coach with 12+ years of transformation expertise.",
+    bio: "Former Olympic weightlifting coach with 12+ years of strength coaching experience.",
     image: "https://images.unsplash.com/photo-1567013127542-490d757e51fc?q=80&w=800&auto=format&fit=crop",
   },
   {

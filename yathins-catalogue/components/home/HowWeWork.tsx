@@ -26,31 +26,31 @@ const PROCESS_STEPS: ProcessStep[] = [
     step: "01",
     title: "Understand",
     description:
-      "We start by understanding your daily business operations, staff workflows, and customer touchpoints before proposing a single line of code.",
+      "We learn your daily routine, your staff workflow, and how your customers buy before writing code.",
   },
   {
     step: "02",
     title: "Plan",
     description:
-      "We architect a clear, friction-free digital workflow that eliminates manual administrative work and speeds up customer decisions.",
+      "We design a simple flow that helps customers buy faster and saves your team time.",
   },
   {
     step: "03",
     title: "Design",
     description:
-      "Every interface is crafted from scratch with editorial typography, bespoke layouts, and brand identity tailored specifically to your business.",
+      "Every screen is built specifically for your business with clear typography and simple layouts.",
   },
   {
     step: "04",
     title: "Build",
     description:
-      "We engineer fast, high-performance web applications using modern web technologies with zero unnecessary template bloat.",
+      "We create fast websites that work smoothly on phones, tablets, and desktop screens.",
   },
   {
     step: "05",
     title: "Support",
     description:
-      "We stay actively involved after launch to monitor performance, refine features, and support your long-term business growth.",
+      "We stay involved after launch to make updates and improvements as your business grows.",
   },
 ];
 
@@ -73,12 +73,11 @@ export function HowWeWork() {
           </div>
 
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-display font-semibold text-white tracking-tight leading-[1.05]">
-            Built around your business. <br className="hidden sm:block" />
-            From start to finish.
+            Built around your business.
           </h2>
 
           <p className="text-zinc-400 text-base sm:text-lg leading-relaxed max-w-2xl">
-            We don&apos;t sell generic templates. We take the time to understand your workflow and build digital systems that help your business run better.
+            We don&apos;t use generic templates. We learn how your business works and build around your daily routine.
           </p>
         </div>
 

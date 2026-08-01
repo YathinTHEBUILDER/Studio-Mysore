@@ -48,19 +48,19 @@ const INDUSTRY_CONFIGS: Record<IndustryId, IndustryConfig> = {
     emoji: "☕",
     accentHex: "#A0785A",
     tagline: "QR ORDERING & MENU DISCOVERY",
-    headline: "Built around your cafe's daily rhythm.",
-    copy: "Skip lines, order directly from the table, and let baristas focus on crafting exceptional coffee rather than taking cash or manual orders.",
-    whatsappPrompt: "Hi Studio Mysore, I run a Cafe & Bakery and would love to see what you can build for my business.",
+    headline: "Built around your café's daily rhythm.",
+    copy: "Customers scan the QR code and order from their table. Your staff stay focused on making great coffee.",
+    whatsappPrompt: "Hi Studio Mysore, I run a café and would like to build a website for my business.",
   },
   restaurant: {
     id: "restaurant",
     label: "Restaurant",
     emoji: "🍽",
     accentHex: "#E11D48",
-    tagline: "TABLE RESERVATIONS & TASTING MENUS",
+    tagline: "TABLE RESERVATIONS & MENUS",
     headline: "Built around your dining room.",
-    copy: "Frictionless table reservations, digital tasting menus with wine pairings, and real-time kitchen order dispatching that elevates hospitality.",
-    whatsappPrompt: "Hi Studio Mysore, I own a Restaurant and would love to discuss an editorial dining experience for my restaurant.",
+    copy: "Guests browse your menu, pick a table time, and order. Your team focus on serving great food.",
+    whatsappPrompt: "Hi Studio Mysore, I own a restaurant and would like to build a website for my business.",
   },
   dental: {
     id: "dental",
@@ -69,8 +69,8 @@ const INDUSTRY_CONFIGS: Record<IndustryId, IndustryConfig> = {
     accentHex: "#3B82F6",
     tagline: "PATIENT SCHEDULING & CARE",
     headline: "Built around patient trust.",
-    copy: "Reassuring, friction-free appointment scheduling with instant specialist selection and automated calendar reminders that save receptionist hours.",
-    whatsappPrompt: "Hi Studio Mysore, I manage a Dental Clinic and want to streamline patient bookings.",
+    copy: "Patients book appointments online when it suits them. Your receptionist spends less time answering calls.",
+    whatsappPrompt: "Hi Studio Mysore, I manage a dental clinic and want to simplify patient bookings.",
   },
   medical: {
     id: "medical",
@@ -79,8 +79,8 @@ const INDUSTRY_CONFIGS: Record<IndustryId, IndustryConfig> = {
     accentHex: "#14B8A6",
     tagline: "CONSULTATIONS & PATIENT INTAKE",
     headline: "Built around patient care.",
-    copy: "Streamlined doctor consultations, digital intake forms, and transparent specialist schedules that turn lobby waiting into seamless check-ins.",
-    whatsappPrompt: "Hi Studio Mysore, I'd like to discuss a Medical Clinic consultation & patient booking platform.",
+    copy: "Patients pick a doctor and book an appointment slot online. Your front desk stays calm during peak hours.",
+    whatsappPrompt: "Hi Studio Mysore, I'd like to discuss a patient booking website for my medical clinic.",
   },
   gym: {
     id: "gym",
@@ -89,8 +89,8 @@ const INDUSTRY_CONFIGS: Record<IndustryId, IndustryConfig> = {
     accentHex: "#6366F1",
     tagline: "CLASS PASSES & MEMBERSHIPS",
     headline: "Built around your community.",
-    copy: "Seamless member onboarding, instant boutique class pass booking, and digital turnstile QR access that drives member retention.",
-    whatsappPrompt: "Hi Studio Mysore, I run a Gym & Fitness Studio and want to build a member booking experience.",
+    copy: "New members explore plans, book trial sessions, and join online. Your trainers spend more time coaching.",
+    whatsappPrompt: "Hi Studio Mysore, I run a gym and want to build a member booking website.",
   },
 };
 
@@ -250,7 +250,7 @@ export function ExperienceSwitcher() {
                   href={`/experiences/${activeId === "medical" ? "medical-clinic" : activeId}`}
                   className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-white text-zinc-950 text-sm font-semibold hover:bg-zinc-100 transition-all shadow-md active:scale-98"
                 >
-                  <span>Launch Full {activeConfig.label} Website</span>
+                  <span>Try It Yourself</span>
                 </Link>
                 <a
                   href={whatsappUrl}
@@ -259,7 +259,7 @@ export function ExperienceSwitcher() {
                   className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-200 text-sm font-medium hover:bg-zinc-800 transition-all shadow-md active:scale-98"
                 >
                   <MessageCircle className="w-4 h-4 text-emerald-500" />
-                  <span>Discuss Solution</span>
+                  <span>Chat on WhatsApp</span>
                 </a>
               </div>
             </div>

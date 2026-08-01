@@ -28,11 +28,11 @@ export const DentalHero: React.FC<DentalHeroProps> = ({ onOpenBooking }) => {
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-display font-semibold text-white tracking-tight leading-[1.08]">
-              Precision Dental Care & Smile Design.
+              More time with patients. Less time managing appointments.
             </h1>
 
             <p className="text-lg text-zinc-400 max-w-xl leading-relaxed">
-              Experience stress-free dental visits with 3D intraoral scans, painless laser whitening, and instant online doctor scheduling.
+              Let patients book appointments, choose available time slots and receive instant confirmation while your staff stays focused on patient care.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -41,7 +41,7 @@ export const DentalHero: React.FC<DentalHeroProps> = ({ onOpenBooking }) => {
                 className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-sky-600 text-white font-semibold text-sm hover:bg-sky-500 transition-all shadow-xl shadow-sky-600/20 active:scale-98"
               >
                 <Calendar className="w-4 h-4" />
-                <span>Schedule Consultation</span>
+                <span>Try It Yourself</span>
               </button>
             </div>
           </m.div>

@@ -38,9 +38,9 @@ const INDUSTRY_ITEMS: IndustryItem[] = [
     slug: "cafe",
     emoji: "☕",
     badge: "Café & Bakery",
-    title: "Artisanal Coffee & QR Ordering",
+    title: "Artisan Coffee & QR Ordering",
     description:
-      "A warm, inviting online experience built around table ordering, daily pastry specials, and zero barista friction.",
+      "Customers scan the QR code, order drinks, and pay from their table without waiting at the counter.",
     accentColor: "#A0785A",
     bgGradient: "radial-gradient(circle at 80% 20%, rgba(160, 120, 90, 0.15) 0%, rgba(9, 9, 11, 0.95) 70%)",
     imageUrl:
@@ -51,9 +51,9 @@ const INDUSTRY_ITEMS: IndustryItem[] = [
     slug: "restaurant",
     emoji: "🍽",
     badge: "Restaurant & Dining",
-    title: "Fine Dining & Table Reservations",
+    title: "Dining & Table Reservations",
     description:
-      "An editorial dining experience that builds anticipation from initial booking to chef-curated tasting menus.",
+      "Guests reserve tables online, explore your menu, and place orders directly to your kitchen.",
     accentColor: "#E11D48",
     bgGradient: "radial-gradient(circle at 80% 20%, rgba(225, 29, 72, 0.15) 0%, rgba(9, 9, 11, 0.95) 70%)",
     imageUrl:
@@ -64,9 +64,9 @@ const INDUSTRY_ITEMS: IndustryItem[] = [
     slug: "dental",
     emoji: "🦷",
     badge: "Dental Clinic",
-    title: "Patient Care & Appointment Booking",
+    title: "Patient Care & Appointments",
     description:
-      "A clean, reassuring clinical interface that helps patients book consultations effortlessly and understand care plans.",
+      "Patients select dates and book appointments online. Your reception spends less time answering calls.",
     accentColor: "#3B82F6",
     bgGradient: "radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15) 0%, rgba(9, 9, 11, 0.95) 70%)",
     imageUrl:
@@ -77,9 +77,9 @@ const INDUSTRY_ITEMS: IndustryItem[] = [
     slug: "medical",
     emoji: "🏥",
     badge: "Medical Clinic",
-    title: "Consultation & Patient Triage",
+    title: "Doctor Booking & Consultations",
     description:
-      "A calm, trustworthy patient platform featuring digital check-ins, specialist schedules, and instant consultations.",
+      "Patients find the right specialist and pick a time slot online. Your daily schedule stays organised.",
     accentColor: "#14B8A6",
     bgGradient: "radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.15) 0%, rgba(9, 9, 11, 0.95) 70%)",
     imageUrl:
@@ -90,9 +90,9 @@ const INDUSTRY_ITEMS: IndustryItem[] = [
     slug: "gym",
     emoji: "💪",
     badge: "Gym & Fitness",
-    title: "Boutique Fitness & Class Passes",
+    title: "Fitness Classes & Memberships",
     description:
-      "An energetic showcase designed to communicate culture, fill boutique classes, and convert visitors into long-term members.",
+      "Visitors explore membership plans, book trial sessions, and join online without desk delays.",
     accentColor: "#6366F1",
     bgGradient: "radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.15) 0%, rgba(9, 9, 11, 0.95) 70%)",
     imageUrl:
@@ -119,12 +119,11 @@ export function IndustryCatalogue() {
           </div>
 
           <h2 className="text-3xl sm:text-5xl lg:text-6xl font-display font-semibold text-white tracking-tight leading-[1.05]">
-            Choose your industry. <br className="hidden sm:block" />
-            Experience a complete working website.
+            Choose your business.
           </h2>
 
           <p className="text-zinc-400 text-base sm:text-lg leading-relaxed max-w-2xl">
-            Each experience below is a full, dedicated web application designed specifically for that business model. Select one to launch the full website.
+            Each experience below is a complete website built for a specific industry. Select yours to try it.
           </p>
         </div>
 
@@ -186,7 +185,7 @@ export function IndustryCatalogue() {
                   href={`/experiences/${item.slug}`}
                   className="inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-white transition-colors outline-none focus-visible:ring-2 focus-visible:ring-white rounded-md"
                 >
-                  <span>Explore Experience</span>
+                  <span>Try It Yourself</span>
                   <ArrowUpRight className="w-4 h-4 text-zinc-400 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
                 </Link>
 

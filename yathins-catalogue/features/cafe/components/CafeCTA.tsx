@@ -7,7 +7,7 @@ import { buildWhatsAppUrl } from "@/lib/site-config";
 
 export const CafeCTA: React.FC = () => {
   const whatsappUrl = buildWhatsAppUrl(
-    "Hi Studio Mysore, I loved the Artisan Cafe experience and want to discuss building a custom ordering solution for my cafe business."
+    "Hi Studio Mysore, I explored the Café Experience and I'd like to discuss something similar for my café."
   );
 
   return (
@@ -19,10 +19,10 @@ export const CafeCTA: React.FC = () => {
               Built by Studio Mysore
             </span>
             <h2 className="text-2xl sm:text-4xl font-display font-semibold text-white tracking-tight">
-              Want an experience like this for your cafe?
+              Let&apos;s build something for your café.
             </h2>
             <p className="text-zinc-400 text-sm leading-relaxed">
-              We design & engineer custom digital ordering platforms, mobile web apps, and QR menus tailored specifically to your brand.
+              Tell us how your café works. We&apos;ll suggest ideas that fit your customers, your staff and the way you already operate.
             </p>
           </div>
 
@@ -34,7 +34,7 @@ export const CafeCTA: React.FC = () => {
               className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-amber-500 text-zinc-950 text-sm font-semibold hover:bg-amber-400 transition-all shadow-lg shadow-amber-500/20"
             >
               <MessageCircle className="w-4 h-4" />
-              <span>Discuss Cafe Project</span>
+              <span>Chat on WhatsApp</span>
               <ArrowUpRight className="w-4 h-4" />
             </a>
           </div>

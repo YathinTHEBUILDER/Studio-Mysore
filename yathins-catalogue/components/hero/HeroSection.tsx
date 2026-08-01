@@ -26,7 +26,7 @@ export function HeroSection() {
 
   // WhatsApp conversion link
   const whatsappUrl = buildWhatsAppUrl(
-    "Hi Studio Mysore, I'd like to learn more about complete digital experiences for my business."
+    "Hi Studio Mysore, I'd like to talk about a website for my business."
   );
 
   return (

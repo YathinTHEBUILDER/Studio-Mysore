@@ -21,7 +21,7 @@ export const INDUSTRIES: Industry[] = [
     emoji: "☕",
     accentColor: "cafe-primary",
     description:
-      "A warm, inviting online experience that helps customers explore your menu and place orders before they arrive.",
+      "Customers scan the QR code and order. Your staff stay focused on making great coffee.",
   },
   {
     id: "restaurant",
@@ -30,7 +30,7 @@ export const INDUSTRIES: Industry[] = [
     emoji: "🍽",
     accentColor: "restaurant-primary",
     description:
-      "An editorial dining experience that builds anticipation and makes reservations feel effortless.",
+      "Guests browse your menu and order from their table. Your team focus on serving food.",
   },
   {
     id: "dental",
@@ -39,7 +39,7 @@ export const INDUSTRIES: Industry[] = [
     emoji: "🦷",
     accentColor: "dental-primary",
     description:
-      "A clean, reassuring experience that helps patients book appointments and understand your services.",
+      "Patients book a time that works for them. Your receptionist spends less time answering calls.",
   },
   {
     id: "medical",
@@ -48,7 +48,7 @@ export const INDUSTRIES: Industry[] = [
     emoji: "🏥",
     accentColor: "medical-primary",
     description:
-      "A calm, trustworthy experience that makes booking a consultation feel straightforward.",
+      "Patients pick a doctor and book online. Your front desk stays calm during busy hours.",
   },
   {
     id: "gym",
@@ -57,7 +57,7 @@ export const INDUSTRIES: Industry[] = [
     emoji: "💪",
     accentColor: "gym-primary",
     description:
-      "An energetic showcase that communicates your culture and converts visitors into members.",
+      "People explore your plans and book trial sessions online. Your team spend more time coaching.",
   },
 ] as const;
 

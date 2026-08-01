@@ -28,11 +28,11 @@ export const GymHero: React.FC<GymHeroProps> = ({ onOpenTrial }) => {
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-display font-semibold text-white tracking-tight leading-[1.08]">
-              High-Energy Training & Community.
+              Spend more time coaching. Less time managing enquiries.
             </h1>
 
             <p className="text-lg text-zinc-400 max-w-xl leading-relaxed">
-              Book boutique HIIT classes, track your personal records, reserve mat & spin bike spots, and join Mysore's premier fitness movement.
+              Let people explore your gym, book a trial session and become members through a simple digital experience that works around your business.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -41,7 +41,7 @@ export const GymHero: React.FC<GymHeroProps> = ({ onOpenTrial }) => {
                 className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-indigo-600 text-white font-semibold text-sm hover:bg-indigo-500 transition-all shadow-xl shadow-indigo-600/20 active:scale-98"
               >
                 <Dumbbell className="w-4 h-4" />
-                <span>Book 1-Day Trial Pass</span>
+                <span>Try It Yourself</span>
               </button>
             </div>
           </m.div>

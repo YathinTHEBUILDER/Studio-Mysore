@@ -25,11 +25,11 @@ export const CafeHero: React.FC = () => {
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-display font-semibold text-white tracking-tight leading-[1.08]">
-              Crafted Espresso & Fresh Micro-Bakery.
+              More time making coffee. Less time taking orders.
             </h1>
 
             <p className="text-lg text-zinc-400 max-w-xl leading-relaxed">
-              Order directly from your phone. Skip the queue, customize your roast profile & milk options, and collect your fresh brew in minutes.
+              Let your customers browse the menu, place an order and pay in just a few taps. Your staff can focus on serving great coffee instead of standing at the counter taking orders.
             </p>
 
             <div className="flex flex-wrap items-center gap-6 pt-2 text-xs font-mono text-zinc-400 border-t border-zinc-800/80 max-w-lg">

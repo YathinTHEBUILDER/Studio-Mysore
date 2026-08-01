@@ -16,7 +16,7 @@ export const DENTAL_SERVICES: DentalService[] = [
     category: "preventative",
     priceEstimate: "$120",
     duration: "30 Mins",
-    description: "Comprehensive 360° cavity scan, ultrasonic scaling, and personalized oral hygiene roadmap.",
+    description: "Full 360° cavity scan, ultrasonic scaling, and personalized oral hygiene roadmap.",
     badge: "Insurance Coverable",
   },
   {

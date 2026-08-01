@@ -7,7 +7,7 @@ import { buildWhatsAppUrl } from "@/lib/site-config";
 
 export const MedicalCTA: React.FC = () => {
   const whatsappUrl = buildWhatsAppUrl(
-    "Hi Studio Mysore, I loved the Medical Clinic experience and want to discuss building a telehealth & clinic management platform for my health organization."
+    "Hi Studio Mysore, I explored the Medical Clinic Experience and I'd like to discuss a custom website and patient booking system for my clinic."
   );
 
   return (
@@ -19,10 +19,10 @@ export const MedicalCTA: React.FC = () => {
               Built by Studio Mysore
             </span>
             <h2 className="text-2xl sm:text-4xl font-display font-semibold text-white tracking-tight">
-              Build a modern medical & telehealth platform.
+              Let&apos;s build something for your clinic.
             </h2>
             <p className="text-zinc-400 text-sm leading-relaxed">
-              We design & build HIPAA-compliant telehealth portals, doctor appointment scheduling engines, and patient intake systems.
+              Tell us how your clinic works. We&apos;ll suggest ideas that fit your doctors, your patients and the way your clinic operates.
             </p>
           </div>
 
@@ -34,7 +34,7 @@ export const MedicalCTA: React.FC = () => {
               className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-teal-600 text-white text-sm font-semibold hover:bg-teal-500 transition-all shadow-lg shadow-teal-600/20"
             >
               <MessageCircle className="w-4 h-4" />
-              <span>Discuss Medical Project</span>
+              <span>Chat on WhatsApp</span>
               <ArrowUpRight className="w-4 h-4" />
             </a>
           </div>

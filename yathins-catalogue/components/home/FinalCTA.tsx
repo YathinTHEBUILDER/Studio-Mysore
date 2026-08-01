@@ -17,7 +17,7 @@ import { cn } from "@/lib/utils";
 
 export function FinalCTA() {
   const whatsappUrl = buildWhatsAppUrl(
-    "I explored Studio Mysore and I'd like to discuss a website for my business."
+    "Hi Studio Mysore, I'd like to talk about a website for my business."
   );
 
   return (
@@ -52,7 +52,7 @@ export function FinalCTA() {
 
           {/* Supporting Copy */}
           <p className="text-zinc-400 text-base sm:text-xl leading-relaxed max-w-xl mx-auto">
-            Tell us how your business works. We&apos;ll suggest what we&apos;d build and why. No pressure. Just a conversation.
+            Tell us how your business works. We&apos;ll show you what we can build and why. No pressure. Just an honest conversation.
           </p>
 
           {/* WhatsApp Action Button */}

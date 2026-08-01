@@ -28,11 +28,11 @@ export const MedicalHero: React.FC<MedicalHeroProps> = ({ onOpenBooking }) => {
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-display font-semibold text-white tracking-tight leading-[1.08]">
-              Seamless Doctor Consultations & Care.
+              Spend more time caring for patients. Less time managing appointments.
             </h1>
 
             <p className="text-lg text-zinc-400 max-w-xl leading-relaxed">
-              Book instant HD video consultations or visit our state-of-the-art clinic. Transparent doctor profiles, symptom intake, and digital prescriptions.
+              Make it easy for patients to book appointments, find the right doctor and receive important information before they even walk into your clinic.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -41,7 +41,7 @@ export const MedicalHero: React.FC<MedicalHeroProps> = ({ onOpenBooking }) => {
                 className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-teal-600 text-white font-semibold text-sm hover:bg-teal-500 transition-all shadow-xl shadow-teal-600/20 active:scale-98"
               >
                 <Video className="w-4 h-4" />
-                <span>Start Telehealth Consultation</span>
+                <span>See the Demo</span>
               </button>
             </div>
           </m.div>

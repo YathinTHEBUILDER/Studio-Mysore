@@ -48,7 +48,7 @@ export const GymFacilitiesSection: React.FC = () => {
             </div>
             <h3 className="font-display text-lg font-semibold text-white">Turnstile QR Check-In</h3>
             <p className="text-xs text-zinc-400 leading-relaxed">
-              Seamless contactless mobile app entry with zero waiting at front desk counters.
+              Quick QR pass entry with zero waiting at the front desk.
             </p>
           </div>
         </div>

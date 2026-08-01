@@ -7,7 +7,7 @@ import { buildWhatsAppUrl } from "@/lib/site-config";
 
 export const GymCTA: React.FC = () => {
   const whatsappUrl = buildWhatsAppUrl(
-    "Hi Studio Mysore, I loved the Gym & Fitness experience and want to discuss building a member booking app for my fitness business."
+    "Hi Studio Mysore, I explored the Gym Experience and I'd like to discuss a custom website and membership experience for my gym."
   );
 
   return (
@@ -19,10 +19,10 @@ export const GymCTA: React.FC = () => {
               Built by Studio Mysore
             </span>
             <h2 className="text-2xl sm:text-4xl font-display font-semibold text-white tracking-tight">
-              Build an energetic member web application.
+              Let&apos;s build something for your gym.
             </h2>
             <p className="text-zinc-400 text-sm leading-relaxed">
-              We design & build boutique gym websites, class booking timetables, turnstile QR access, and member subscription portals.
+              Tell us how your gym works. We&apos;ll suggest ideas that fit your members, your trainers and the way you run your business.
             </p>
           </div>
 
@@ -34,7 +34,7 @@ export const GymCTA: React.FC = () => {
               className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-500 transition-all shadow-lg shadow-indigo-600/20"
             >
               <MessageCircle className="w-4 h-4" />
-              <span>Discuss Gym Project</span>
+              <span>Chat on WhatsApp</span>
               <ArrowUpRight className="w-4 h-4" />
             </a>
           </div>

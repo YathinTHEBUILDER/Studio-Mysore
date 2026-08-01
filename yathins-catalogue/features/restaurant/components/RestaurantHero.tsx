@@ -28,11 +28,11 @@ export const RestaurantHero: React.FC<RestaurantHeroProps> = ({ onOpenReserve })
             </div>
 
             <h1 className="text-4xl sm:text-6xl font-display font-semibold text-white tracking-tight leading-[1.08]">
-              An Editorial Culinary Experience.
+              Spend more time serving guests. Less time taking orders.
             </h1>
 
             <p className="text-lg text-zinc-400 max-w-xl leading-relaxed">
-              Curated multi-course tasting menus, rare vintage wine pairings, and seamless digital table reservations designed for unforgettable evenings.
+              Let customers browse your menu, place orders and enjoy a smoother dining experience while your team stays focused on great service.
             </p>
 
             <div className="pt-2 flex flex-wrap items-center gap-4">
@@ -41,7 +41,7 @@ export const RestaurantHero: React.FC<RestaurantHeroProps> = ({ onOpenReserve })
                 className="flex items-center gap-2 px-6 py-3.5 rounded-xl bg-rose-600 text-white font-semibold text-sm hover:bg-rose-500 transition-all shadow-xl shadow-rose-600/20 active:scale-98"
               >
                 <Calendar className="w-4 h-4" />
-                <span>Book Table & Tasting Menu</span>
+                <span>See the Demo</span>
               </button>
             </div>
           </m.div>
