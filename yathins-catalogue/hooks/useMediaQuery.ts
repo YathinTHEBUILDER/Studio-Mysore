@@ -13,31 +13,26 @@
  * Convenience aliases are exported at the bottom.
  */
 
-import { useState, useEffect } from "react";
+import { useSyncExternalStore, useCallback } from "react";
 import { BREAKPOINTS } from "@/lib/constants";
 
 export function useMediaQuery(query: string): boolean {
-  const [matches, setMatches] = useState(false);
+  const subscribe = useCallback(
+    (callback: () => void) => {
+      const matchMedia = window.matchMedia(query);
+      matchMedia.addEventListener("change", callback);
+      return () => matchMedia.removeEventListener("change", callback);
+    },
+    [query]
+  );
 
-  useEffect(() => {
-    const mediaQueryList = window.matchMedia(query);
+  const getSnapshot = () => {
+    return window.matchMedia(query).matches;
+  };
 
-    // Set initial value
-    setMatches(mediaQueryList.matches);
+  const getServerSnapshot = () => false;
 
-    // Listen for changes
-    const listener = (event: MediaQueryListEvent) => {
-      setMatches(event.matches);
-    };
-
-    mediaQueryList.addEventListener("change", listener);
-
-    return () => {
-      mediaQueryList.removeEventListener("change", listener);
-    };
-  }, [query]);
-
-  return matches;
+  return useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
 }
 
 // ---------------------------------------------------------------------------

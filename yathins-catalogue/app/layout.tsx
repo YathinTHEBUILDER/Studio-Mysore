@@ -17,6 +17,7 @@ import "./globals.css";
 import { inter, clashDisplay } from "@/lib/fonts";
 import { siteConfig } from "@/lib/site-config";
 import { Providers } from "@/components/providers";
+import { Navbar } from "@/components/layout";
 
 // ---------------------------------------------------------------------------
 // Metadata — consumed by Next.js for <head> generation
@@ -125,7 +126,10 @@ export default function RootLayout({
          * Providers wraps Lenis (smooth scroll) + Framer Motion (LazyMotion).
          * Order matters: MotionProvider → LenisProvider → children.
          */}
-        <Providers>{children}</Providers>
+        <Providers>
+          <Navbar />
+          <main>{children}</main>
+        </Providers>
       </body>
     </html>
   );

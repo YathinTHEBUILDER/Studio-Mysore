@@ -18,7 +18,7 @@ import {
   createContext,
   useContext,
   useEffect,
-  useRef,
+  useState,
   type ReactNode,
 } from "react";
 import Lenis from "lenis";
@@ -45,7 +45,7 @@ interface LenisProviderProps {
 }
 
 export function LenisProvider({ children }: LenisProviderProps) {
-  const lenisRef = useRef<Lenis | null>(null);
+  const [lenis, setLenis] = useState<Lenis | null>(null);
 
   useEffect(() => {
     // Respect user's reduced motion preference —
@@ -60,7 +60,7 @@ export function LenisProvider({ children }: LenisProviderProps) {
     }
 
     // Instantiate Lenis with physics matched to a premium editorial feel
-    const lenis = new Lenis({
+    const lenisInstance = new Lenis({
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
@@ -70,32 +70,34 @@ export function LenisProvider({ children }: LenisProviderProps) {
       touchMultiplier: 2,
     });
 
-    lenisRef.current = lenis;
+    const frameId = requestAnimationFrame(() => {
+      setLenis(lenisInstance);
+    });
 
     // Connect Lenis to GSAP's RAF so ScrollTrigger stays in sync.
     // GSAP ticker fires every frame — we pass elapsed time to Lenis.
-    gsap.ticker.add((time: number) => {
-      lenis.raf(time * 1000);
-    });
+    const updateTicker = (time: number) => {
+      lenisInstance.raf(time * 1000);
+    };
+    gsap.ticker.add(updateTicker);
 
     // Prevent GSAP from adding its own requestAnimationFrame (Lenis controls RAF).
     gsap.ticker.lagSmoothing(0);
 
     // Inform ScrollTrigger of scroll position updates from Lenis
-    lenis.on("scroll", ScrollTrigger.update);
+    lenisInstance.on("scroll", ScrollTrigger.update);
 
     return () => {
+      cancelAnimationFrame(frameId);
       // Cleanup: remove ticker, destroy Lenis
-      gsap.ticker.remove((time: number) => {
-        lenis.raf(time * 1000);
-      });
-      lenis.destroy();
-      lenisRef.current = null;
+      gsap.ticker.remove(updateTicker);
+      lenisInstance.destroy();
+      setLenis(null);
     };
   }, []);
 
   return (
-    <LenisContext.Provider value={{ lenis: lenisRef.current }}>
+    <LenisContext.Provider value={{ lenis }}>
       {children}
     </LenisContext.Provider>
   );

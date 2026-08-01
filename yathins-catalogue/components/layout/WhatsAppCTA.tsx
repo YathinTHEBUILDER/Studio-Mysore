@@ -1,0 +1,87 @@
+"use client";
+
+import * as React from "react";
+import { m } from "framer-motion";
+import { cn } from "@/lib/utils";
+import { buildWhatsAppUrl } from "@/lib/site-config";
+
+export interface WhatsAppCTAProps {
+  className?: string;
+  variant?: "primary" | "ghost" | "compact";
+  customMessage?: string;
+  onClick?: () => void;
+}
+
+/**
+ * WhatsAppCTA — Primary Conversion Action Button
+ *
+ * Direct conversion anchor specified across all Studio Mysore specs
+ * (01-master-prd.md, 06-ui-system.md, 07-homepage-experience.md).
+ */
+export const WhatsAppCTA: React.FC<WhatsAppCTAProps> = ({
+  className,
+  variant = "primary",
+  customMessage,
+  onClick,
+}) => {
+  const href = buildWhatsAppUrl(customMessage);
+
+  if (variant === "compact") {
+    return (
+      <m.a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        onClick={onClick}
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        className={cn(
+          "inline-flex items-center justify-center p-2.5 rounded-lg bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 hover:bg-emerald-500/20 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60",
+          className
+        )}
+        aria-label="Chat on WhatsApp"
+      >
+        <WhatsAppIcon className="h-5 w-5 fill-current" />
+      </m.a>
+    );
+  }
+
+  return (
+    <m.a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={onClick}
+      whileHover={{ scale: 1.02, y: -1 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+      className={cn(
+        "inline-flex items-center justify-center gap-2 px-4 py-2 text-xs md:text-sm font-semibold rounded-lg transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-emerald-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+        variant === "primary"
+          ? "bg-emerald-600 hover:bg-emerald-500 text-white shadow-lg shadow-emerald-900/30 border border-emerald-400/30"
+          : "bg-surface hover:bg-surface-elevated text-emerald-400 border border-emerald-500/30",
+        className
+      )}
+      aria-label="Chat on WhatsApp"
+    >
+      <WhatsAppIcon className="h-4 w-4 fill-current shrink-0" />
+      <span>Chat on WhatsApp</span>
+    </m.a>
+  );
+};
+
+WhatsAppCTA.displayName = "WhatsAppCTA";
+
+/** Authentic WhatsApp Brand Icon SVG */
+function WhatsAppIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.461c-1.926 0-3.71-.512-5.253-1.408l-.377-.219-3.904 1.024 1.042-3.805-.246-.392a10.126 10.126 0 0 1-1.554-5.36c0-5.59 4.549-10.138 10.14-10.138 2.709 0 5.255 1.056 7.17 2.972a10.07 10.07 0 0 1 2.969 7.168c0 5.592-4.549 10.14-10.14 10.14m0-21.843C5.467 0 0 5.467 0 12.21c0 2.155.56 4.258 1.626 6.111L0 24l5.811-1.524A12.164 12.164 0 0 0 12.051 24c6.744 0 12.211-5.467 12.211-12.21 0-3.264-1.272-6.332-3.579-8.64A12.13 12.13 0 0 0 12.051 0" />
+    </svg>
+  );
+}

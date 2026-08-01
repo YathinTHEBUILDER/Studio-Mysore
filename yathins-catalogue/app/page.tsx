@@ -1,17 +1,17 @@
 /**
  * Home Page — Yathin's Catalogue
  *
- * Sprint 1: This is the blank canvas.
- * No content is rendered here yet — the foundation is being built.
+ * Renders the Hero section only.
+ * Per 15-antigravity-prompts.md: "Do not build the next homepage section."
  *
- * Sprint 2 will implement the full homepage per 07-homepage-experience.md.
+ * The Hero occupies the full viewport (100dvh).
+ * Nothing is rendered below the fold.
  *
- * The page renders the correct background colour so the foundation
- * can be visually verified in the browser before Sprint 2 begins.
+ * Source: 07-homepage-experience.md
  */
 
+import { HeroSection } from "@/components/hero";
+
 export default function HomePage() {
-  return (
-    <main className="min-h-dvh bg-background" aria-label="Homepage" />
-  );
+  return <HeroSection />;
 }

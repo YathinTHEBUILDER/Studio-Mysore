@@ -1,11 +1,12 @@
 ---
+
 title: Homepage Experience
 version: 1.0
 status: Approved
 owner: Studio Mysore
 project: Yathin's Catalogue
 last_updated: 2026-08-01
----
+------------------------
 
 # Homepage Experience
 
@@ -423,13 +424,9 @@ Larger editorial layouts.
 # Performance Goals
 
 * Smooth scrolling.
-
 * Instant interactions.
-
 * Optimised images.
-
 * Stable layout.
-
 * Responsive animations.
 
 The homepage should remain fluid across all supported devices.
@@ -483,4 +480,4 @@ The homepage is complete when a visitor can:
 
 # Next Document
 
-[08-cafe-experience.md](file:///c:/Users/YATHIN/Desktop/Studio%20Mysore/08-cafe-experience.md)
+08-cafe-experience.md

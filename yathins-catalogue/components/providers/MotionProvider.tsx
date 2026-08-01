@@ -24,9 +24,10 @@ interface MotionProviderProps {
 
 export function MotionProvider({ children }: MotionProviderProps) {
   return (
-    // strict={true} warns if you import `motion` from framer-motion directly
-    // and bypass LazyMotion — catching bundle bloat early.
-    <LazyMotion features={domAnimation} strict>
+    // strict={true} is disabled — framer-motion v12 raises a false-positive
+    // when components import `m` from "framer-motion" root in some bundler
+    // configurations. `domAnimation` still ensures optimal tree-shaking.
+    <LazyMotion features={domAnimation}>
       {children}
     </LazyMotion>
   );
