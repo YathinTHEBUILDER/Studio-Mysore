@@ -1,11 +1,8 @@
 "use client";
 
 import * as React from "react";
-import { m, useScroll, useMotionValueEvent, useReducedMotion } from "framer-motion";
-import { Menu } from "lucide-react";
+import { useScroll, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { NAV_SCROLL_THRESHOLD } from "@/lib/constants";
-import { Container } from "@/components/ui/Container";
 import { Logo } from "./Logo";
 import { NavLinks } from "./NavLinks";
 import { WhatsAppCTA } from "./WhatsAppCTA";
@@ -18,57 +15,62 @@ export interface NavbarProps {
 /**
  * Navbar — Primary Persistent Header Component
  *
- * Entrance timeline: 0.2s fade-in sequence
- * Implements transparent-to-glassmorphism transition upon scrolling 50px
+ * Specifications:
+ * - Desktop: Height 72px, Max Width 1480px, Horizontal Padding 40px, Vertical Padding 16px
+ * - Position: Fixed, Top 24px, Centered horizontally
+ * - Grid layout: 1fr auto 1fr (Navigation remains perfectly centered regardless of logo width)
+ * - Scroll State (> 60px): Floating capsule with rgba(8,8,8,0.72) background, 24px backdrop blur, 1px solid rgba(255,255,255,0.08) border, 450ms duration, power3.out ease
+ * - Mobile: MENU + trigger opening full-screen overlay
  */
 export const Navbar: React.FC<NavbarProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = React.useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState<boolean>(false);
-  const shouldReduceMotion = useReducedMotion();
 
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setIsScrolled(latest > NAV_SCROLL_THRESHOLD);
+    setIsScrolled(latest > 60);
   });
 
   return (
     <>
       <header
         className={cn(
-          "sticky top-0 z-40 w-full transition-all duration-300 ease-in-out",
+          "fixed top-[24px] left-1/2 -translate-x-1/2 z-40 w-[calc(100%-32px)] max-w-[1480px] h-[72px] px-6 md:px-[40px] py-[16px] rounded-[999px] transition-all duration-[450ms] ease-[cubic-bezier(0.215,0.61,0.355,1)] js-navbar select-none",
           isScrolled
-            ? "bg-zinc-950/85 backdrop-blur-xl border-b border-zinc-800/80 shadow-lg shadow-black/50 py-3.5"
-            : "bg-transparent border-b border-transparent py-6",
+            ? "bg-[rgba(8,8,8,0.72)] backdrop-blur-[24px] border border-[rgba(255,255,255,0.08)] shadow-2xl shadow-black/60"
+            : "bg-transparent border border-transparent",
           className
         )}
       >
-        <Container variant="wide" className="flex items-center justify-between">
-          {/* Logo Brand Identifier */}
-          <Logo />
+        <div className="grid grid-cols-[1fr_auto_1fr] items-center w-full h-full">
+          {/* Logo (Left) */}
+          <div className="flex items-center justify-start">
+            <Logo />
+          </div>
 
-          {/* Desktop Navigation Links */}
-          <div className="hidden lg:flex items-center gap-8">
+          {/* Navigation Links (Center) */}
+          <div className="hidden lg:flex items-center justify-center">
             <NavLinks orientation="horizontal" />
           </div>
 
-          {/* Desktop WhatsApp Conversion CTA & Mobile Toggle */}
-          <div className="flex items-center gap-3">
-            <WhatsAppCTA className="hidden sm:inline-flex" />
+          {/* CTA & Mobile Menu Trigger (Right) */}
+          <div className="flex items-center justify-end gap-4">
+            <WhatsAppCTA className="hidden md:inline-flex" />
 
-            {/* Mobile Hamburger Toggle Button */}
+            {/* Mobile Trigger: MENU + */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2.5 rounded-sm bg-zinc-900/90 hover:bg-zinc-800 text-white border border-zinc-800 transition-colors outline-none focus-visible:ring-1 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="lg:hidden font-['Inter',var(--font-inter),sans-serif] text-[14px] font-medium text-white opacity-80 hover:opacity-100 uppercase tracking-widest outline-none py-2 px-1 transition-opacity"
               aria-label="Open mobile menu"
             >
-              <Menu className="h-5 w-5" />
+              MENU +
             </button>
           </div>
-        </Container>
+        </div>
       </header>
 
-      {/* Mobile Drawer Overlay */}
+      {/* Mobile Full-Screen Overlay */}
       <MobileDrawer
         isOpen={isMobileMenuOpen}
         onClose={() => setIsMobileMenuOpen(false)}
@@ -78,4 +80,5 @@ export const Navbar: React.FC<NavbarProps> = ({ className }) => {
 };
 
 Navbar.displayName = "Navbar";
+
 

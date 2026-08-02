@@ -33,9 +33,9 @@ const buttonVariants = cva(
         icon: "bg-transparent text-neutral-300 hover:bg-neutral-900 hover:text-neutral-100 p-0",
       },
       size: {
-        sm: "h-9 px-3.5 text-xs gap-1.5 min-h-[36px]",
-        md: "h-11 px-5 text-sm gap-2 min-h-[44px]",
-        lg: "h-13 px-7 text-base gap-2.5 min-h-[48px]",
+        sm: "h-10 px-4 text-xs gap-2 min-h-[40px]",
+        md: "h-12 px-6 text-sm gap-2 min-h-[48px]",
+        lg: "h-16 px-8 text-base gap-4 min-h-[64px]",
       },
       fullWidth: {
         true: "w-full min-w-full justify-center",

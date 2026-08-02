@@ -157,12 +157,12 @@ export function HowWeWork() {
     <section
       ref={sectionRef}
       id="how-it-works"
-      className="relative py-36 sm:py-48 lg:py-56 bg-background border-t border-zinc-900 overflow-hidden"
+      className="relative py-[160px] sm:py-[192px] lg:py-[192px] bg-background border-t border-zinc-900 overflow-hidden"
       aria-label="How It Works — Process"
     >
-      <div className="container-wide w-full relative z-10 space-y-20 lg:space-y-24">
+      <div className="container-wide w-full relative z-10 space-y-24 lg:space-y-[120px]">
         {/* ── Section Header ───────────────────────────────────────────── */}
-        <div className="max-w-4xl space-y-6">
+        <div className="max-w-4xl space-y-8">
           <div className="flex items-center gap-4 js-work-image">
             <div className="w-12 h-[1px] bg-zinc-700" />
             <span className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-zinc-400">
@@ -180,16 +180,16 @@ export function HowWeWork() {
         </div>
 
         {/* ── Editorial Process Steps Grid ───────────────────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 sm:gap-16 lg:gap-20 js-work-steps-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 sm:gap-20 lg:gap-24 js-work-steps-grid">
           {PROCESS_STEPS.map((item) => (
             <div
               key={item.step}
               className={cn(
-                "border-t border-zinc-800/80 pt-8 sm:pt-10 flex flex-col justify-between space-y-8 group transition-all duration-500 hover:border-zinc-600/80 js-work-step",
+                "border-t border-zinc-800/80 pt-10 sm:pt-12 flex flex-col justify-between space-y-10 group transition-all duration-500 hover:border-zinc-600/80 js-work-step",
                 isMounted && !prefersReducedMotion && "opacity-0"
               )}
             >
-              <div className="space-y-6">
+              <div className="space-y-8">
                 <div className="flex items-center justify-between">
                   <span className="font-mono text-4xl sm:text-5xl lg:text-6xl text-zinc-600 font-light tracking-tight group-hover:text-zinc-300 transition-colors duration-500 block">
                     {item.step}

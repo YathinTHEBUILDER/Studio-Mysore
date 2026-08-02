@@ -14,9 +14,9 @@ import { cn } from "@/lib/utils";
 const sectionVariants = cva("relative w-full", {
   variants: {
     spacing: {
-      default: "py-16 md:py-24", // 64px mobile / 96px desktop
-      compact: "py-8 md:py-12",   // 32px mobile / 48px desktop
-      generous: "py-24 md:py-32", // 96px mobile / 128px desktop
+      default: "py-20 md:py-[120px]", // 80px mobile / 120px desktop
+      compact: "py-12 md:py-16",       // 48px mobile / 64px desktop
+      generous: "py-[120px] md:py-[160px]", // 120px mobile / 160px desktop
       none: "py-0",
     },
   },

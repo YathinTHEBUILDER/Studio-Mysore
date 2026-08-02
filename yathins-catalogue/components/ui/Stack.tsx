@@ -13,14 +13,18 @@ import { cn } from "@/lib/utils";
 const stackVariants = cva("flex flex-col", {
   variants: {
     space: {
-      1: "gap-1",   // 4px
       2: "gap-2",   // 8px
-      3: "gap-3",   // 12px
       4: "gap-4",   // 16px
       6: "gap-6",   // 24px
       8: "gap-8",   // 32px
+      10: "gap-10", // 40px
       12: "gap-12", // 48px
       16: "gap-16", // 64px
+      20: "gap-20", // 80px
+      24: "gap-24", // 96px
+      30: "gap-[120px]", // 120px
+      40: "gap-[160px]", // 160px
+      48: "gap-[192px]", // 192px
     },
     align: {
       start: "items-start",

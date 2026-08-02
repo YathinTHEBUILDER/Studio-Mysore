@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
  */
 
 const badgeVariants = cva(
-  "inline-flex items-center gap-1.5 font-mono tracking-[0.2em] uppercase font-medium transition-all duration-300 rounded-sm select-none",
+  "inline-flex items-center gap-2 font-mono tracking-[0.2em] uppercase font-medium transition-all duration-300 rounded-sm select-none",
   {
     variants: {
       variant: {
@@ -22,9 +22,9 @@ const badgeVariants = cva(
         warning: "bg-amber-950/80 text-amber-300 border border-amber-500/30",
       },
       size: {
-        sm: "px-2 py-0.5 text-[9px] leading-none",
-        md: "px-3 py-1 text-[10px] leading-none",
-        lg: "px-4 py-1.5 text-xs leading-none",
+        sm: "px-2 py-2 text-[9px] leading-none",
+        md: "px-4 py-2 text-[10px] leading-none",
+        lg: "px-6 py-2 text-xs leading-none",
       },
     },
     defaultVariants: {

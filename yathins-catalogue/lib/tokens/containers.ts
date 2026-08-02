@@ -23,9 +23,9 @@ export const containers = {
  * Applied as padding-inline on all container variants.
  */
 export const containerPadding = {
-  mobile: "20px",
-  tablet: "32px",
-  desktop: "48px",
+  mobile: "24px",
+  tablet: "40px",
+  desktop: "64px",
 } as const;
 
 export type ContainerToken = keyof typeof containers;

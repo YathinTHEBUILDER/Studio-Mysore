@@ -3,7 +3,6 @@
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { m } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { NAV_LINKS } from "@/lib/constants";
 import type { NavLink } from "@/types";
@@ -17,7 +16,8 @@ export interface NavLinksProps {
 /**
  * NavLinks — Desktop & Mobile Navigation Menu Items
  *
- * Implements smooth sliding active indicator using Framer Motion layoutId="activeNav"
+ * Font: Inter, Size: 15px, Weight: 500, Gap: 40px
+ * Hover: translateY(-2px), Opacity: 0.75 → 1, Duration: 180ms
  */
 export const NavLinks: React.FC<NavLinksProps> = ({
   className,
@@ -43,8 +43,8 @@ export const NavLinks: React.FC<NavLinksProps> = ({
     <nav
       aria-label="Main Navigation"
       className={cn(
-        "flex",
-        isHorizontal ? "items-center gap-1.5" : "flex-col items-start gap-2 w-full",
+        "flex items-center",
+        isHorizontal ? "flex-row gap-[40px]" : "flex-col items-start gap-8 w-full",
         className
       )}
     >
@@ -63,45 +63,14 @@ export const NavLinks: React.FC<NavLinksProps> = ({
               if (onLinkClick) onLinkClick();
             }}
             className={cn(
-              "relative px-4 py-2 text-[11px] uppercase tracking-[0.2em] font-mono font-medium transition-colors duration-300 outline-none rounded-md group focus-visible:ring-1 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
+              "font-['Inter',var(--font-inter),sans-serif] transition-all duration-[180ms] outline-none",
               isHorizontal
-                ? "inline-flex items-center"
-                : "flex w-full items-center justify-between text-xs py-3",
-              isActive
-                ? "text-white"
-                : "text-zinc-400 hover:text-zinc-100"
+                ? "text-[15px] font-medium leading-none text-white opacity-75 hover:opacity-100 hover:-translate-y-[2px]"
+                : "text-[36px] sm:text-[48px] font-['Instrument_Sans',var(--font-instrument-sans),sans-serif] font-bold text-white hover:opacity-80 py-2",
+              isActive && isHorizontal && "!opacity-100 text-white font-medium"
             )}
           >
-            <span className="relative z-10 flex items-center gap-1.5">
-              {isActive && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />}
-              {link.label}
-            </span>
-
-            {/* Active Pill Indicator for Desktop Nav */}
-            {isHorizontal && isActive && (
-              <m.div
-                layoutId="activeNav"
-                className="absolute inset-0 rounded-md bg-zinc-900/90 border border-zinc-700/80 shadow-inner"
-                transition={{
-                  type: "spring",
-                  stiffness: 380,
-                  damping: 32,
-                }}
-              />
-            )}
-
-            {/* Active Indicator for Mobile Nav */}
-            {!isHorizontal && isActive && (
-              <m.div
-                layoutId="activeNavMobile"
-                className="w-1.5 h-5 bg-zinc-200 rounded-full"
-                transition={{
-                  type: "spring",
-                  stiffness: 380,
-                  damping: 32,
-                }}
-              />
-            )}
+            {link.label}
           </Link>
         );
       })}
@@ -110,4 +79,5 @@ export const NavLinks: React.FC<NavLinksProps> = ({
 };
 
 NavLinks.displayName = "NavLinks";
+
 

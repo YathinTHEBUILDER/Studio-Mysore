@@ -39,11 +39,11 @@ export const Divider = React.forwardRef<HTMLDivElement, DividerProps>(
 
     if (label && orientation === "horizontal") {
       return (
-        <div className={cn("relative flex items-center justify-center w-full my-6 select-none", className)}>
+        <div className={cn("relative flex items-center justify-center w-full my-8 select-none", className)}>
           <div className="absolute inset-0 flex items-center">
             <div className="w-full h-[1px] bg-gradient-to-r from-transparent via-zinc-800 to-transparent" />
           </div>
-          <span className="relative z-10 px-4 py-1 text-[10px] font-mono tracking-[0.3em] uppercase text-zinc-400 bg-zinc-950 border border-zinc-800/80 rounded-full shadow-sm">
+          <span className="relative z-10 px-4 py-2 text-[10px] font-mono tracking-[0.3em] uppercase text-zinc-400 bg-zinc-950 border border-zinc-800/80 rounded-full shadow-sm">
             {label}
           </span>
         </div>

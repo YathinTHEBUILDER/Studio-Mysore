@@ -1,34 +1,23 @@
 /**
- * Spacing Tokens — Yathin's Catalogue
+ * Spacing Tokens — Studio Mysore Design System
  *
- * Source of truth: 04-visual-design-system.md
- * Approved scale: 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 96 / 128 (px)
- *
- * Tailwind's default scale already maps to 4px multiples.
- * These tokens name the semantic intent of each step.
+ * Strict Spacing Scale:
+ * Allowed values (px): 8, 16, 24, 32, 40, 48, 64, 80, 96, 120, 160, 192
  */
 
 export const spacing = {
-  /** 4px — tight icon gap, badge padding */
-  1: "4px",
-  /** 8px — small internal padding */
-  2: "8px",
-  /** 12px — compact element gap */
-  3: "12px",
-  /** 16px — base padding unit */
-  4: "16px",
-  /** 24px — component internal spacing */
-  6: "24px",
-  /** 32px — section sub-spacing */
-  8: "32px",
-  /** 48px — standard section gap */
-  12: "48px",
-  /** 64px — generous section gap */
-  16: "64px",
-  /** 96px — section vertical padding */
-  24: "96px",
-  /** 128px — hero vertical padding */
-  32: "128px",
+  8: "8px",
+  16: "16px",
+  24: "24px",
+  32: "32px",
+  40: "40px",
+  48: "48px",
+  64: "64px",
+  80: "80px",
+  96: "96px",
+  120: "120px",
+  160: "160px",
+  192: "192px",
 } as const;
 
 export type SpacingToken = keyof typeof spacing;

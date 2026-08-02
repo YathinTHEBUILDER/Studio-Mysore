@@ -129,7 +129,7 @@ export function ExperienceSwitcher() {
   return (
     <section
       id="experiences"
-      className="relative py-24 sm:py-32 bg-background border-t border-zinc-800/60 overflow-hidden"
+      className="relative py-[120px] sm:py-[160px] bg-background border-t border-zinc-800/60 overflow-hidden"
       aria-label="Interactive Product Demonstration by Industry"
     >
       {/* Subtle Ambient Background Soft Lighting */}
@@ -144,16 +144,16 @@ export function ExperienceSwitcher() {
         }}
       />
 
-      <div className="container-wide w-full relative z-10 space-y-14">
+      <div className="container-wide w-full relative z-10 space-y-16 lg:space-y-20">
         {/* ── Section Header & Industry Selector Tabs ───────────────────── */}
-        <div className="flex flex-col items-center text-center space-y-6 max-w-3xl mx-auto">
+        <div className="flex flex-col items-center text-center space-y-8 max-w-3xl mx-auto">
           {/* Eyebrow Label */}
-          <div className="flex items-center justify-center gap-3">
-            <div className="w-6 h-[1px] bg-zinc-800" />
+          <div className="flex items-center justify-center gap-4">
+            <div className="w-8 h-[1px] bg-zinc-800" />
             <span className="text-xs font-mono font-medium tracking-[0.25em] uppercase text-zinc-400">
               Product Demonstration
             </span>
-            <div className="w-6 h-[1px] bg-zinc-800" />
+            <div className="w-8 h-[1px] bg-zinc-800" />
           </div>
 
           {/* Section Main Title */}
@@ -162,11 +162,11 @@ export function ExperienceSwitcher() {
           </h2>
 
           {/* Industry Tab Navigation Bar */}
-          <div className="w-full pt-2 flex items-center justify-start sm:justify-center gap-1.5 overflow-x-auto no-scrollbar pb-2">
+          <div className="w-full pt-4 flex items-center justify-start sm:justify-center gap-2 overflow-x-auto no-scrollbar pb-4">
             <div
               role="tablist"
               aria-label="Select business vertical"
-              className="inline-flex items-center gap-1.5 p-1.5 rounded-2xl bg-zinc-900/80 border border-zinc-800/80 shadow-sm"
+              className="inline-flex items-center gap-2 p-2 rounded-2xl bg-zinc-900/80 border border-zinc-800/80 shadow-sm"
             >
               {INDUSTRIES.map((ind, index) => {
                 const isActive = activeId === ind.id;
@@ -185,7 +185,7 @@ export function ExperienceSwitcher() {
                     tabIndex={isActive ? 0 : -1}
                     onClick={() => setActiveId(ind.id)}
                     onKeyDown={(e) => handleKeyDown(e, index)}
-                    className="relative px-4 py-2.5 rounded-xl text-xs sm:text-sm font-medium transition-colors flex items-center gap-2 shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 min-h-[42px]"
+                    className="relative px-6 py-2 rounded-xl text-xs sm:text-sm font-medium transition-colors flex items-center gap-2 shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 min-h-[40px]"
                     style={{
                       color: isActive ? "#FFFFFF" : "#A1A1AA",
                     }}
@@ -212,12 +212,12 @@ export function ExperienceSwitcher() {
           role="tabpanel"
           id={`experience-panel-${activeId}`}
           aria-labelledby={`experience-tab-${activeId}`}
-          className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
+          className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center"
         >
           {/* ── LEFT COLUMN (7 cols): Copy + Photography Showcase ────── */}
-          <div className="lg:col-span-7 flex flex-col justify-between space-y-8 min-h-[500px]">
+          <div className="lg:col-span-7 flex flex-col justify-between space-y-10 min-h-[500px]">
             {/* Dynamic Headline & Copy Block */}
-            <div className="space-y-4">
+            <div className="space-y-6">
               <AnimatePresence mode="wait">
                 <m.div
                   key={activeId}
@@ -225,7 +225,7 @@ export function ExperienceSwitcher() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  className="space-y-3"
+                  className="space-y-4"
                 >
                   <span
                     className="text-xs font-mono font-semibold uppercase tracking-[0.25em] block"
@@ -245,10 +245,10 @@ export function ExperienceSwitcher() {
               </AnimatePresence>
 
               {/* Action Buttons */}
-              <div className="pt-2 flex flex-wrap items-center gap-4">
+              <div className="pt-4 flex flex-wrap items-center gap-6">
                 <Link
                   href={`/experiences/${activeId === "medical" ? "medical-clinic" : activeId}`}
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-white text-zinc-950 text-sm font-semibold hover:bg-zinc-100 transition-all shadow-md active:scale-98"
+                  className="inline-flex items-center gap-4 px-6 py-4 rounded-xl bg-white text-zinc-950 text-sm font-semibold hover:bg-zinc-100 transition-all shadow-md active:scale-98"
                 >
                   <span>Try It Yourself</span>
                 </Link>
@@ -256,7 +256,7 @@ export function ExperienceSwitcher() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-200 text-sm font-medium hover:bg-zinc-800 transition-all shadow-md active:scale-98"
+                  className="inline-flex items-center gap-4 px-6 py-4 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-200 text-sm font-medium hover:bg-zinc-800 transition-all shadow-md active:scale-98"
                 >
                   <MessageCircle className="w-4 h-4 text-emerald-500" />
                   <span>Chat on WhatsApp</span>
@@ -265,7 +265,7 @@ export function ExperienceSwitcher() {
             </div>
 
             {/* Editorial Photography & Metrics Card */}
-            <div className="w-full pt-2">
+            <div className="w-full pt-4">
               <IndustryPhotographyCard
                 industryId={activeId}
                 accentHex={activeConfig.accentHex}
@@ -297,7 +297,7 @@ export function ExperienceSwitcher() {
             </div>
 
             {/* Interactive Prompt Hint */}
-            <div className="mt-4 text-center">
+            <div className="mt-6 text-center">
               <span className="text-xs font-mono text-zinc-500 tracking-wider flex items-center gap-2 justify-center">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
                 Interactive preview — tap to test flow

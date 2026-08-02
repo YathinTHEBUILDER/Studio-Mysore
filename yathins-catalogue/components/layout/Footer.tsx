@@ -26,12 +26,12 @@ export function Footer() {
   );
 
   return (
-    <footer className="w-full bg-background border-t border-zinc-800/80 pt-16 pb-12 overflow-hidden select-none">
-      <Container variant="wide" className="space-y-14">
+    <footer className="w-full bg-background border-t border-zinc-800/80 pt-20 pb-16 overflow-hidden select-none">
+      <Container variant="wide" className="space-y-16">
         {/* Top Colophon Bar: Studio Status & Issue Stamp */}
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 pb-4">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-[11px] font-mono text-zinc-300">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 pb-6">
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900 border border-zinc-800 text-[11px] font-mono text-zinc-300">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>Operational • Mysore Studio</span>
             </div>
@@ -49,20 +49,20 @@ export function Footer() {
         <Divider variant="gradient" />
 
         {/* Main Colophon Navigation Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 py-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 lg:gap-16 py-6">
           {/* Column 1: Brand Identity & Philosophy (4 cols) */}
-          <div className="lg:col-span-4 space-y-6">
+          <div className="lg:col-span-4 space-y-8">
             <Logo />
             <p className="text-sm text-zinc-400 font-light leading-relaxed max-w-[42ch]">
               We design and build bespoke, production-grade websites for businesses that refuse generic templates. Pure performance, cinematic aesthetics, zero compromises.
             </p>
 
-            <div className="pt-2">
+            <div className="pt-4">
               <a
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white text-zinc-950 font-semibold text-xs transition-all duration-300 hover:bg-zinc-200 shadow-lg shadow-white/5 active:scale-95 outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="group inline-flex items-center gap-4 px-6 py-4 rounded-full bg-white text-zinc-950 font-semibold text-xs transition-all duration-300 hover:bg-zinc-200 shadow-lg shadow-white/5 active:scale-95 outline-none focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               >
                 <MessageCircle className="w-3.5 h-3.5 text-zinc-950 fill-zinc-950" />
                 <span>Talk to Founder on WhatsApp</span>
@@ -72,15 +72,15 @@ export function Footer() {
           </div>
 
           {/* Column 2: Industry Experiences (3 cols) */}
-          <div className="lg:col-span-3 space-y-4">
+          <div className="lg:col-span-3 space-y-6">
             <h4 className="text-xs font-mono font-semibold uppercase tracking-[0.25em] text-white">
               Catalogue Experiences
             </h4>
-            <ul className="space-y-2.5 text-xs font-sans text-zinc-400">
+            <ul className="space-y-4 text-xs font-sans text-zinc-400">
               <li>
                 <Link
                   href="/experiences/cafe"
-                  className="hover:text-white transition-colors flex items-center justify-between group py-0.5"
+                  className="hover:text-white transition-colors flex items-center justify-between group py-2"
                 >
                   <span>Micro-Batch Roastery Café</span>
                   <span className="font-mono text-[10px] text-zinc-600 group-hover:text-amber-400">01</span>
@@ -89,7 +89,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/experiences/restaurant"
-                  className="hover:text-white transition-colors flex items-center justify-between group py-0.5"
+                  className="hover:text-white transition-colors flex items-center justify-between group py-2"
                 >
                   <span>Fine Dining Tasting Room</span>
                   <span className="font-mono text-[10px] text-zinc-600 group-hover:text-rose-400">02</span>
@@ -98,7 +98,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/experiences/dental"
-                  className="hover:text-white transition-colors flex items-center justify-between group py-0.5"
+                  className="hover:text-white transition-colors flex items-center justify-between group py-2"
                 >
                   <span>3D Digital Dental Studio</span>
                   <span className="font-mono text-[10px] text-zinc-600 group-hover:text-sky-400">03</span>
@@ -107,7 +107,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/experiences/medical-clinic"
-                  className="hover:text-white transition-colors flex items-center justify-between group py-0.5"
+                  className="hover:text-white transition-colors flex items-center justify-between group py-2"
                 >
                   <span>Outpatient Medical Clinic</span>
                   <span className="font-mono text-[10px] text-zinc-600 group-hover:text-teal-400">04</span>
@@ -116,7 +116,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/experiences/gym"
-                  className="hover:text-white transition-colors flex items-center justify-between group py-0.5"
+                  className="hover:text-white transition-colors flex items-center justify-between group py-2"
                 >
                   <span>Heavy Iron Athletic Lab</span>
                   <span className="font-mono text-[10px] text-zinc-600 group-hover:text-lime-400">05</span>
@@ -126,11 +126,11 @@ export function Footer() {
           </div>
 
           {/* Column 3: Platform Architecture & Credentials (3 cols) */}
-          <div className="lg:col-span-3 space-y-4">
+          <div className="lg:col-span-3 space-y-6">
             <h4 className="text-xs font-mono font-semibold uppercase tracking-[0.25em] text-white">
               Engineering Credentials
             </h4>
-            <ul className="space-y-2.5 text-xs font-mono text-zinc-400">
+            <ul className="space-y-4 text-xs font-mono text-zinc-400">
               <li className="flex items-center gap-2">
                 <span className="w-1 h-1 rounded-full bg-zinc-600" />
                 <span>Zero Generic Framer/WP Templates</span>
@@ -155,11 +155,11 @@ export function Footer() {
           </div>
 
           {/* Column 4: Navigation Links (2 cols) */}
-          <div className="lg:col-span-2 space-y-4">
+          <div className="lg:col-span-2 space-y-6">
             <h4 className="text-xs font-mono font-semibold uppercase tracking-[0.25em] text-white">
               Navigation
             </h4>
-            <ul className="space-y-2.5 text-xs font-sans text-zinc-400">
+            <ul className="space-y-4 text-xs font-sans text-zinc-400">
               <li>
                 <Link href="/#experiences" className="hover:text-white transition-colors">
                   Catalogue Grid
@@ -182,7 +182,7 @@ export function Footer() {
         <Divider variant="gradient" />
 
         {/* Bottom Colophon Credit Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] font-mono text-zinc-500">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-6 text-[11px] font-mono text-zinc-500">
           <div>
             © {new Date().getFullYear()} Studio Mysore. All rights reserved.
           </div>

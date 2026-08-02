@@ -22,7 +22,7 @@ const containerVariants = cva(
         full: "max-w-full",
       },
       padded: {
-        true: "px-5 md:px-8 lg:px-12",
+        true: "px-6 md:px-10 lg:px-16",
         false: "px-0",
       },
     },

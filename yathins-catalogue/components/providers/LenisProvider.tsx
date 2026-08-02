@@ -48,14 +48,14 @@ export function LenisProvider({ children }: LenisProviderProps) {
   const [lenis, setLenis] = useState<Lenis | null>(null);
 
   useEffect(() => {
-    // Media query checks for mobile (<768px) & reduced motion
+    // Media query checks for screen width below 768px (< 768px) and prefers-reduced-motion
     const mobileQuery = window.matchMedia("(max-width: 767px)");
     const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     const isSmoothingDisabled = () => mobileQuery.matches || reducedMotionQuery.matches;
 
     let lenisInstance: Lenis | null = null;
-    let updateTicker: ((time: number) => void) | null = null;
+    let updateTicker: ((time: number, deltaTime: number, frame: number) => void) | null = null;
 
     const cleanupLenis = () => {
       if (updateTicker) {
@@ -79,27 +79,27 @@ export function LenisProvider({ children }: LenisProviderProps) {
 
       if (lenisInstance) return;
 
-      // Instantiate Lenis with direct, non-slippery physics
+      // Grounded, heavy, non-slippery Lenis configuration
       lenisInstance = new Lenis({
-        duration: 0.85, // Direct response time without floatiness or lag
+        duration: 1.2, // Heavy, deliberate response time for a luxury scroll feel
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Snappy exponential settlement
         orientation: "vertical",
         gestureOrientation: "vertical",
         smoothWheel: true,
-        wheelMultiplier: 0.95, // Direct 1:1 control with zero runaway acceleration
+        wheelMultiplier: 0.75, // Grounded 0.75x multiplier: no slippery acceleration or drift
         touchMultiplier: 1.0,
         autoRaf: false, // SINGLE RAF LOOP: driven exclusively by GSAP ticker below
       });
 
       setLenis(lenisInstance);
 
-      // Single unified RAF loop: GSAP ticker drives Lenis frame updates
+      // Single RAF loop: GSAP ticker drives Lenis frame updates
       updateTicker = (time: number) => {
         lenisInstance?.raf(time * 1000);
       };
       gsap.ticker.add(updateTicker);
 
-      // Prevent GSAP lag smoothing to eliminate delay stutters
+      // Prevent GSAP lag smoothing to eliminate delay stutters at 60 FPS
       gsap.ticker.lagSmoothing(0);
 
       // Synchronise ScrollTrigger with Lenis scroll updates

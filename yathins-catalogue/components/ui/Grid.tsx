@@ -23,8 +23,9 @@ const gridVariants = cva("grid w-full", {
     gap: {
       4: "gap-4",   // 16px
       6: "gap-6",   // 24px
-      8: "gap-6 md:gap-8",   // 24px mobile / 32px desktop
-      12: "gap-8 md:gap-12", // 32px mobile / 48px desktop
+      8: "gap-8 md:gap-10",   // 32px mobile / 40px desktop
+      12: "gap-10 md:gap-16", // 40px mobile / 64px desktop
+      16: "gap-16 md:gap-20", // 64px mobile / 80px desktop
     },
   },
   defaultVariants: {

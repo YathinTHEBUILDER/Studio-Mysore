@@ -113,11 +113,11 @@ export function FinalCTA() {
     <section
       ref={containerRef}
       id="final-cta"
-      className="relative py-36 sm:py-48 lg:py-56 bg-background border-t border-zinc-900 overflow-hidden"
+      className="relative py-[160px] sm:py-[192px] lg:py-[192px] bg-background border-t border-zinc-900 overflow-hidden"
       aria-label="Final CTA — Let's talk"
     >
       <div className="container-wide w-full relative z-10">
-        <div className="max-w-4xl mx-auto text-center space-y-10 sm:space-y-12">
+        <div className="max-w-4xl mx-auto text-center space-y-12 sm:space-y-16">
           {/* Eyebrow */}
           <div
             className={cn(
@@ -155,7 +155,7 @@ export function FinalCTA() {
           {/* WhatsApp Action Button & Email Option */}
           <div
             className={cn(
-              "pt-6 flex flex-col sm:flex-row items-center justify-center gap-4 js-cta-buttons",
+              "pt-8 flex flex-col sm:flex-row items-center justify-center gap-6 js-cta-buttons",
               isMounted && !prefersReducedMotion && "opacity-0"
             )}
           >
@@ -169,8 +169,8 @@ export function FinalCTA() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  "inline-flex items-center justify-center gap-3",
-                  "px-9 py-4.5 rounded-full",
+                  "inline-flex items-center justify-center gap-4",
+                  "px-10 py-4 rounded-full",
                   "bg-white text-zinc-950",
                   "text-xs font-mono font-semibold tracking-[0.15em] uppercase",
                   "shadow-xl shadow-white/5",
@@ -187,8 +187,8 @@ export function FinalCTA() {
             <a
               href="mailto:yathin@studiomysore.com"
               className={cn(
-                "inline-flex items-center justify-center gap-2",
-                "px-8 py-4.5 rounded-full",
+                "inline-flex items-center justify-center gap-4",
+                "px-8 py-4 rounded-full",
                 "bg-zinc-900/80 text-zinc-300 border border-zinc-800",
                 "text-xs font-mono font-medium tracking-[0.15em] uppercase",
                 "transition-all duration-300 hover:bg-zinc-800 hover:text-white hover:border-zinc-700",

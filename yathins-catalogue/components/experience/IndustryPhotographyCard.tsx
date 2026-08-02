@@ -124,7 +124,7 @@ export function IndustryPhotographyCard({
       </AnimatePresence>
 
       {/* Card Content Top */}
-      <div className="relative z-10 space-y-4 p-6 sm:p-8">
+      <div className="relative z-10 space-y-6 p-8 sm:p-10">
         {/* Dynamic Title */}
         <AnimatePresence mode="wait">
           <m.div
@@ -133,7 +133,7 @@ export function IndustryPhotographyCard({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.28 }}
-            className="space-y-1.5"
+            className="space-y-2"
           >
             <h3 className="text-2xl sm:text-3xl font-bold font-display text-white tracking-tight leading-snug">
               {data.title}
@@ -143,7 +143,7 @@ export function IndustryPhotographyCard({
       </div>
 
       {/* Card Content Bottom: Feature Highlights */}
-      <div className="relative z-10 space-y-4 p-6 sm:p-8 pt-0">
+      <div className="relative z-10 space-y-6 p-8 sm:p-10 pt-0">
         <AnimatePresence mode="wait">
           <m.div
             key={industryId}
@@ -156,7 +156,7 @@ export function IndustryPhotographyCard({
             {data.highlights.map((feat) => (
               <div
                 key={feat}
-                className="inline-flex items-center px-3 py-1.5 bg-zinc-900/90 text-xs font-medium text-zinc-300 border-0 shadow-none"
+                className="inline-flex items-center px-4 py-2 bg-zinc-900/90 text-xs font-medium text-zinc-300 border-0 shadow-none"
               >
                 <span>{feat}</span>
               </div>
