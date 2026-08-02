@@ -1,21 +1,27 @@
 "use client";
 
 /**
- * WhatWeBuild — Capabilities Accordion
+ * WhatWeBuild — Primary Navigation Into Capabilities
  *
  * Section ID: #what-we-build
- * Title: WHAT WE BUILD
  *
- * Four items, one open at a time.
- * Right panel links to existing Studio Mysore demos.
+ * Left column: Large editorial title + 4 expandable capability rows.
+ * Right column: The actual Studio Mysore interactive demo embedded in a
+ *               browser-chrome frame using <iframe>. GSAP fades + clip-path
+ *               transitions on panel switch.
  *
- * Colours: #060606 / #F5F5F5 / #D4AF37 only.
- * Spacing: 16, 24, 32, 48, 64, 96, 128, 160 only.
+ * Layout:
+ *   12-column grid, max-w 1560px, px 96px, py 160px.
+ *   Left:  cols 1–5
+ *   Right: cols 7–12 (sticky, full section height)
+ *
+ * Colours: #060606 / #F5F5F5 / #D4AF37 exclusively.
+ * Motion: GSAP, power3.out, 0.6s duration.
  */
 
 import * as React from "react";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { gsap } from "gsap";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Data
@@ -26,11 +32,9 @@ interface Capability {
   number: string;
   title: string;
   description: string;
-  demo: {
-    label: string;
-    route: string;
-    description: string;
-  };
+  iframeUrl: string;
+  demoLabel: string;
+  demoRoute: string;
 }
 
 const CAPABILITIES: Capability[] = [
@@ -39,111 +43,361 @@ const CAPABILITIES: Capability[] = [
     number: "01",
     title: "Customer Experience",
     description:
-      "Interactive websites, online ordering, bookings and customer journeys.",
-    demo: {
-      label: "Restaurant ordering demo",
-      route: "/experiences/cafe",
-      description:
-        "Explore a live customer-facing ordering and booking flow built for a hospitality business.",
-    },
+      "Create websites and digital experiences customers genuinely enjoy using.",
+    iframeUrl: "/experiences/restaurant",
+    demoLabel: "Restaurant ordering demo",
+    demoRoute: "/experiences/restaurant",
   },
   {
     id: "ops",
     number: "02",
     title: "Operations",
     description:
-      "Inventory, staff management, scheduling and daily operations.",
-    demo: {
-      label: "Inventory dashboard",
-      route: "/experiences/medical-clinic",
-      description:
-        "See how staff workflows, inventory tracking and task dispatch work inside a live operations system.",
-    },
+      "Manage inventory, staff, workflows and daily business operations from one place.",
+    iframeUrl: "/experiences/medical-clinic",
+    demoLabel: "Inventory dashboard",
+    demoRoute: "/experiences/medical-clinic",
   },
   {
     id: "commerce",
     number: "03",
     title: "Commerce",
-    description: "Payments, POS, subscriptions and online sales.",
-    demo: {
-      label: "Checkout and POS",
-      route: "/experiences/cafe",
-      description:
-        "Try a complete checkout and point-of-sale experience built for real transaction volume.",
-    },
+    description:
+      "Accept payments, manage orders and sell across digital channels.",
+    iframeUrl: "/experiences/cafe",
+    demoLabel: "Checkout and POS",
+    demoRoute: "/experiences/cafe",
   },
   {
     id: "insights",
     number: "04",
     title: "Insights",
-    description: "Analytics, reporting and business intelligence.",
-    demo: {
-      label: "Analytics dashboard",
-      route: "/experiences/gym",
-      description:
-        "Explore live analytics, retention tracking and business intelligence built for daily use.",
-    },
+    description:
+      "Track performance with dashboards, analytics and reporting that support better decisions.",
+    iframeUrl: "/experiences/gym",
+    demoLabel: "Analytics dashboard",
+    demoRoute: "/experiences/gym",
   },
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
-// Accordion Item
+// Browser Chrome Frame wrapping an iframe
 // ─────────────────────────────────────────────────────────────────────────────
 
-function AccordionItem({
+function BrowserFrame({
+  url,
+  label,
+  route,
+  isActive,
+}: {
+  url: string;
+  label: string;
+  route: string;
+  isActive: boolean;
+}) {
+  const frameRef = React.useRef<HTMLDivElement>(null);
+  const prevIsActive = React.useRef(isActive);
+
+  // GSAP clip-path + fade transition when active state changes
+  React.useEffect(() => {
+    const el = frameRef.current;
+    if (!el) return;
+
+    if (isActive && !prevIsActive.current) {
+      // Entering
+      gsap.fromTo(
+        el,
+        {
+          opacity: 0,
+          clipPath: "inset(4% 0% 4% 0%)",
+        },
+        {
+          opacity: 1,
+          clipPath: "inset(0% 0% 0% 0%)",
+          duration: 0.6,
+          ease: "power3.out",
+        }
+      );
+    } else if (!isActive && prevIsActive.current) {
+      // Exiting
+      gsap.to(el, {
+        opacity: 0,
+        clipPath: "inset(4% 0% 4% 0%)",
+        duration: 0.35,
+        ease: "power3.in",
+      });
+    }
+
+    prevIsActive.current = isActive;
+  }, [isActive]);
+
+  if (!isActive) {
+    // Keep in DOM (pre-loaded) but invisible so iframes don't reload
+    return (
+      <div
+        ref={frameRef}
+        style={{
+          position: "absolute",
+          inset: 0,
+          opacity: 0,
+          clipPath: "inset(4% 0% 4% 0%)",
+          pointerEvents: "none",
+          zIndex: 0,
+        }}
+      >
+        <BrowserChrome url={url} label={label} route={route} />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      ref={frameRef}
+      style={{
+        position: "absolute",
+        inset: 0,
+        zIndex: 1,
+        clipPath: "inset(0% 0% 0% 0%)",
+      }}
+    >
+      <BrowserChrome url={url} label={label} route={route} />
+    </div>
+  );
+}
+
+function BrowserChrome({
+  url,
+  label,
+  route,
+}: {
+  url: string;
+  label: string;
+  route: string;
+}) {
+  return (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        display: "flex",
+        flexDirection: "column",
+        border: "1px solid rgba(245,245,245,0.1)",
+        overflow: "hidden",
+        background: "#0a0a0a",
+      }}
+    >
+      {/* ── Browser chrome bar ── */}
+      <div
+        style={{
+          flexShrink: 0,
+          height: 40,
+          background: "#111111",
+          borderBottom: "1px solid rgba(245,245,245,0.07)",
+          display: "flex",
+          alignItems: "center",
+          paddingLeft: 16,
+          paddingRight: 16,
+          gap: 12,
+        }}
+      >
+        {/* Traffic lights */}
+        <div style={{ display: "flex", gap: 6 }}>
+          {["rgba(245,245,245,0.15)", "rgba(245,245,245,0.1)", "rgba(245,245,245,0.07)"].map(
+            (bg, i) => (
+              <div
+                key={i}
+                style={{
+                  width: 10,
+                  height: 10,
+                  borderRadius: "50%",
+                  background: bg,
+                }}
+              />
+            )
+          )}
+        </div>
+
+        {/* Address bar */}
+        <div
+          style={{
+            flex: 1,
+            height: 24,
+            background: "rgba(245,245,245,0.04)",
+            border: "1px solid rgba(245,245,245,0.06)",
+            borderRadius: 4,
+            display: "flex",
+            alignItems: "center",
+            paddingLeft: 10,
+            paddingRight: 10,
+            gap: 6,
+          }}
+        >
+          {/* Lock icon */}
+          <svg width="9" height="10" viewBox="0 0 9 10" fill="none">
+            <rect x="1" y="4" width="7" height="6" rx="1" stroke="rgba(245,245,245,0.3)" strokeWidth="1"/>
+            <path d="M2.5 4V3a2 2 0 014 0v1" stroke="rgba(245,245,245,0.3)" strokeWidth="1"/>
+          </svg>
+          <span
+            style={{
+              fontFamily: "monospace",
+              fontSize: 10,
+              color: "rgba(245,245,245,0.35)",
+              letterSpacing: "0.02em",
+            }}
+          >
+            studiomysore.com{url}
+          </span>
+        </div>
+
+        {/* Open in new tab */}
+        <Link
+          href={route}
+          target="_blank"
+          rel="noopener noreferrer"
+          title={`Open ${label} in new tab`}
+          style={{
+            color: "rgba(245,245,245,0.3)",
+            transition: "color 200ms ease",
+            display: "flex",
+            alignItems: "center",
+          }}
+          onMouseEnter={(e) =>
+            ((e.currentTarget as HTMLAnchorElement).style.color =
+              "rgba(245,245,245,0.75)")
+          }
+          onMouseLeave={(e) =>
+            ((e.currentTarget as HTMLAnchorElement).style.color =
+              "rgba(245,245,245,0.3)")
+          }
+        >
+          <svg
+            width="13"
+            height="13"
+            viewBox="0 0 13 13"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5.5 2H2a1 1 0 00-1 1v8a1 1 0 001 1h8a1 1 0 001-1V8.5" />
+            <path d="M8 1h4m0 0v4m0-4L5.5 7.5" />
+          </svg>
+        </Link>
+      </div>
+
+      {/* ── Iframe content ── */}
+      <iframe
+        src={url}
+        title={label}
+        style={{
+          flex: 1,
+          width: "100%",
+          border: "none",
+          display: "block",
+          background: "#060606",
+        }}
+        loading="lazy"
+      />
+
+      {/* ── Bottom bar ── */}
+      <div
+        style={{
+          flexShrink: 0,
+          height: 32,
+          background: "#111111",
+          borderTop: "1px solid rgba(245,245,245,0.06)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingLeft: 16,
+          paddingRight: 16,
+        }}
+      >
+        <span
+          style={{
+            fontFamily: "monospace",
+            fontSize: 9,
+            color: "rgba(245,245,245,0.2)",
+            letterSpacing: "0.18em",
+            textTransform: "uppercase",
+          }}
+        >
+          {label}
+        </span>
+        <span
+          style={{
+            fontFamily: "monospace",
+            fontSize: 9,
+            color: "rgba(212,175,55,0.4)",
+            letterSpacing: "0.15em",
+            textTransform: "uppercase",
+          }}
+        >
+          LIVE DEMO
+        </span>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Accordion Row
+// ─────────────────────────────────────────────────────────────────────────────
+
+function CapabilityRow({
   item,
   isOpen,
-  onToggle,
+  onSelect,
 }: {
   item: Capability;
   isOpen: boolean;
-  onToggle: () => void;
+  onSelect: () => void;
 }) {
   const bodyRef = React.useRef<HTMLDivElement>(null);
-  const [height, setHeight] = React.useState(0);
+  const [bodyHeight, setBodyHeight] = React.useState(0);
 
-  // Measure height for smooth CSS transition
   React.useEffect(() => {
-    if (bodyRef.current) {
-      setHeight(isOpen ? bodyRef.current.scrollHeight : 0);
-    }
+    const el = bodyRef.current;
+    if (!el) return;
+    setBodyHeight(isOpen ? el.scrollHeight : 0);
   }, [isOpen]);
 
   return (
     <div
       style={{
-        borderTop: "1px solid rgba(245,245,245,0.08)",
+        borderTop: "1px solid rgba(245,245,245,0.07)",
       }}
     >
-      {/* Row button */}
       <button
-        onClick={onToggle}
+        onClick={onSelect}
         aria-expanded={isOpen}
         style={{
           width: "100%",
-          display: "grid",
-          gridTemplateColumns: "repeat(12, 1fr)",
-          columnGap: 24,
-          alignItems: "center",
+          display: "flex",
+          alignItems: "baseline",
+          gap: 24,
           paddingTop: 32,
-          paddingBottom: 32,
+          paddingBottom: isOpen ? 16 : 32,
           background: "none",
           border: "none",
           cursor: "pointer",
           textAlign: "left",
           outline: "none",
+          transition: "padding-bottom 300ms ease",
         }}
       >
         {/* Number */}
         <span
           style={{
-            gridColumn: "1 / 2",
             fontFamily: "monospace",
-            fontSize: 12,
-            letterSpacing: "0.12em",
-            color: isOpen ? "#D4AF37" : "rgba(245,245,245,0.35)",
+            fontSize: 11,
+            letterSpacing: "0.14em",
+            color: isOpen ? "#D4AF37" : "rgba(245,245,245,0.25)",
             transition: "color 300ms ease",
-            fontWeight: 500,
+            flexShrink: 0,
+            lineHeight: 1,
+            paddingTop: 4,
           }}
         >
           {item.number}
@@ -152,194 +406,63 @@ function AccordionItem({
         {/* Title */}
         <span
           style={{
-            gridColumn: "2 / 9",
+            flex: 1,
             fontFamily:
               "var(--font-instrument-sans), 'Instrument Sans', sans-serif",
-            fontSize: "clamp(26px, 2.8vw, 44px)",
+            fontSize: "clamp(28px, 2.6vw, 48px)",
             fontWeight: 700,
-            color: isOpen ? "#F5F5F5" : "rgba(245,245,245,0.55)",
             lineHeight: 1,
-            letterSpacing: "-0.03em",
-            transition: "color 300ms ease",
+            letterSpacing: "-0.035em",
+            color: isOpen ? "#F5F5F5" : "rgba(245,245,245,0.4)",
+            transition: "color 350ms ease",
           }}
         >
           {item.title}
         </span>
 
-        {/* Plus / Minus indicator */}
+        {/* Indicator */}
         <span
           style={{
-            gridColumn: "12 / 13",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            color: isOpen ? "#D4AF37" : "rgba(245,245,245,0.3)",
-            transition: "color 300ms ease",
-            fontSize: 20,
+            flexShrink: 0,
+            fontFamily: "var(--font-inter), system-ui, sans-serif",
+            fontSize: 18,
             fontWeight: 300,
             lineHeight: 1,
+            color: isOpen ? "#D4AF37" : "rgba(245,245,245,0.2)",
+            transition: "color 300ms ease, transform 300ms ease",
+            transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
           }}
         >
-          {isOpen ? "−" : "+"}
+          +
         </span>
       </button>
 
-      {/* Expandable body */}
+      {/* Expandable description */}
       <div
         style={{
-          height: height,
+          height: bodyHeight,
           overflow: "hidden",
-          transition: "height 420ms cubic-bezier(0.16, 1, 0.3, 1)",
+          transition: "height 450ms cubic-bezier(0.16, 1, 0.3, 1)",
         }}
       >
         <div ref={bodyRef}>
-          <div
+          <p
             style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(12, 1fr)",
-              columnGap: 24,
-              paddingBottom: 64,
-              paddingTop: 16,
+              margin: 0,
+              paddingBottom: 32,
+              paddingLeft: 35, // align with title (number width + gap)
+              fontSize: 17,
+              lineHeight: 1.7,
+              color: "rgba(245,245,245,0.5)",
+              fontFamily: "var(--font-inter), system-ui, sans-serif",
+              fontWeight: 400,
+              maxWidth: 420,
             }}
           >
-            {/* Description — cols 2–6 */}
-            <div
-              style={{
-                gridColumn: "2 / 7",
-              }}
-            >
-              <p
-                style={{
-                  fontSize: 18,
-                  lineHeight: 1.7,
-                  color: "rgba(245,245,245,0.6)",
-                  margin: 0,
-                  marginBottom: 32,
-                  fontFamily: "var(--font-inter), system-ui, sans-serif",
-                  fontWeight: 400,
-                }}
-              >
-                {item.description}
-              </p>
-            </div>
-
-            {/* Right panel — cols 8–12 */}
-            <div
-              style={{
-                gridColumn: "8 / 13",
-              }}
-            >
-              <DemoPanel item={item} />
-            </div>
-          </div>
+            {item.description}
+          </p>
         </div>
       </div>
-    </div>
-  );
-}
-
-// ─────────────────────────────────────────────────────────────────────────────
-// Demo Panel — links to actual Studio Mysore experiences
-// ─────────────────────────────────────────────────────────────────────────────
-
-function DemoPanel({ item }: { item: Capability }) {
-  return (
-    <div
-      style={{
-        border: "1px solid rgba(245,245,245,0.08)",
-        padding: 32,
-        background: "rgba(245,245,245,0.02)",
-        display: "flex",
-        flexDirection: "column",
-        gap: 24,
-      }}
-    >
-      {/* Demo label */}
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 16,
-        }}
-      >
-        <div
-          style={{
-            width: 6,
-            height: 6,
-            borderRadius: "50%",
-            background: "#D4AF37",
-            flexShrink: 0,
-          }}
-        />
-        <span
-          style={{
-            fontFamily: "monospace",
-            fontSize: 10,
-            letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            color: "#D4AF37",
-            opacity: 0.9,
-          }}
-        >
-          {item.demo.label}
-        </span>
-      </div>
-
-      {/* Description */}
-      <p
-        style={{
-          fontSize: 14,
-          lineHeight: 1.65,
-          color: "rgba(245,245,245,0.45)",
-          margin: 0,
-          fontFamily: "var(--font-inter), system-ui, sans-serif",
-          fontWeight: 400,
-        }}
-      >
-        {item.demo.description}
-      </p>
-
-      {/* Link to live demo */}
-      <Link
-        href={item.demo.route}
-        style={{
-          display: "inline-flex",
-          alignItems: "center",
-          gap: 10,
-          fontSize: 13,
-          fontWeight: 600,
-          color: "#F5F5F5",
-          fontFamily: "var(--font-inter), system-ui, sans-serif",
-          letterSpacing: "0.01em",
-          textDecoration: "none",
-          opacity: 0.8,
-          transition: "opacity 200ms ease",
-          paddingTop: 8,
-          borderTop: "1px solid rgba(245,245,245,0.08)",
-        }}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLAnchorElement).style.opacity = "1";
-          const arr = (e.currentTarget as HTMLAnchorElement).querySelector<HTMLSpanElement>(".wwb-arrow");
-          if (arr) arr.style.transform = "translateX(4px)";
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLAnchorElement).style.opacity = "0.8";
-          const arr = (e.currentTarget as HTMLAnchorElement).querySelector<HTMLSpanElement>(".wwb-arrow");
-          if (arr) arr.style.transform = "translateX(0)";
-        }}
-      >
-        <span>View live demo</span>
-        <span
-          className="wwb-arrow"
-          style={{
-            display: "inline-block",
-            transition: "transform 220ms ease",
-            fontSize: 14,
-          }}
-        >
-          →
-        </span>
-      </Link>
     </div>
   );
 }
@@ -349,19 +472,19 @@ function DemoPanel({ item }: { item: Capability }) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 export function WhatWeBuild() {
-  const [openId, setOpenId] = React.useState<string>("cx");
+  const [activeId, setActiveId] = React.useState<string>("cx");
+  const sectionRef = React.useRef<HTMLElement>(null);
 
-  const handleToggle = (id: string) => {
-    setOpenId((prev) => (prev === id ? "" : id));
+  const handleSelect = (id: string) => {
+    setActiveId((prev) => (prev === id ? prev : id)); // always stays open
   };
 
   return (
     <section
+      ref={sectionRef}
       id="what-we-build"
       style={{
         background: "#060606",
-        paddingTop: 128,
-        paddingBottom: 160,
         borderTop: "1px solid rgba(245,245,245,0.06)",
       }}
       aria-label="What We Build"
@@ -373,20 +496,30 @@ export function WhatWeBuild() {
           marginRight: "auto",
           paddingLeft: 96,
           paddingRight: 96,
+          paddingTop: 160,
+          paddingBottom: 160,
         }}
       >
-        {/* ── Section header ── */}
+        {/* ── Inner 12-col grid ── */}
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(12, 1fr)",
             columnGap: 24,
-            marginBottom: 96,
-            alignItems: "end",
+            alignItems: "start",
           }}
         >
-          {/* Title — cols 1–6 */}
-          <div style={{ gridColumn: "1 / 7" }}>
+          {/* ──────────────────────────────────────
+              LEFT: cols 1–5
+          ─────────────────────────────────────── */}
+          <div
+            style={{
+              gridColumn: "1 / 6",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {/* Section label */}
             <span
               style={{
                 display: "block",
@@ -395,60 +528,98 @@ export function WhatWeBuild() {
                 letterSpacing: "0.25em",
                 textTransform: "uppercase",
                 color: "#D4AF37",
-                opacity: 0.8,
-                marginBottom: 24,
+                opacity: 0.75,
+                marginBottom: 32,
               }}
             >
               Capabilities
             </span>
+
+            {/* Title */}
             <h2
               style={{
                 fontFamily:
                   "var(--font-instrument-sans), 'Instrument Sans', sans-serif",
-                fontSize: "clamp(40px, 4.5vw, 72px)",
+                fontSize: "clamp(44px, 4.8vw, 80px)",
                 fontWeight: 700,
                 color: "#F5F5F5",
-                lineHeight: 0.92,
-                letterSpacing: "-0.04em",
+                lineHeight: 0.9,
+                letterSpacing: "-0.045em",
                 margin: 0,
+                marginBottom: 64,
               }}
             >
-              WHAT WE BUILD
+              WHAT
+              <br />
+              WE BUILD
             </h2>
-          </div>
 
-          {/* Subline — cols 8–12 */}
-          <div style={{ gridColumn: "8 / 13" }}>
+            {/* Accordion */}
+            <div
+              style={{
+                borderBottom: "1px solid rgba(245,245,245,0.07)",
+              }}
+            >
+              {CAPABILITIES.map((item) => (
+                <CapabilityRow
+                  key={item.id}
+                  item={item}
+                  isOpen={activeId === item.id}
+                  onSelect={() => handleSelect(item.id)}
+                />
+              ))}
+            </div>
+
+            {/* Footer note */}
             <p
               style={{
-                fontSize: 16,
-                lineHeight: 1.7,
-                color: "rgba(245,245,245,0.45)",
-                margin: 0,
-                fontFamily: "var(--font-inter), system-ui, sans-serif",
+                marginTop: 48,
+                fontFamily: "monospace",
+                fontSize: 10,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "rgba(245,245,245,0.2)",
+                lineHeight: 1.6,
               }}
             >
-              Four product domains. Each one built to solve a specific
-              operational problem — not a collection of features bolted
-              together.
+              Select a capability
+              <br />
+              to preview a live demo →
             </p>
           </div>
-        </div>
 
-        {/* ── Accordion list ── */}
-        <div
-          style={{
-            borderBottom: "1px solid rgba(245,245,245,0.08)",
-          }}
-        >
-          {CAPABILITIES.map((item) => (
-            <AccordionItem
-              key={item.id}
-              item={item}
-              isOpen={openId === item.id}
-              onToggle={() => handleToggle(item.id)}
-            />
-          ))}
+          {/* ──────────────────────────────────────
+              EMPTY SPACER: col 6
+          ─────────────────────────────────────── */}
+          <div style={{ gridColumn: "6 / 7" }} aria-hidden="true" />
+
+          {/* ──────────────────────────────────────
+              RIGHT: cols 7–12 (sticky panel)
+          ─────────────────────────────────────── */}
+          <div
+            style={{
+              gridColumn: "7 / 13",
+              position: "sticky",
+              top: 96,
+              // Height: viewport minus top offset and some breathing room
+              height: "calc(100vh - 160px)",
+              minHeight: 560,
+              maxHeight: 800,
+            }}
+          >
+            {/* Stack all frames, use GSAP to show/hide */}
+            <div style={{ position: "relative", width: "100%", height: "100%" }}>
+              {CAPABILITIES.map((item) => (
+                <BrowserFrame
+                  key={item.id}
+                  url={item.iframeUrl}
+                  label={item.demoLabel}
+                  route={item.demoRoute}
+                  isActive={activeId === item.id}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>
