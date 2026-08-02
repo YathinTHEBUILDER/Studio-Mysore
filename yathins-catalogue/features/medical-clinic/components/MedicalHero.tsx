@@ -62,8 +62,8 @@ export const MedicalHero: React.FC<MedicalHeroProps> = ({ onOpenBooking }) => {
             className="lg:col-span-5 relative"
           >
             <FilmFrame
-              src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?q=80&w=1000&auto=format&fit=crop"
-              alt="Senior Consultant Physician"
+              src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=1200&auto=format&fit=crop"
+              alt="CarePoint Modern Clean Medical Center Lounge"
               frameLabel="OUTPATIENT CLINIC • 35MM FRAME"
               theme="teal"
               contrast="normal"

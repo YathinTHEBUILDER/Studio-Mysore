@@ -46,7 +46,7 @@ export function useLenis(): UseLenisReturn {
     if (lenis) {
       lenis.scrollTo(target as string, {
         offset: options.offset ?? 0,
-        duration: options.duration ?? 1.2,
+        duration: options.duration ?? 0.85,
         onComplete: options.onComplete,
       });
     } else {

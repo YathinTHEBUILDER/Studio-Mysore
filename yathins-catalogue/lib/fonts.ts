@@ -20,7 +20,7 @@
  * ──────────────────────────────────────────────────────────────
  */
 
-import { Inter } from "next/font/google";
+import { Inter, Instrument_Sans } from "next/font/google";
 
 /**
  * Inter — Google Fonts
@@ -35,23 +35,17 @@ export const inter = Inter({
 });
 
 /**
- * clashDisplay — Sprint 1 stub
- *
- * When the font file is available:
- *   1. Install: import localFont from "next/font/local"
- *   2. Replace this stub with:
- *
- *   export const clashDisplay = localFont({
- *     src: [{ path: "../public/fonts/ClashDisplay-Variable.woff2", style: "normal" }],
- *     display: "swap",
- *     variable: "--font-clash-display",
- *     preload: true,
- *     fallback: ["system-ui", "sans-serif"],
- *   });
- *
- * For now, we return an object that matches the shape next/font returns
- * so the rest of the codebase compiles without changes.
+ * Instrument Sans — Google Fonts
+ * Hero Display & Editorial Typography
  */
+export const instrumentSans = Instrument_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-instrument-sans",
+  preload: true,
+  weight: ["400", "500", "600", "700"],
+});
+
 export const clashDisplay = {
   variable: "--font-clash-display",
   className: "",
@@ -61,4 +55,5 @@ export const clashDisplay = {
  * Combined font class names string.
  * Apply to <html> in the root layout.
  */
-export const fontVariables = `${inter.variable} ${clashDisplay.variable}`;
+export const fontVariables = `${inter.variable} ${instrumentSans.variable} ${clashDisplay.variable}`;
+

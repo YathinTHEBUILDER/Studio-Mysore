@@ -53,7 +53,7 @@ export function Footer() {
           {/* Column 1: Brand Identity & Philosophy (4 cols) */}
           <div className="lg:col-span-4 space-y-6">
             <Logo />
-            <p className="text-sm text-zinc-400 font-light leading-relaxed max-w-sm">
+            <p className="text-sm text-zinc-400 font-light leading-relaxed max-w-[42ch]">
               We design and build bespoke, production-grade websites for businesses that refuse generic templates. Pure performance, cinematic aesthetics, zero compromises.
             </p>
 

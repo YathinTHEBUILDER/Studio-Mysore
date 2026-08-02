@@ -16,7 +16,7 @@
  *   02-technical-architecture.md (Tailwind, fonts)
  */
 
-@import url('https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700,800&display=swap');
+@import url('https://api.fontshare.com/v2/css?f[]=general-sans@700,600,500,400,300&display=swap');
 @import "tailwindcss";
 
 /* ============================================================
@@ -31,7 +31,7 @@
      ------------------------------------------------------------------ */
 
   /* Background layers */
-  --color-background:      #09090B;
+  --color-background:      #060606;
   --color-surface:         #111111;
   --color-surface-elevated:#18181B;
   --color-border:          #27272A;
@@ -64,7 +64,7 @@
      These @theme entries make font-display and font-body utilities.
      ------------------------------------------------------------------ */
 
-  --font-display: var(--font-clash-display), system-ui, sans-serif;
+  --font-display: var(--font-instrument-sans), 'Instrument Sans', var(--font-inter), system-ui, sans-serif;
   --font-body:    var(--font-inter), system-ui, sans-serif;
   --font-sans:    var(--font-inter), system-ui, sans-serif;
   --font-mono:    ui-monospace, "Cascadia Code", "Source Code Pro", monospace;
@@ -140,7 +140,7 @@
 
 :root {
   /* Colour aliases — shorthand for component use */
-  --bg:              #09090B;
+  --bg:              #060606;
   --surface:         #111111;
   --surface-elevated:#18181B;
   --border:          #27272A;
@@ -149,8 +149,8 @@
   --text-muted:      #71717A;
 
   /* Font variables — populated by next/font in the root layout */
-  --font-inter:          '';
-  --font-clash-display:  'Clash Display', sans-serif;
+  --font-inter:           '';
+  --font-instrument-sans: 'Instrument Sans', sans-serif;
 }
 
 /* ============================================================
@@ -166,7 +166,7 @@ html {
 }
 
 body {
-  background-color: #09090B; /* --color-background */
+  background-color: #060606; /* --color-background */
   color: #FAFAFA;             /* --color-text-primary */
   font-family: var(--font-inter), system-ui, sans-serif;
   font-size: 1rem;
@@ -295,10 +295,10 @@ ol {
    ============================================================ */
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-clash-display), system-ui, sans-serif;
-  font-weight: 500;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-family: var(--font-general-sans), 'General Sans', system-ui, sans-serif;
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -0.035em;
   margin: 0;
   color: #FAFAFA;
 }

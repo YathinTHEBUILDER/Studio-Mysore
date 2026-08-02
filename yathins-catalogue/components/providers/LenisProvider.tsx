@@ -48,51 +48,85 @@ export function LenisProvider({ children }: LenisProviderProps) {
   const [lenis, setLenis] = useState<Lenis | null>(null);
 
   useEffect(() => {
-    // Respect user's reduced motion preference —
-    // if set, fall back to native browser scrolling.
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    // Media query checks for mobile (<768px) & reduced motion
+    const mobileQuery = window.matchMedia("(max-width: 767px)");
+    const reducedMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-    if (prefersReducedMotion) {
-      // Do not instantiate Lenis; native scroll is more accessible.
-      return;
-    }
+    const isSmoothingDisabled = () => mobileQuery.matches || reducedMotionQuery.matches;
 
-    // Instantiate Lenis with physics matched to a premium editorial feel
-    const lenisInstance = new Lenis({
-      duration: 1.5, // Decelerates slower for an elegant, premium feel
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: "vertical",
-      gestureOrientation: "vertical",
-      smoothWheel: true,
-      wheelMultiplier: 0.85, // Adds a bit of resistance/weight to the scroll
-      touchMultiplier: 1.5,
-    });
+    let lenisInstance: Lenis | null = null;
+    let updateTicker: ((time: number) => void) | null = null;
 
-    const frameId = requestAnimationFrame(() => {
-      setLenis(lenisInstance);
-    });
-
-    // Connect Lenis to GSAP's RAF so ScrollTrigger stays in sync.
-    // GSAP ticker fires every frame — we pass elapsed time to Lenis.
-    const updateTicker = (time: number) => {
-      lenisInstance.raf(time * 1000);
+    const cleanupLenis = () => {
+      if (updateTicker) {
+        gsap.ticker.remove(updateTicker);
+        updateTicker = null;
+      }
+      if (lenisInstance) {
+        lenisInstance.destroy();
+        lenisInstance = null;
+      }
+      setLenis(null);
+      ScrollTrigger.refresh();
     };
-    gsap.ticker.add(updateTicker);
 
-    // Prevent GSAP from adding its own requestAnimationFrame (Lenis controls RAF).
-    gsap.ticker.lagSmoothing(0);
+    const setupLenis = () => {
+      // Below 768px or if prefers-reduced-motion is true, disable smooth scrolling
+      if (isSmoothingDisabled()) {
+        cleanupLenis();
+        return;
+      }
 
-    // Inform ScrollTrigger of scroll position updates from Lenis
-    lenisInstance.on("scroll", ScrollTrigger.update);
+      if (lenisInstance) return;
+
+      // Instantiate Lenis with direct, non-slippery physics
+      lenisInstance = new Lenis({
+        duration: 0.85, // Direct response time without floatiness or lag
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Snappy exponential settlement
+        orientation: "vertical",
+        gestureOrientation: "vertical",
+        smoothWheel: true,
+        wheelMultiplier: 0.95, // Direct 1:1 control with zero runaway acceleration
+        touchMultiplier: 1.0,
+        autoRaf: false, // SINGLE RAF LOOP: driven exclusively by GSAP ticker below
+      });
+
+      setLenis(lenisInstance);
+
+      // Single unified RAF loop: GSAP ticker drives Lenis frame updates
+      updateTicker = (time: number) => {
+        lenisInstance?.raf(time * 1000);
+      };
+      gsap.ticker.add(updateTicker);
+
+      // Prevent GSAP lag smoothing to eliminate delay stutters
+      gsap.ticker.lagSmoothing(0);
+
+      // Synchronise ScrollTrigger with Lenis scroll updates
+      lenisInstance.on("scroll", ScrollTrigger.update);
+
+      // Initial ScrollTrigger refresh for accurate trigger calculation
+      ScrollTrigger.refresh();
+    };
+
+    setupLenis();
+
+    // Listen for screen width (< 768px) and reduced-motion changes dynamically
+    const handleMediaChange = () => {
+      if (isSmoothingDisabled()) {
+        cleanupLenis();
+      } else {
+        setupLenis();
+      }
+    };
+
+    mobileQuery.addEventListener("change", handleMediaChange);
+    reducedMotionQuery.addEventListener("change", handleMediaChange);
 
     return () => {
-      cancelAnimationFrame(frameId);
-      // Cleanup: remove ticker, destroy Lenis
-      gsap.ticker.remove(updateTicker);
-      lenisInstance.destroy();
-      setLenis(null);
+      mobileQuery.removeEventListener("change", handleMediaChange);
+      reducedMotionQuery.removeEventListener("change", handleMediaChange);
+      cleanupLenis();
     };
   }, []);
 

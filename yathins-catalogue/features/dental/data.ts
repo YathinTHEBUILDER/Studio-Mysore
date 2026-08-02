@@ -56,7 +56,7 @@ export const DENTAL_DOCTORS: DentalDoctor[] = [
     specialty: "Digital Smile Design, Porcelain Veneers & Laser Aesthetics",
     experience: "14+ Years Experience",
     availableDays: "Mon, Wed, Fri (9 AM - 1 PM)",
-    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1594824813566-88855ce78964?q=80&w=800&auto=format&fit=crop",
     rating: 4.9,
   },
   {
@@ -67,7 +67,7 @@ export const DENTAL_DOCTORS: DentalDoctor[] = [
     specialty: "Clear Aligners, Braces & Complex Jaw Alignments",
     experience: "11+ Years Experience",
     availableDays: "Tue, Thu, Sat (4 PM - 8:30 PM)",
-    image: "https://images.unsplash.com/photo-1594824813566-88855ce78964?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?q=80&w=800&auto=format&fit=crop",
     rating: 4.95,
   },
   {

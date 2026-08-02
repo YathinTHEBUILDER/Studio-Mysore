@@ -14,7 +14,7 @@
 
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { inter, clashDisplay } from "@/lib/fonts";
+import { fontVariables } from "@/lib/fonts";
 import { siteConfig } from "@/lib/site-config";
 import { Providers } from "@/components/providers";
 import { Navbar } from "@/components/layout";
@@ -118,7 +118,7 @@ export default function RootLayout({
      */
     <html
       lang="en"
-      className={`${inter.variable} ${clashDisplay.variable}`}
+      className={fontVariables}
       suppressHydrationWarning
     >
       <body className="min-h-dvh bg-background text-text-primary font-body antialiased overflow-x-hidden">

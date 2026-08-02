@@ -82,39 +82,72 @@ export function HowWeWork() {
     if (!isMounted || prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      // Orchestrated, overlapping section timeline
-      const tl = gsap.timeline({
+      const duration = 0.9;
+      const overlap = "-=0.315"; // 35% overlap (0.9 * 0.35 = 0.315s)
+
+      gsap.set(
+        [
+          ".js-work-image",
+          ".js-work-heading",
+          ".js-work-body",
+          ".js-work-steps-grid",
+        ],
+        {
+          opacity: 0,
+          y: 30,
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+        }
+      );
+
+      const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
           start: "top 80%",
           toggleActions: "play none none none",
         },
+        defaults: {
+          duration,
+          ease: "power4.out",
+        },
       });
 
-      // 1. Reveal Section Header
-      tl.fromTo(
-        ".js-work-header",
-        { opacity: 0, y: 24 },
-        {
+      // 1. Image / Eyebrow visual anchor
+      timeline
+        .to(".js-work-image", {
           opacity: 1,
           y: 0,
-          duration: 0.85,
-          ease: "power4.out",
-        }
-      )
-      // 2. Steps begin revealing BEFORE header animation finishes
-      .fromTo(
-        ".js-work-step",
-        { opacity: 0, y: 20 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.75,
-          stagger: 0.08,
-          ease: "power3.out",
-        },
-        "-=0.55"
-      );
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        })
+        // 2. Heading (35% overlap)
+        .to(
+          ".js-work-heading",
+          {
+            opacity: 1,
+            y: 0,
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          },
+          overlap
+        )
+        // 3. Body (35% overlap)
+        .to(
+          ".js-work-body",
+          {
+            opacity: 1,
+            y: 0,
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          },
+          overlap
+        )
+        // 4. CTA / Steps Grid (35% overlap)
+        .to(
+          ".js-work-steps-grid",
+          {
+            opacity: 1,
+            y: 0,
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          },
+          overlap
+        );
     }, sectionRef);
 
     return () => ctx.revert();
@@ -128,26 +161,20 @@ export function HowWeWork() {
       aria-label="How It Works — Process"
     >
       <div className="container-wide w-full relative z-10 space-y-20 lg:space-y-24">
-        
         {/* ── Section Header ───────────────────────────────────────────── */}
-        <div
-          className={cn(
-            "max-w-4xl space-y-6 js-work-header",
-            isMounted && !prefersReducedMotion && "opacity-0"
-          )}
-        >
-          <div className="flex items-center gap-4">
+        <div className="max-w-4xl space-y-6">
+          <div className="flex items-center gap-4 js-work-image">
             <div className="w-12 h-[1px] bg-zinc-700" />
             <span className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-zinc-400">
               How It Works
             </span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display font-semibold text-white tracking-tight leading-[1.02]">
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display font-bold text-white tracking-[-0.03em] leading-[0.98] js-work-heading">
             Built around your business.
           </h2>
 
-          <p className="text-zinc-400 text-lg sm:text-2xl font-light leading-relaxed max-w-2xl">
+          <p className="text-zinc-400 text-lg sm:text-2xl font-light leading-relaxed max-w-[60ch] js-work-body">
             Tell us how your business works, and your website gets built around your daily routine—not a generic template.
           </p>
         </div>
@@ -172,11 +199,11 @@ export function HowWeWork() {
                   </span>
                 </div>
 
-                <h3 className="text-2xl sm:text-3xl font-display font-semibold text-white tracking-tight group-hover:text-amber-400/90 transition-colors duration-300">
+                <h3 className="text-2xl sm:text-3xl font-display font-bold text-white tracking-[-0.025em] group-hover:text-amber-400/90 transition-colors duration-300">
                   {item.title}
                 </h3>
 
-                <p className="text-base sm:text-lg text-zinc-400 leading-relaxed font-light">
+                <p className="text-base sm:text-lg text-zinc-400 leading-relaxed font-light max-w-[50ch]">
                   {item.description}
                 </p>
               </div>

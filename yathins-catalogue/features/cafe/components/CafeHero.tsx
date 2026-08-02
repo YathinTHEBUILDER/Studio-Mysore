@@ -53,8 +53,8 @@ export const CafeHero: React.FC = () => {
             className="lg:col-span-5 relative"
           >
             <FilmFrame
-              src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?q=80&w=1000&auto=format&fit=crop"
-              alt="Artisan Coffee Roastery atmosphere"
+              src="https://images.unsplash.com/photo-1497636577773-f1231844b336?q=80&w=1200&auto=format&fit=crop"
+              alt="Artisan Coffee Roastery morning sunlight and steam"
               frameLabel="ROASTERY 35MM • YIRGACHEFFE G1"
               theme="amber"
               contrast="normal"

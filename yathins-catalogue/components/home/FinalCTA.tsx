@@ -38,42 +38,71 @@ export function FinalCTA() {
     if (!isMounted || prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
+      const duration = 0.9;
+      const overlap = "-=0.315"; // 35% overlap (0.9 * 0.35 = 0.315s)
+
+      gsap.set(
+        [
+          ".js-cta-eyebrow",
+          ".js-cta-title",
+          ".js-cta-copy",
+          ".js-cta-buttons",
+        ],
+        {
+          opacity: 0,
+          y: 30,
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+        }
+      );
+
+      const timeline = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top 80%",
           toggleActions: "play none none none",
         },
+        defaults: {
+          duration,
+          ease: "power4.out",
+        },
       });
 
-      tl.fromTo(
-        ".js-cta-eyebrow",
-        { opacity: 0, y: 16 },
-        { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" }
-      )
-        .fromTo(
+      // 1. Image / Eyebrow visual anchor
+      timeline
+        .to(".js-cta-eyebrow", {
+          opacity: 1,
+          y: 0,
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        })
+        // 2. Heading (35% overlap)
+        .to(
           ".js-cta-title",
-          { opacity: 0, y: 22 },
-          { opacity: 1, y: 0, duration: 0.8, ease: "power4.out" },
-          "-=0.45"
+          {
+            opacity: 1,
+            y: 0,
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          },
+          overlap
         )
-        .fromTo(
+        // 3. Body (35% overlap)
+        .to(
           ".js-cta-copy",
-          { opacity: 0, y: 18 },
-          { opacity: 1, y: 0, duration: 0.75, ease: "power3.out" },
-          "-=0.55"
+          {
+            opacity: 1,
+            y: 0,
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          },
+          overlap
         )
-        .fromTo(
+        // 4. CTA (35% overlap)
+        .to(
           ".js-cta-buttons",
-          { opacity: 0, y: 16 },
-          { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
-          "-=0.5"
-        )
-        .fromTo(
-          ".js-cta-badge",
-          { opacity: 0 },
-          { opacity: 1, duration: 0.6, ease: "power2.out" },
-          "-=0.4"
+          {
+            opacity: 1,
+            y: 0,
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          },
+          overlap
         );
     }, containerRef);
 
@@ -106,7 +135,7 @@ export function FinalCTA() {
           {/* Headline */}
           <h2
             className={cn(
-              "text-4xl sm:text-6xl lg:text-7xl font-display font-semibold text-white tracking-tight leading-[1.02] js-cta-title",
+              "text-4xl sm:text-6xl lg:text-7xl font-display font-bold text-white tracking-[-0.03em] leading-[0.98] js-cta-title",
               isMounted && !prefersReducedMotion && "opacity-0"
             )}
           >
@@ -116,7 +145,7 @@ export function FinalCTA() {
           {/* Supporting Copy */}
           <p
             className={cn(
-              "text-zinc-400 text-lg sm:text-2xl font-light leading-relaxed max-w-2xl mx-auto js-cta-copy",
+              "text-zinc-400 text-lg sm:text-2xl font-light leading-relaxed max-w-[60ch] mx-auto js-cta-copy",
               isMounted && !prefersReducedMotion && "opacity-0"
             )}
           >
@@ -168,21 +197,6 @@ export function FinalCTA() {
             >
               <span>Email Founder Directly</span>
             </a>
-          </div>
-
-          {/* Guarantee pill */}
-          <div
-            className={cn(
-              "pt-4 flex items-center justify-center gap-6 text-xs text-zinc-500 font-mono js-cta-badge",
-              isMounted && !prefersReducedMotion && "opacity-0"
-            )}
-          >
-            <span className="flex items-center gap-2">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              Direct Founder Response within 2 Hours
-            </span>
-            <span>•</span>
-            <span>No Sales Reps</span>
           </div>
         </div>
       </div>

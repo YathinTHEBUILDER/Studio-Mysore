@@ -51,7 +51,7 @@ export const CAFE_PRODUCTS: CafeProduct[] = [
     category: "teas",
     price: 180,
     description: "Slow-simmered Assam orthodox black tea infused with crushed fresh ginger, green cardamom, and Kerala cinnamon served in terracotta.",
-    image: "https://images.unsplash.com/photo-1597481499750-3e6b22637e12?q=80&w=800&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?q=80&w=800&auto=format&fit=crop",
     notes: "Notes: Crushed Ginger, Cardamom, Malt",
     calories: 85,
   },

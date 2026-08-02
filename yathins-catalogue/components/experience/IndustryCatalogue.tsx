@@ -54,7 +54,7 @@ export const CATALOGUE_ITEMS: CatalogueItem[] = [
     cta: "Explore Café Website",
     route: "/experiences/cafe",
     imageUrl:
-      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1800&q=90",
+      "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=1800&q=90",
     gridSpanClass: "lg:col-span-2",
   },
   {
@@ -129,60 +129,100 @@ export function IndustryCatalogue() {
     if (!isMounted || prefersReducedMotion) return;
 
     const ctx = gsap.context(() => {
-      // Orchestrated master timeline for Industry Catalogue section
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 78%",
-          toggleActions: "play none none none",
-        },
-      });
+      const duration = 0.9;
+      const overlap = "-=0.315"; // 35% overlap of 0.9s duration (0.9 * 0.35 = 0.315s)
 
-      // 1. Section Header entrance
-      tl.fromTo(
-        ".js-catalogue-header",
-        { opacity: 0, y: 28 },
+      // 1. Section Header Timeline
+      gsap.set(
+        [
+          ".js-catalogue-header-image",
+          ".js-catalogue-header-heading",
+        ],
         {
-          opacity: 1,
-          y: 0,
-          duration: 0.85,
-          ease: "power4.out",
+          opacity: 0,
+          y: 30,
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
         }
       );
 
-      // 2. Cards stagger-reveal in overlap BEFORE header animation finishes
-      const cards = gsap.utils.toArray<HTMLElement>(".js-catalogue-card-container");
-      tl.fromTo(
-        cards,
-        { opacity: 0, y: 28 },
-        {
+      const headerTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: ".js-catalogue-header",
+          start: "top 85%",
+          toggleActions: "play none none none",
+        },
+        defaults: {
+          duration,
+          ease: "power4.out",
+        },
+      });
+
+      headerTl
+        .to(".js-catalogue-header-image", {
           opacity: 1,
           y: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power3.out",
-        },
-        "-=0.55"
-      );
+          clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+        })
+        .to(
+          ".js-catalogue-header-heading",
+          {
+            opacity: 1,
+            y: 0,
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+          },
+          overlap
+        );
 
-      // 3. Image clip-path unwrapping & scale-down synchronized across cards
-      cards.forEach((card, idx) => {
+      // 2. Individual 85vh Card Timelines (Image -> Heading -> CTA, 35% overlap, power4.out)
+      const cards = gsap.utils.toArray<HTMLElement>(".js-catalogue-card-container");
+      cards.forEach((card) => {
         const img = card.querySelector(".js-catalogue-card-img");
-        if (img) {
-          tl.fromTo(
-            img,
-            {
-              clipPath: "inset(6% 6% 6% 6% round 2px)",
-              scale: 1.08,
+        const heading = card.querySelector(".js-catalogue-card-heading");
+        const cta = card.querySelector(".js-catalogue-card-cta");
+
+        if (img && heading && cta) {
+          gsap.set([img, heading, cta], {
+            opacity: 0,
+            y: 30,
+            clipPath: "polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%)",
+          });
+
+          const cardTl = gsap.timeline({
+            scrollTrigger: {
+              trigger: card,
+              start: "top 85%",
+              toggleActions: "play none none none",
             },
-            {
-              clipPath: "inset(0% 0% 0% 0% round 2px)",
-              scale: 1.0,
-              duration: 1.1,
+            defaults: {
+              duration,
               ease: "power4.out",
             },
-            `-=${0.75 - idx * 0.05}` // Continuous fluid stagger overlap
-          );
+          });
+
+          cardTl
+            .to(img, {
+              opacity: 1,
+              y: 0,
+              clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+            })
+            .to(
+              heading,
+              {
+                opacity: 1,
+                y: 0,
+                clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+              },
+              overlap
+            )
+            .to(
+              cta,
+              {
+                opacity: 1,
+                y: 0,
+                clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)",
+              },
+              overlap
+            );
         }
       });
     }, sectionRef);
@@ -194,94 +234,57 @@ export function IndustryCatalogue() {
     <section
       ref={sectionRef}
       id="experiences"
-      className="relative py-36 sm:py-48 lg:py-56 bg-zinc-950 border-t border-zinc-900 overflow-hidden"
+      className="relative py-24 sm:py-36 bg-zinc-950 border-t border-zinc-900 overflow-hidden"
       aria-label="Experience Catalogue"
     >
-      <div className="container-wide w-full relative z-10 space-y-20 lg:space-y-24">
+      <div className="w-full relative z-10 space-y-16 lg:space-y-24 px-4 sm:px-8 lg:px-16">
         {/* ── Section Header ───────────────────────────────────────────── */}
-        <div
-          className={cn(
-            "max-w-4xl space-y-6 js-catalogue-header",
-            isMounted && !prefersReducedMotion && "opacity-0"
-          )}
-        >
-          <div className="flex items-center gap-4">
+        <div className="max-w-4xl space-y-6 js-catalogue-header">
+          <div className="flex items-center gap-4 js-catalogue-header-image">
             <div className="w-12 h-[1px] bg-zinc-700" />
             <span className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-zinc-400">
               Experience Catalogue
             </span>
           </div>
 
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display font-semibold text-white tracking-tight leading-[1.02]">
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display font-bold text-white tracking-[-0.035em] leading-[0.96] js-catalogue-header-heading">
             Try a website built for your industry.
           </h2>
-
-          <p className="text-zinc-400 text-lg sm:text-2xl font-light leading-relaxed max-w-2xl">
-            Explore complete, production-grade applications tailored to different business models.
-          </p>
         </div>
 
-        {/* ── Editorial Experience Cards Grid ───────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-10">
+        {/* ── 85vh Full Editorial Experience Cards Sequence (One Card Visible at a Time) ── */}
+        <div className="flex flex-col gap-16 sm:gap-24 lg:gap-32 w-full">
           {CATALOGUE_ITEMS.map((item) => (
             <div
               key={item.id}
-              className={cn(
-                "h-full js-catalogue-card-container",
-                isMounted && !prefersReducedMotion && "opacity-0",
-                item.gridSpanClass
-              )}
+              className="w-full h-[85vh] relative overflow-hidden js-catalogue-card-container"
             >
               <Link
                 href={item.route}
-                className={cn(
-                  "group relative flex flex-col justify-between rounded-sm p-1 overflow-hidden h-full min-h-[500px] sm:min-h-[560px]",
-                  "bg-zinc-950/90 border border-zinc-800/90 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)]",
-                  "transition-all duration-700 ease-out hover:-translate-y-2 hover:border-zinc-500/50 hover:shadow-black/95 cursor-pointer block"
-                )}
+                className="group relative block w-full h-full overflow-hidden no-underline border-0 shadow-none bg-transparent cursor-pointer"
               >
-                {/* 1. Cinematic Film Frame Still */}
-                <div className="absolute inset-1 z-0 overflow-hidden pointer-events-none rounded-none">
+                {/* 1. Large Editorial Photograph Container (~80% of Viewport Height) */}
+                <div className="relative w-full h-[80vh] overflow-hidden">
                   <img
                     src={item.imageUrl}
                     alt={item.title}
-                    className="w-full h-full object-cover contrast-[1.07] brightness-[0.97] saturate-[1.05] transition-transform duration-1000 ease-out group-hover:scale-105 js-catalogue-card-img"
-                    style={
-                      isMounted && !prefersReducedMotion
-                        ? { clipPath: "inset(6% 6% 6% 6% round 2px)" }
-                        : undefined
-                    }
+                    className="w-full h-full object-cover js-catalogue-card-img transition-transform duration-[450ms] ease-out group-hover:scale-[1.04]"
                   />
-                  {/* Subtle Radial Vignette Overlay */}
-                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(9,9,11,0.85)_100%)] pointer-events-none" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/75 to-zinc-950/20 group-hover:via-zinc-950/65 transition-colors duration-500" />
-                </div>
 
-                {/* 2. Film Frame Content Layout */}
-                <div className="relative z-10 flex flex-col justify-between h-full p-8 sm:p-10">
-                  <div className="flex items-center justify-between border-b border-zinc-800/60 pb-6">
-                    <h3 className="font-display text-3xl sm:text-4xl font-semibold text-white tracking-tight">
+                  {/* 2. Dark Overlay (35% -> 15% on hover) */}
+                  <div className="absolute inset-0 bg-black/35 group-hover:bg-black/15 transition-colors duration-[450ms] ease-out pointer-events-none" />
+
+                  {/* 3. Title & Button Content directly on top of image */}
+                  <div className="absolute inset-x-0 bottom-0 p-8 sm:p-14 lg:p-20 flex flex-col items-start gap-6 z-10">
+                    {/* Title sits directly on image, translateY 10px on hover */}
+                    <h3 className="font-display text-5xl sm:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-none transition-transform duration-[450ms] ease-out group-hover:translate-y-[10px] js-catalogue-card-heading">
                       {item.title}
                     </h3>
-                    <span className="font-mono text-xs text-zinc-400 tracking-widest uppercase">
-                      {item.number}
-                    </span>
-                  </div>
 
-                  {/* 3. One Editorial Sentence */}
-                  <div className="my-auto py-10">
-                    <p className="font-display text-2xl sm:text-3xl lg:text-4xl font-light text-zinc-100 leading-snug tracking-tight group-hover:text-white transition-colors duration-300 whitespace-pre-line">
-                      {item.sentence}
-                    </p>
-                  </div>
-
-                  {/* 4. Action CTA Indicator */}
-                  <div className="flex items-center justify-between pt-6 border-t border-zinc-800/60">
-                    <span className="font-mono text-xs text-zinc-300 font-medium tracking-wide uppercase group-hover:text-white transition-colors">
-                      {item.cta}
-                    </span>
-                    <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-zinc-950 transition-all duration-300">
-                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                    {/* Button sits below title, fades from 0 -> 1 on hover */}
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-[450ms] ease-out inline-flex items-center gap-3 px-8 py-4 bg-white text-zinc-950 font-medium text-base tracking-wide border-0 shadow-none js-catalogue-card-cta">
+                      <span>{item.cta}</span>
+                      <ArrowUpRight className="w-5 h-5" />
                     </div>
                   </div>
                 </div>

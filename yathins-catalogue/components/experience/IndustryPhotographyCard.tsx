@@ -13,7 +13,7 @@ import type { IndustryId } from "@/types/experience";
 
 interface IndustryPhotographyCardProps {
   industryId: IndustryId;
-  accentHex: string;
+  accentHex?: string;
 }
 
 interface PhotographyData {
@@ -105,12 +105,11 @@ const PHOTOGRAPHY_DATA: Record<IndustryId, PhotographyData> = {
 
 export function IndustryPhotographyCard({
   industryId,
-  accentHex,
 }: IndustryPhotographyCardProps) {
   const data = PHOTOGRAPHY_DATA[industryId];
 
   return (
-    <div className="relative w-full rounded-2xl overflow-hidden p-6 sm:p-8 flex flex-col justify-between border border-zinc-800/80 bg-zinc-900/40 shadow-xl transition-all">
+    <div className="relative w-full overflow-hidden p-0 flex flex-col justify-between border-0 bg-transparent shadow-none transition-all">
       {/* Background Animated Gradient Backdrop */}
       <AnimatePresence mode="wait">
         <m.div
@@ -125,14 +124,8 @@ export function IndustryPhotographyCard({
       </AnimatePresence>
 
       {/* Card Content Top */}
-      <div className="relative z-10 space-y-4">
-        {/* Industry Badge */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-[11px] font-mono font-medium tracking-widest uppercase bg-zinc-900/80 text-zinc-300 border border-zinc-800">
-          <span className="w-1.5 h-1.5 rounded-full" style={{ background: accentHex }} />
-          {data.badge}
-        </div>
-
-        {/* Dynamic Title & Subtitle */}
+      <div className="relative z-10 space-y-4 p-6 sm:p-8">
+        {/* Dynamic Title */}
         <AnimatePresence mode="wait">
           <m.div
             key={industryId}
@@ -142,19 +135,15 @@ export function IndustryPhotographyCard({
             transition={{ duration: 0.28 }}
             className="space-y-1.5"
           >
-            <h3 className="text-xl sm:text-2xl font-bold font-display text-white tracking-tight leading-snug">
+            <h3 className="text-2xl sm:text-3xl font-bold font-display text-white tracking-tight leading-snug">
               {data.title}
             </h3>
-            <p className="text-sm text-zinc-400 leading-relaxed max-w-md">
-              {data.subtitle}
-            </p>
           </m.div>
         </AnimatePresence>
       </div>
 
-      {/* Card Content Bottom: Feature Highlights & Metrics */}
-      <div className="relative z-10 space-y-5 pt-6 mt-6 border-t border-zinc-800/80">
-        {/* Workflow Feature Chips */}
+      {/* Card Content Bottom: Feature Highlights */}
+      <div className="relative z-10 space-y-4 p-6 sm:p-8 pt-0">
         <AnimatePresence mode="wait">
           <m.div
             key={industryId}
@@ -162,40 +151,18 @@ export function IndustryPhotographyCard({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25 }}
-            className="space-y-2"
+            className="flex flex-wrap gap-2"
           >
-            <span className="text-[10px] font-mono uppercase tracking-widest text-zinc-500 block">
-              Core Business Workflow
-            </span>
-            <div className="flex flex-wrap gap-2">
-              {data.highlights.map((feat) => (
-                <div
-                  key={feat}
-                  className="inline-flex items-center px-3 py-1.5 rounded-lg bg-zinc-900/80 border border-zinc-800 text-xs font-medium text-zinc-300"
-                >
-                  <span>{feat}</span>
-                </div>
-              ))}
-            </div>
+            {data.highlights.map((feat) => (
+              <div
+                key={feat}
+                className="inline-flex items-center px-3 py-1.5 bg-zinc-900/90 text-xs font-medium text-zinc-300 border-0 shadow-none"
+              >
+                <span>{feat}</span>
+              </div>
+            ))}
           </m.div>
         </AnimatePresence>
-
-        {/* Business Metrics */}
-        <div className="grid grid-cols-2 gap-3 pt-1">
-          {data.metrics.map((m) => (
-            <div
-              key={m.label}
-              className="p-3.5 rounded-xl bg-zinc-900/60 border border-zinc-800/80"
-            >
-              <div className="text-lg sm:text-xl font-bold font-display text-white tracking-tight">
-                {m.value}
-              </div>
-              <div className="text-[11px] font-mono text-zinc-500 tracking-wide mt-0.5">
-                {m.label}
-              </div>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );

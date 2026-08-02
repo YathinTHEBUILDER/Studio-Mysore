@@ -29,7 +29,7 @@ export const EXPERIENCES_LIST: ExperienceItem[] = [
     cta: "Open Café Experience",
     route: "/experiences/cafe",
     image:
-      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1509785307050-d4066910ec1e?auto=format&fit=crop&w=1200&q=80",
     gridSpanClass: "lg:col-span-2",
   },
   {
@@ -121,7 +121,7 @@ export const ExperienceDirectoryGrid: React.FC = () => {
                     <span className="text-2xl sm:text-3xl" role="img" aria-label={exp.title}>
                       {exp.emoji}
                     </span>
-                    <h3 className="font-display text-2xl sm:text-3xl font-semibold text-white tracking-tight">
+                    <h3 className="font-display text-3xl sm:text-4xl font-bold text-white tracking-[-0.03em]">
                       {exp.title}
                     </h3>
                   </div>
