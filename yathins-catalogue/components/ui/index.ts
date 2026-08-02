@@ -22,3 +22,4 @@ export * from "./feedback";
 export * from "./overlay";
 export * from "./navigation";
 export * from "./shared";
+export * from "./FilmFrame";

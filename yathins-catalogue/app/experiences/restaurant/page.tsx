@@ -12,7 +12,10 @@ import { RestaurantTastingMenu } from "@/features/restaurant/components/Restaura
 import { RestaurantCheckoutModal } from "@/features/restaurant/components/RestaurantCheckoutModal";
 import { RestaurantConfirmation } from "@/features/restaurant/components/RestaurantConfirmation";
 import { RestaurantAmbianceSection } from "@/features/restaurant/components/RestaurantAmbianceSection";
+import { RestaurantChefSection } from "@/features/restaurant/components/RestaurantChefSection";
 import { RestaurantCTA } from "@/features/restaurant/components/RestaurantCTA";
+import { RestaurantOwnerDashboard } from "@/features/restaurant/components/RestaurantOwnerDashboard";
+import { SystemModeBar } from "@/components/experience/SystemModeBar";
 import { CourseCategory } from "@/features/restaurant/types";
 
 const CATEGORIES: { id: CourseCategory | "all"; label: string; emoji: string }[] = [
@@ -25,6 +28,8 @@ const CATEGORIES: { id: CourseCategory | "all"; label: string; emoji: string }[]
 
 export default function RestaurantExperiencePage() {
   const {
+    viewMode,
+    setViewMode,
     partySize,
     setPartySize,
     selectedDate,
@@ -49,46 +54,65 @@ export default function RestaurantExperiencePage() {
       {/* Business Header */}
       <RestaurantNavbar onOpenReserve={() => setIsReserveModalOpen(true)} />
 
-      {/* Hero */}
-      <RestaurantHero onOpenReserve={() => setIsReserveModalOpen(true)} />
+      {/* Dual System Mode Switcher */}
+      <SystemModeBar
+        viewMode={viewMode}
+        onToggleViewMode={setViewMode}
+        industryName="Luxury Restaurant"
+        badgeText="KDS, Table Floor Plan & Reservations System"
+      />
 
-      {/* Main Experience Body */}
-      <Container variant="wide" className="py-12 space-y-12">
-        {confirmedReservation ? (
-          <RestaurantConfirmation
-            reservation={confirmedReservation}
-            onReset={() => setConfirmedReservation(null)}
-          />
-        ) : (
-          <>
-            <RestaurantReservationEngine
-              partySize={partySize}
-              onSetPartySize={setPartySize}
-              selectedDate={selectedDate}
-              onSetSelectedDate={setSelectedDate}
-              seatingArea={seatingArea}
-              onSetSeatingArea={setSeatingArea}
-              depositRequired={depositRequired}
-              onProceed={() => setIsReserveModalOpen(true)}
-            />
+      {viewMode === "owner" ? (
+        <Container variant="wide" className="py-12">
+          <RestaurantOwnerDashboard />
+        </Container>
+      ) : (
+        <>
+          {/* Hero */}
+          <RestaurantHero onOpenReserve={() => setIsReserveModalOpen(true)} />
 
-            <RestaurantTastingMenu
-              categories={CATEGORIES}
-              selectedCategory={selectedCategory}
-              onSelectCategory={setSelectedCategory}
-              courses={filteredCourses}
-              selectedCourses={selectedCourses}
-              onToggleCourse={toggleCourseSelection}
-            />
-          </>
-        )}
-      </Container>
+          {/* Main Experience Body */}
+          <Container variant="wide" className="py-12 space-y-12">
+            {confirmedReservation ? (
+              <RestaurantConfirmation
+                reservation={confirmedReservation}
+                onReset={() => setConfirmedReservation(null)}
+              />
+            ) : (
+              <>
+                <RestaurantReservationEngine
+                  partySize={partySize}
+                  onSetPartySize={setPartySize}
+                  selectedDate={selectedDate}
+                  onSetSelectedDate={setSelectedDate}
+                  seatingArea={seatingArea}
+                  onSetSeatingArea={setSeatingArea}
+                  depositRequired={depositRequired}
+                  onProceed={() => setIsReserveModalOpen(true)}
+                />
 
-      {/* Ambiance */}
-      <RestaurantAmbianceSection />
+                <RestaurantTastingMenu
+                  categories={CATEGORIES}
+                  selectedCategory={selectedCategory}
+                  onSelectCategory={setSelectedCategory}
+                  courses={filteredCourses}
+                  selectedCourses={selectedCourses}
+                  onToggleCourse={toggleCourseSelection}
+                />
+              </>
+            )}
+          </Container>
 
-      {/* Conversion CTA */}
-      <RestaurantCTA />
+          {/* Chef Spotlight & Reviews */}
+          <RestaurantChefSection />
+
+          {/* Ambiance */}
+          <RestaurantAmbianceSection />
+
+          {/* Conversion CTA */}
+          <RestaurantCTA />
+        </>
+      )}
 
       {/* Reservation Checkout Modal */}
       <RestaurantCheckoutModal

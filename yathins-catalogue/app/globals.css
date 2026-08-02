@@ -16,6 +16,7 @@
  *   02-technical-architecture.md (Tailwind, fonts)
  */
 
+@import url('https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700,800&display=swap');
 @import "tailwindcss";
 
 /* ============================================================
@@ -149,7 +150,7 @@
 
   /* Font variables — populated by next/font in the root layout */
   --font-inter:          '';
-  --font-clash-display:  '';
+  --font-clash-display:  'Clash Display', sans-serif;
 }
 
 /* ============================================================

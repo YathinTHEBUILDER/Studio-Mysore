@@ -5,6 +5,7 @@ import { CourseCategory, TastingCourseItem, RestaurantReservation } from "./type
 import { RESTAURANT_COURSES } from "./data";
 
 export function useRestaurantState() {
+  const [viewMode, setViewMode] = React.useState<"customer" | "owner">("customer");
   const [partySize, setPartySize] = React.useState<number>(2);
   const [selectedDate, setSelectedDate] = React.useState<string>("Tonight, 7:30 PM");
   const [seatingArea, setSeatingArea] = React.useState<"main_dining" | "chef_counter" | "terrace">("main_dining");
@@ -27,7 +28,7 @@ export function useRestaurantState() {
   };
 
   const courseSubtotal = selectedCourses.reduce((sum, item) => sum + item.price, 0);
-  const depositRequired = 25 * partySize;
+  const depositRequired = 2500 * partySize;
 
   const completeReservation = (guestName: string, guestPhone: string, guestEmail: string, notes?: string) => {
     const reservation: RestaurantReservation = {
@@ -49,6 +50,8 @@ export function useRestaurantState() {
   };
 
   return {
+    viewMode,
+    setViewMode,
     partySize,
     setPartySize,
     selectedDate,

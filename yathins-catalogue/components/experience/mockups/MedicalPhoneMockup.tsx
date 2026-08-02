@@ -42,7 +42,7 @@ export function MedicalPhoneMockup() {
               MEDICAL CARE · PATIENT PORTAL
             </span>
             <h2 className="text-[14px] font-bold text-white tracking-tight">
-              St. Jude Care Clinic
+              Mysore Care Clinic
             </h2>
           </div>
           <div className="px-2 py-0.5 rounded-full text-[8.5px] font-bold bg-teal-500/10 text-teal-300 border border-teal-500/20">

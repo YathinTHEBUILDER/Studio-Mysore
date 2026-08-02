@@ -5,6 +5,7 @@ import { GymMembershipTier, GymTrainer, GymClassSession, GymTrialBooking } from 
 import { GYM_TIERS, GYM_TRAINERS, GYM_CLASSES } from "./data";
 
 export function useGymState() {
+  const [viewMode, setViewMode] = React.useState<"customer" | "owner">("customer");
   const [selectedTier, setSelectedTier] = React.useState<GymMembershipTier>(GYM_TIERS[1]);
   const [selectedTrainer, setSelectedTrainer] = React.useState<GymTrainer>(GYM_TRAINERS[0]);
   const [selectedClass, setSelectedClass] = React.useState<GymClassSession>(GYM_CLASSES[0]);
@@ -27,6 +28,8 @@ export function useGymState() {
   };
 
   return {
+    viewMode,
+    setViewMode,
     selectedTier,
     setSelectedTier,
     selectedTrainer,

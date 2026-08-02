@@ -19,8 +19,8 @@ export function GymPhoneMockup() {
   const [isSubmitting, setIsSubmitting] = React.useState<boolean>(false);
 
   const classes = [
-    { id: "hiit", name: "HIIT & Strength", time: "07:00 AM", instructor: "Coach Alex", spots: 3, kcal: "650 kcal" },
-    { id: "spin", name: "Rhythm Cycle", time: "08:30 AM", instructor: "Maya Lin", spots: 2, kcal: "520 kcal" },
+    { id: "hiit", name: "HIIT & Strength", time: "07:00 AM", instructor: "Coach Arjun", spots: 3, kcal: "650 kcal" },
+    { id: "spin", name: "Rhythm Cycle", time: "08:30 AM", instructor: "Kavya Nair", spots: 2, kcal: "520 kcal" },
     { id: "yoga", name: "Power Vinyasa", time: "05:30 PM", instructor: "Rohan D.", spots: 5, kcal: "380 kcal" },
   ];
 

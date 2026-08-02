@@ -14,9 +14,13 @@ import { DentalIntakeModal } from "@/features/dental/components/DentalIntakeModa
 import { DentalConfirmation } from "@/features/dental/components/DentalConfirmation";
 import { DentalTechnologySection } from "@/features/dental/components/DentalTechnologySection";
 import { DentalCTA } from "@/features/dental/components/DentalCTA";
+import { DentalOwnerDashboard } from "@/features/dental/components/DentalOwnerDashboard";
+import { SystemModeBar } from "@/components/experience/SystemModeBar";
 
 export default function DentalExperiencePage() {
   const {
+    viewMode,
+    setViewMode,
     selectedService,
     setSelectedService,
     selectedDoctor,
@@ -39,50 +43,66 @@ export default function DentalExperiencePage() {
       {/* Clinic Header */}
       <DentalNavbar onOpenBooking={() => setIsBookingModalOpen(true)} />
 
-      {/* Hero */}
-      <DentalHero onOpenBooking={() => setIsBookingModalOpen(true)} />
+      {/* Dual System Mode Switcher */}
+      <SystemModeBar
+        viewMode={viewMode}
+        onToggleViewMode={setViewMode}
+        industryName="Dental Clinic"
+        badgeText="Operatory Schedule, Patient EHR & Billing System"
+      />
 
-      {/* Main Body */}
-      <Container variant="wide" className="py-12 space-y-12">
-        {confirmedAppointment ? (
-          <DentalConfirmation
-            appointment={confirmedAppointment}
-            onReset={() => setConfirmedAppointment(null)}
-          />
-        ) : (
-          <>
-            <DentalServicesGrid
-              services={services}
-              selectedService={selectedService}
-              onSelectService={setSelectedService}
-              onBookService={(serv) => {
-                setSelectedService(serv);
-                setIsBookingModalOpen(true);
-              }}
-            />
+      {viewMode === "owner" ? (
+        <Container variant="wide" className="py-12">
+          <DentalOwnerDashboard />
+        </Container>
+      ) : (
+        <>
+          {/* Hero */}
+          <DentalHero onOpenBooking={() => setIsBookingModalOpen(true)} />
 
-            <DentalPractitionerDirectory
-              doctors={doctors}
-              selectedDoctor={selectedDoctor}
-              onSelectDoctor={setSelectedDoctor}
-            />
+          {/* Main Body */}
+          <Container variant="wide" className="py-12 space-y-12">
+            {confirmedAppointment ? (
+              <DentalConfirmation
+                appointment={confirmedAppointment}
+                onReset={() => setConfirmedAppointment(null)}
+              />
+            ) : (
+              <>
+                <DentalServicesGrid
+                  services={services}
+                  selectedService={selectedService}
+                  onSelectService={setSelectedService}
+                  onBookService={(serv) => {
+                    setSelectedService(serv);
+                    setIsBookingModalOpen(true);
+                  }}
+                />
 
-            <DentalBookingCalendar
-              selectedDate={selectedDate}
-              onSetSelectedDate={setSelectedDate}
-              selectedSlot={selectedSlot}
-              onSetSelectedSlot={setSelectedSlot}
-              onProceed={() => setIsBookingModalOpen(true)}
-            />
-          </>
-        )}
-      </Container>
+                <DentalPractitionerDirectory
+                  doctors={doctors}
+                  selectedDoctor={selectedDoctor}
+                  onSelectDoctor={setSelectedDoctor}
+                />
 
-      {/* Clinical Tech Overview */}
-      <DentalTechnologySection />
+                <DentalBookingCalendar
+                  selectedDate={selectedDate}
+                  onSetSelectedDate={setSelectedDate}
+                  selectedSlot={selectedSlot}
+                  onSetSelectedSlot={setSelectedSlot}
+                  onProceed={() => setIsBookingModalOpen(true)}
+                />
+              </>
+            )}
+          </Container>
 
-      {/* Conversion CTA */}
-      <DentalCTA />
+          {/* Clinical Tech Overview */}
+          <DentalTechnologySection />
+
+          {/* Conversion CTA */}
+          <DentalCTA />
+        </>
+      )}
 
       {/* Intake Modal */}
       <DentalIntakeModal

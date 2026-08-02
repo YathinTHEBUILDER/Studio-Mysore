@@ -19,20 +19,20 @@ export const siteConfig = {
 
   /** Short description for meta tags */
   description:
-    "Studio Mysore shows business owners what their website could become. See working prototypes built for your industry.",
+    "Explore working websites built for different business models. Try live interactive prototypes tailored to your industry.",
 
   /** Canonical base URL — update for production */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://yathinscatalogue.com",
 
   /**
    * WhatsApp configuration
-   * Replace with the actual Studio Mysore WhatsApp number.
+   * Replace with the actual WhatsApp number.
    * Format: country code + number, no spaces or dashes.
    */
   whatsapp: {
     number: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "919xxxxxxxxx",
     defaultMessage:
-      "Hi Studio Mysore, I'd like to talk about a website for my business.",
+      "Hi, I'd like to talk about a website for my business.",
   },
 
   /** Open Graph / Twitter card defaults */

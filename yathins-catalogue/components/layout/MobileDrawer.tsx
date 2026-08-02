@@ -7,6 +7,8 @@ import { Logo } from "./Logo";
 import { NavLinks } from "./NavLinks";
 import { WhatsAppCTA } from "./WhatsAppCTA";
 import { siteConfig } from "@/lib/site-config";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { springs } from "@/lib/tokens/transitions";
 
 export interface MobileDrawerProps {
   isOpen: boolean;
@@ -22,6 +24,8 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
   isOpen,
   onClose,
 }) => {
+  const shouldReduceMotion = useReducedMotion();
+
   // Lock body scroll when drawer is open
   React.useEffect(() => {
     if (isOpen) {
@@ -62,10 +66,10 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
 
           {/* Drawer Content Panel */}
           <m.div
-            initial={{ x: "100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "100%" }}
-            transition={{ type: "spring", stiffness: 320, damping: 30 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { x: "100%" }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { x: 0 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { x: "100%" }}
+            transition={springs.gentle}
             className="relative w-full max-w-xs h-full bg-zinc-950 border-l border-zinc-800 p-6 flex flex-col justify-between shadow-2xl z-10 overflow-y-auto"
             role="dialog"
             aria-modal="true"
@@ -73,17 +77,25 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
           >
             {/* Header / Top Row */}
             <div>
-              <div className="flex items-center justify-between pb-6 border-b border-zinc-800 mb-6">
+              <div className="flex items-center justify-between pb-4 border-b border-zinc-800/80 mb-6">
                 <Logo onClick={onClose} />
 
                 {/* Accessible Close Button */}
-                <button
+                <m.button
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
                   onClick={onClose}
-                  className="p-2 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-zinc-400"
+                  className="p-2 rounded-sm text-zinc-400 hover:text-white bg-zinc-900 border border-zinc-800 transition-colors outline-none focus-visible:ring-1 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   aria-label="Close menu"
                 >
-                  <X className="h-5 w-5" />
-                </button>
+                  <X className="h-4 w-4" />
+                </m.button>
+              </div>
+
+              {/* Publication Tag */}
+              <div className="mb-6 px-3 py-1.5 rounded-sm bg-zinc-900/90 border border-zinc-800/80 flex items-center justify-between text-[10px] font-mono text-zinc-400 uppercase tracking-widest">
+                <span>Studio Mysore</span>
+                <span>Issue N° 01</span>
               </div>
 
               {/* Mobile Navigation Links */}
@@ -91,12 +103,13 @@ export const MobileDrawer: React.FC<MobileDrawerProps> = ({
             </div>
 
             {/* Bottom Section with WhatsApp CTA & Tagline */}
-            <div className="pt-6 border-t border-zinc-800 space-y-4">
+            <div className="pt-6 border-t border-zinc-800/80 space-y-4">
               <WhatsAppCTA className="w-full text-center" onClick={onClose} />
 
-              <p className="text-xs font-mono text-zinc-500 text-center leading-relaxed">
-                {siteConfig.name} — {siteConfig.tagline}
-              </p>
+              <div className="flex items-center justify-center gap-2 pt-1 text-[11px] font-mono text-zinc-500">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                <span>Operational • Mysore Studio</span>
+              </div>
             </div>
           </m.div>
         </div>

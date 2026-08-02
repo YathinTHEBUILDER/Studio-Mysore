@@ -13,7 +13,11 @@ import { CafeCartDrawer } from "@/features/cafe/components/CafeCartDrawer";
 import { CafeCheckoutModal } from "@/features/cafe/components/CafeCheckoutModal";
 import { CafeOrderConfirmation } from "@/features/cafe/components/CafeOrderConfirmation";
 import { CafeRoasterySection } from "@/features/cafe/components/CafeRoasterySection";
+import { CafeStaffSection } from "@/features/cafe/components/CafeStaffSection";
+import { CafeReviewsSection } from "@/features/cafe/components/CafeReviewsSection";
 import { CafeCTA } from "@/features/cafe/components/CafeCTA";
+import { CafeOwnerDashboard } from "@/features/cafe/components/CafeOwnerDashboard";
+import { SystemModeBar } from "@/components/experience/SystemModeBar";
 import { CafeCategory } from "@/features/cafe/types";
 
 const CATEGORIES: { id: CafeCategory | "all"; label: string; emoji: string }[] = [
@@ -26,6 +30,8 @@ const CATEGORIES: { id: CafeCategory | "all"; label: string; emoji: string }[] =
 
 export default function CafeExperiencePage() {
   const {
+    viewMode,
+    setViewMode,
     selectedCategory,
     setSelectedCategory,
     selectedProduct,
@@ -42,6 +48,7 @@ export default function CafeExperiencePage() {
     setIsCheckoutOpen,
     confirmedOrder,
     setConfirmedOrder,
+    allOrders,
     addToCart,
     removeFromCart,
     updateQuantity,
@@ -53,33 +60,55 @@ export default function CafeExperiencePage() {
       {/* Business-Specific Header */}
       <CafeNavbar cartCount={cartCount} onOpenCart={() => setIsCartOpen(true)} />
 
-      {/* Hero Section */}
-      <CafeHero />
+      {/* Dual System Mode Switcher */}
+      <SystemModeBar
+        viewMode={viewMode}
+        onToggleViewMode={setViewMode}
+        industryName="Artisan Café"
+        badgeText="POS, Inventory, Staff & Order System"
+      />
 
-      {/* Main Experience Interactive Body */}
-      <Container variant="wide" className="py-8">
-        {confirmedOrder ? (
-          <CafeOrderConfirmation
-            order={confirmedOrder}
-            onReset={() => setConfirmedOrder(null)}
-          />
-        ) : (
-          <CafeMenuGrid
-            categories={CATEGORIES}
-            selectedCategory={selectedCategory}
-            onSelectCategory={setSelectedCategory}
-            products={filteredProducts}
-            onSelectProduct={(product) => setSelectedProduct(product)}
-            onQuickAdd={(product) => addToCart(product)}
-          />
-        )}
-      </Container>
+      {viewMode === "owner" ? (
+        <Container variant="wide" className="py-12">
+          <CafeOwnerDashboard orders={allOrders} />
+        </Container>
+      ) : (
+        <>
+          {/* Hero Section */}
+          <CafeHero />
 
-      {/* Roastery Brand Story Section */}
-      <CafeRoasterySection />
+          {/* Main Experience Interactive Body */}
+          <Container variant="wide" className="py-8">
+            {confirmedOrder ? (
+              <CafeOrderConfirmation
+                order={confirmedOrder}
+                onReset={() => setConfirmedOrder(null)}
+              />
+            ) : (
+              <CafeMenuGrid
+                categories={CATEGORIES}
+                selectedCategory={selectedCategory}
+                onSelectCategory={setSelectedCategory}
+                products={filteredProducts}
+                onSelectProduct={(product) => setSelectedProduct(product)}
+                onQuickAdd={(product) => addToCart(product)}
+              />
+            )}
+          </Container>
 
-      {/* Final Conversion CTA */}
-      <CafeCTA />
+          {/* Roastery Brand Story Section */}
+          <CafeRoasterySection />
+
+          {/* Staff Spotlight Section */}
+          <CafeStaffSection />
+
+          {/* Verified Customer Reviews */}
+          <CafeReviewsSection />
+
+          {/* Final Conversion CTA */}
+          <CafeCTA />
+        </>
+      )}
 
       {/* Modals & Overlays */}
       <CafeProductModal

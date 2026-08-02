@@ -63,13 +63,13 @@ export const CafeOrderConfirmation: React.FC<CafeOrderConfirmationProps> = ({
               <span className="text-zinc-300">
                 {item.quantity}x {item.product.name} {item.selectedMilk && `(${item.selectedMilk})`}
               </span>
-              <span className="font-mono text-amber-400">${(item.product.price * item.quantity).toFixed(2)}</span>
+              <span className="font-mono text-amber-400">₹{(item.product.price * item.quantity).toLocaleString('en-IN')}</span>
             </div>
           ))}
         </div>
         <div className="flex justify-between font-mono text-sm font-bold pt-2 text-white border-t border-zinc-800">
           <span>Total Paid</span>
-          <span className="text-amber-400">${order.total.toFixed(2)}</span>
+          <span className="text-amber-400">₹{order.total.toLocaleString('en-IN')}</span>
         </div>
       </div>
 

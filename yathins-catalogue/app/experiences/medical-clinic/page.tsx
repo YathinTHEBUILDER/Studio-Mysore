@@ -11,12 +11,17 @@ import { MedicalDepartmentsOverview } from "@/features/medical-clinic/components
 import { MedicalDoctorDirectory } from "@/features/medical-clinic/components/MedicalDoctorDirectory";
 import { MedicalBookingWorkflow } from "@/features/medical-clinic/components/MedicalBookingWorkflow";
 import { MedicalContactSection } from "@/features/medical-clinic/components/MedicalContactSection";
+import { MedicalPharmacySection } from "@/features/medical-clinic/components/MedicalPharmacySection";
 import { MedicalIntakeModal } from "@/features/medical-clinic/components/MedicalIntakeModal";
 import { MedicalConfirmation } from "@/features/medical-clinic/components/MedicalConfirmation";
 import { MedicalCTA } from "@/features/medical-clinic/components/MedicalCTA";
+import { MedicalOwnerDashboard } from "@/features/medical-clinic/components/MedicalOwnerDashboard";
+import { SystemModeBar } from "@/components/experience/SystemModeBar";
 
 export default function MedicalClinicExperiencePage() {
   const {
+    viewMode,
+    setViewMode,
     selectedDept,
     setSelectedDept,
     selectedDoctor,
@@ -38,49 +43,68 @@ export default function MedicalClinicExperiencePage() {
       {/* Clinic Navbar */}
       <MedicalNavbar onOpenBooking={() => setIsBookingModalOpen(true)} />
 
-      {/* Hero */}
-      <MedicalHero onOpenBooking={() => setIsBookingModalOpen(true)} />
+      {/* Dual System Mode Switcher */}
+      <SystemModeBar
+        viewMode={viewMode}
+        onToggleViewMode={setViewMode}
+        industryName="Medical Clinic"
+        badgeText="OPD Triage, Pharmacy Inventory & Telehealth System"
+      />
 
-      {/* Main Experience Body */}
-      <Container variant="wide" className="py-12 space-y-12">
-        {confirmedAppointment ? (
-          <MedicalConfirmation
-            appointment={confirmedAppointment}
-            onReset={() => setConfirmedAppointment(null)}
-          />
-        ) : (
-          <>
-            <MedicalDepartmentsOverview
-              selectedDept={selectedDept}
-              onSelectDept={setSelectedDept}
-            />
+      {viewMode === "owner" ? (
+        <Container variant="wide" className="py-12">
+          <MedicalOwnerDashboard />
+        </Container>
+      ) : (
+        <>
+          {/* Hero */}
+          <MedicalHero onOpenBooking={() => setIsBookingModalOpen(true)} />
 
-            <MedicalDoctorDirectory
-              doctors={filteredDoctors}
-              selectedDoctor={selectedDoctor}
-              onSelectDoctor={setSelectedDoctor}
-              onBookDoctor={(doc) => {
-                setSelectedDoctor(doc);
-                setIsBookingModalOpen(true);
-              }}
-            />
+          {/* Main Experience Body */}
+          <Container variant="wide" className="py-12 space-y-12">
+            {confirmedAppointment ? (
+              <MedicalConfirmation
+                appointment={confirmedAppointment}
+                onReset={() => setConfirmedAppointment(null)}
+              />
+            ) : (
+              <>
+                <MedicalDepartmentsOverview
+                  selectedDept={selectedDept}
+                  onSelectDept={setSelectedDept}
+                />
 
-            <MedicalBookingWorkflow
-              consultationMode={consultationMode}
-              onSetConsultationMode={setConsultationMode}
-              selectedDate={selectedDate}
-              onSetSelectedDate={setSelectedDate}
-              onProceed={() => setIsBookingModalOpen(true)}
-            />
-          </>
-        )}
-      </Container>
+                <MedicalDoctorDirectory
+                  doctors={filteredDoctors}
+                  selectedDoctor={selectedDoctor}
+                  onSelectDoctor={setSelectedDoctor}
+                  onBookDoctor={(doc) => {
+                    setSelectedDoctor(doc);
+                    setIsBookingModalOpen(true);
+                  }}
+                />
 
-      {/* Clinic Contact & Hours */}
-      <MedicalContactSection />
+                <MedicalBookingWorkflow
+                  consultationMode={consultationMode}
+                  onSetConsultationMode={setConsultationMode}
+                  selectedDate={selectedDate}
+                  onSetSelectedDate={setSelectedDate}
+                  onProceed={() => setIsBookingModalOpen(true)}
+                />
+              </>
+            )}
+          </Container>
 
-      {/* Conversion CTA */}
-      <MedicalCTA />
+          {/* Pharmacy & Diagnostics */}
+          <MedicalPharmacySection />
+
+          {/* Clinic Contact & Hours */}
+          <MedicalContactSection />
+
+          {/* Conversion CTA */}
+          <MedicalCTA />
+        </>
+      )}
 
       {/* Intake Modal */}
       <MedicalIntakeModal

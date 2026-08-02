@@ -5,6 +5,7 @@ import { DentalService, DentalDoctor, DentalAppointment } from "./types";
 import { DENTAL_SERVICES, DENTAL_DOCTORS } from "./data";
 
 export function useDentalState() {
+  const [viewMode, setViewMode] = React.useState<"customer" | "owner">("customer");
   const [selectedService, setSelectedService] = React.useState<DentalService>(DENTAL_SERVICES[0]);
   const [selectedDoctor, setSelectedDoctor] = React.useState<DentalDoctor>(DENTAL_DOCTORS[0]);
   const [selectedDate, setSelectedDate] = React.useState<string>("Tomorrow, 10:00 AM");
@@ -30,6 +31,8 @@ export function useDentalState() {
   };
 
   return {
+    viewMode,
+    setViewMode,
     selectedService,
     setSelectedService,
     selectedDoctor,

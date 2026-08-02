@@ -18,13 +18,13 @@ export const GymMembershipTiers: React.FC<GymMembershipTiersProps> = ({
   onJoinTier,
 }) => {
   return (
-    <section className="py-12 bg-zinc-950 space-y-8">
+    <section className="py-12 bg-black space-y-8">
       <div className="text-center space-y-3 max-w-xl mx-auto">
-        <span className="text-xs font-mono uppercase tracking-widest text-indigo-400 font-bold block">
-          Membership Passes
+        <span className="text-xs font-mono uppercase tracking-widest text-lime-400 font-bold block">
+          Membership Passes & Access
         </span>
-        <h2 className="text-3xl font-display font-semibold text-white">
-          Flexible memberships with zero lock-in.
+        <h2 className="text-3xl sm:text-5xl font-sans font-black uppercase tracking-wider italic text-white">
+          NO CONTRACTS. PURE DISCIPLINE.
         </h2>
       </div>
 
@@ -35,31 +35,31 @@ export const GymMembershipTiers: React.FC<GymMembershipTiersProps> = ({
             <div
               key={tier.id}
               onClick={() => onSelectTier(tier)}
-              className={`p-6 rounded-3xl bg-zinc-900/60 border cursor-pointer transition-all duration-300 flex flex-col justify-between ${
+              className={`p-7 rounded-tl-2xl rounded-br-2xl bg-zinc-900/90 border cursor-pointer transition-all duration-300 flex flex-col justify-between ${
                 isSelected
-                  ? "border-indigo-500 bg-indigo-950/20 shadow-xl shadow-indigo-950/30"
-                  : "border-zinc-800/80 hover:border-indigo-500/40"
+                  ? "border-lime-400 bg-indigo-950/40 shadow-2xl shadow-indigo-950/80"
+                  : "border-indigo-500/30 hover:border-lime-400/60"
               }`}
             >
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="font-display text-xl font-semibold text-white">{tier.name}</h3>
+                  <h3 className="font-sans font-black text-xl text-white uppercase italic">{tier.name}</h3>
                   {tier.badge && (
-                    <span className="text-[10px] font-mono uppercase tracking-widest px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 font-bold">
+                    <span className="text-[10px] font-mono uppercase tracking-widest px-3 py-1 rounded-tl-lg rounded-br-lg bg-lime-400 text-black font-extrabold shadow-md">
                       {tier.badge}
                     </span>
                   )}
                 </div>
 
                 <div className="flex items-baseline gap-1">
-                  <span className="font-mono text-3xl font-bold text-white">${tier.priceMonthly}</span>
-                  <span className="text-xs font-mono text-zinc-400">/ month</span>
+                  <span className="font-mono text-4xl font-extrabold text-lime-400">₹{tier.priceMonthly.toLocaleString('en-IN')}</span>
+                  <span className="text-xs font-mono text-indigo-300/80 uppercase">/ month</span>
                 </div>
 
-                <ul className="space-y-2.5 border-t border-zinc-800/60 pt-4">
+                <ul className="space-y-3 border-t border-indigo-900/50 pt-5">
                   {tier.features.map((feat, idx) => (
-                    <li key={idx} className="flex items-center gap-2 text-xs text-zinc-300">
-                      <Check className="w-3.5 h-3.5 text-indigo-400 shrink-0" />
+                    <li key={idx} className="flex items-center gap-2.5 text-xs font-sans text-indigo-100">
+                      <Check className="w-4 h-4 text-lime-400 shrink-0" />
                       <span>{feat}</span>
                     </li>
                   ))}
@@ -71,10 +71,10 @@ export const GymMembershipTiers: React.FC<GymMembershipTiersProps> = ({
                   e.stopPropagation();
                   onJoinTier(tier);
                 }}
-                className="w-full mt-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/20"
+                className="w-full mt-7 py-3 rounded-tl-xl rounded-br-xl bg-indigo-600 hover:bg-indigo-500 text-white font-mono font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 active:scale-95 border border-indigo-400/40"
               >
-                <span>Select Membership</span>
-                <ArrowRight className="w-3.5 h-3.5" />
+                <span>Claim Pass</span>
+                <ArrowRight className="w-4 h-4 text-lime-400" />
               </button>
             </div>
           );
@@ -83,3 +83,4 @@ export const GymMembershipTiers: React.FC<GymMembershipTiersProps> = ({
     </section>
   );
 };
+

@@ -1,7 +1,9 @@
 "use client";
 
 import * as React from "react";
+import { m } from "framer-motion";
 import { Users, Calendar, Clock, Sparkles } from "lucide-react";
+import { springs } from "@/lib/tokens/transitions";
 
 interface RestaurantReservationEngineProps {
   partySize: number;
@@ -32,46 +34,49 @@ export const RestaurantReservationEngine: React.FC<RestaurantReservationEnginePr
   onProceed,
 }) => {
   return (
-    <div className="p-6 rounded-3xl bg-zinc-900/80 border border-rose-500/20 shadow-2xl space-y-6 text-white">
-      <div className="flex items-center gap-2 text-rose-400 font-mono text-xs uppercase tracking-widest">
-        <Sparkles className="w-4 h-4" />
-        <span>Step 1 • Table Selection Engine</span>
+    <div className="p-8 rounded-sm bg-gradient-to-b from-stone-900/90 via-stone-950 to-stone-950 border border-amber-500/30 shadow-2xl space-y-6 text-amber-50 relative">
+      <div className="flex items-center gap-2.5 text-amber-400 font-mono text-[11px] uppercase tracking-[0.25em]">
+        <Sparkles className="w-3.5 h-3.5 animate-pulse" />
+        <span>Stage I • Evening Table Reservation</span>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Guests */}
-        <div className="space-y-2">
-          <label className="text-xs font-mono uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-            <Users className="w-4 h-4 text-rose-400" />
+        <div className="space-y-2.5">
+          <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-amber-200/60 flex items-center gap-2">
+            <Users className="w-3.5 h-3.5 text-amber-400" />
             <span>Party Size</span>
           </label>
-          <div className="flex items-center gap-2 p-1 bg-zinc-950 rounded-xl border border-zinc-800">
+          <div className="flex items-center gap-1.5 p-1 bg-stone-950 rounded-sm border border-amber-900/40">
             {[1, 2, 4, 6, 8].map((size) => (
-              <button
+              <m.button
                 key={size}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                transition={springs.snappy}
                 onClick={() => onSetPartySize(size)}
-                className={`flex-1 py-2 text-xs font-mono font-bold rounded-lg transition-all ${
+                className={`flex-1 py-2 text-xs font-mono font-bold transition-colors rounded-sm ${
                   partySize === size
-                    ? "bg-rose-600 text-white shadow-md shadow-rose-600/30"
-                    : "text-zinc-400 hover:text-white"
+                    ? "bg-amber-500 text-stone-950 shadow-md shadow-amber-500/20"
+                    : "text-amber-200/60 hover:text-amber-100 hover:bg-stone-900"
                 }`}
               >
                 {size} {size === 1 ? "Guest" : "Guests"}
-              </button>
+              </m.button>
             ))}
           </div>
         </div>
 
         {/* Date / Time */}
-        <div className="space-y-2">
-          <label className="text-xs font-mono uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-            <Clock className="w-4 h-4 text-rose-400" />
-            <span>Select Time Slot</span>
+        <div className="space-y-2.5">
+          <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-amber-200/60 flex items-center gap-2">
+            <Clock className="w-3.5 h-3.5 text-amber-400" />
+            <span>Seating Time</span>
           </label>
           <select
             value={selectedDate}
             onChange={(e) => onSetSelectedDate(e.target.value)}
-            className="w-full px-4 py-2.5 rounded-xl bg-zinc-950 border border-zinc-800 text-xs font-mono text-white focus:outline-none focus:border-rose-500"
+            className="w-full px-4 py-2.5 rounded-sm bg-stone-950 border border-amber-900/40 text-xs font-mono text-amber-100 focus:outline-none focus:border-amber-400 transition-colors"
           >
             {TIME_SLOTS.map((slot) => (
               <option key={slot} value={slot}>
@@ -82,57 +87,64 @@ export const RestaurantReservationEngine: React.FC<RestaurantReservationEnginePr
         </div>
 
         {/* Seating Area */}
-        <div className="space-y-2">
-          <label className="text-xs font-mono uppercase tracking-wider text-zinc-400 flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-rose-400" />
+        <div className="space-y-2.5">
+          <label className="text-[11px] font-mono uppercase tracking-[0.2em] text-amber-200/60 flex items-center gap-2">
+            <Calendar className="w-3.5 h-3.5 text-amber-400" />
             <span>Atmosphere</span>
           </label>
           <div className="grid grid-cols-3 gap-2">
-            <button
+            <m.button
+              whileTap={{ scale: 0.96 }}
               onClick={() => onSetSeatingArea("main_dining")}
-              className={`p-2 rounded-xl text-[11px] font-mono font-semibold transition-all border ${
+              className={`p-2 rounded-sm text-[10px] font-mono uppercase tracking-wider font-semibold transition-all border ${
                 seatingArea === "main_dining"
-                  ? "bg-rose-600/20 border-rose-500 text-rose-300"
-                  : "bg-zinc-950 border-zinc-800 text-zinc-400"
+                  ? "bg-rose-950/80 border-amber-500 text-amber-200 shadow-md"
+                  : "bg-stone-950 border-amber-900/30 text-amber-200/50 hover:text-amber-200"
               }`}
             >
-              Main Room
-            </button>
-            <button
+              Main Dining
+            </m.button>
+            <m.button
+              whileTap={{ scale: 0.96 }}
               onClick={() => onSetSeatingArea("chef_counter")}
-              className={`p-2 rounded-xl text-[11px] font-mono font-semibold transition-all border ${
+              className={`p-2 rounded-sm text-[10px] font-mono uppercase tracking-wider font-semibold transition-all border ${
                 seatingArea === "chef_counter"
-                  ? "bg-rose-600/20 border-rose-500 text-rose-300"
-                  : "bg-zinc-950 border-zinc-800 text-zinc-400"
+                  ? "bg-rose-950/80 border-amber-500 text-amber-200 shadow-md"
+                  : "bg-stone-950 border-amber-900/30 text-amber-200/50 hover:text-amber-200"
               }`}
             >
               Chef's Bar
-            </button>
-            <button
+            </m.button>
+            <m.button
+              whileTap={{ scale: 0.96 }}
               onClick={() => onSetSeatingArea("terrace")}
-              className={`p-2 rounded-xl text-[11px] font-mono font-semibold transition-all border ${
+              className={`p-2 rounded-sm text-[10px] font-mono uppercase tracking-wider font-semibold transition-all border ${
                 seatingArea === "terrace"
-                  ? "bg-rose-600/20 border-rose-500 text-rose-300"
-                  : "bg-zinc-950 border-zinc-800 text-zinc-400"
+                  ? "bg-rose-950/80 border-amber-500 text-amber-200 shadow-md"
+                  : "bg-stone-950 border-amber-900/30 text-amber-200/50 hover:text-amber-200"
               }`}
             >
               Garden Patio
-            </button>
+            </m.button>
           </div>
         </div>
       </div>
 
-      <div className="flex items-center justify-between border-t border-zinc-800 pt-4 text-xs font-mono">
-        <div className="text-zinc-400">
-          Table Holding Deposit: <strong className="text-rose-400">${depositRequired}</strong> (${25}/guest)
+      <div className="flex flex-col sm:flex-row items-center justify-between border-t border-amber-900/30 pt-5 text-xs font-mono gap-4">
+        <div className="text-amber-200/60">
+          Table Holding Deposit: <strong className="text-amber-400 font-bold">₹{depositRequired.toLocaleString('en-IN')}</strong> (₹500/guest)
         </div>
-        <button
+        <m.button
+          whileHover={{ scale: 1.03 }}
+          whileTap={{ scale: 0.97 }}
+          transition={springs.snappy}
           onClick={onProceed}
-          className="px-6 py-2.5 rounded-xl bg-rose-600 text-white font-semibold hover:bg-rose-500 transition-all shadow-md shadow-rose-600/20"
+          className="w-full sm:w-auto px-7 py-3 rounded-sm bg-gradient-to-r from-amber-500 to-amber-600 text-stone-950 font-mono font-bold text-xs uppercase tracking-[0.15em] hover:bg-amber-400 transition-all shadow-xl shadow-amber-500/20"
         >
-          Confirm Reservation Slot
-        </button>
+          Confirm Reservation
+        </m.button>
       </div>
     </div>
   );
 };
+

@@ -61,13 +61,13 @@ export function LenisProvider({ children }: LenisProviderProps) {
 
     // Instantiate Lenis with physics matched to a premium editorial feel
     const lenisInstance = new Lenis({
-      duration: 1.2,
+      duration: 1.5, // Decelerates slower for an elegant, premium feel
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: "vertical",
       gestureOrientation: "vertical",
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 2,
+      wheelMultiplier: 0.85, // Adds a bit of resistance/weight to the scroll
+      touchMultiplier: 1.5,
     });
 
     const frameId = requestAnimationFrame(() => {

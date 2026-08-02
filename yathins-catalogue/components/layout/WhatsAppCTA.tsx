@@ -33,15 +33,15 @@ export const WhatsAppCTA: React.FC<WhatsAppCTAProps> = ({
         target="_blank"
         rel="noopener noreferrer"
         onClick={onClick}
-        whileHover={{ scale: 1.04 }}
+        whileHover={{ scale: 1.04, y: -1 }}
         whileTap={{ scale: 0.96 }}
         className={cn(
-          "inline-flex items-center justify-center p-2.5 rounded-xl bg-zinc-900 text-emerald-400 border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-zinc-400",
+          "inline-flex items-center justify-center p-2.5 rounded-full bg-zinc-900 text-emerald-400 border border-zinc-800 hover:bg-zinc-800 hover:border-zinc-700 transition-all shadow-sm outline-none focus-visible:ring-1 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
           className
         )}
         aria-label="Chat on WhatsApp"
       >
-        <WhatsAppIcon className="h-5 w-5 fill-current" />
+        <WhatsAppIcon className="h-4.5 w-4.5 fill-current" />
       </m.a>
     );
   }
@@ -56,10 +56,10 @@ export const WhatsAppCTA: React.FC<WhatsAppCTAProps> = ({
       whileTap={{ scale: 0.98 }}
       transition={{ type: "spring", stiffness: 400, damping: 28 }}
       className={cn(
-        "inline-flex items-center justify-center gap-2.5 px-5 py-2.5 text-xs font-semibold uppercase tracking-wider rounded-xl transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-zinc-400",
+        "inline-flex items-center justify-center gap-2.5 px-6 py-3 text-[11px] font-mono font-semibold uppercase tracking-[0.2em] rounded-full transition-all duration-300 outline-none focus-visible:ring-1 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
         variant === "primary"
-          ? "bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-700/80 shadow-sm"
-          : "bg-transparent hover:bg-zinc-900/60 text-zinc-300 border border-zinc-800 hover:border-zinc-700",
+          ? "bg-zinc-900/90 hover:bg-zinc-800 text-white border border-zinc-700/80 shadow-lg shadow-black/40 hover:border-zinc-500/80"
+          : "bg-transparent hover:bg-zinc-900/80 text-zinc-300 border border-zinc-800 hover:border-zinc-600",
         className
       )}
       aria-label="Chat on WhatsApp"

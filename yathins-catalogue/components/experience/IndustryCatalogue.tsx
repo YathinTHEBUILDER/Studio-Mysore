@@ -1,199 +1,292 @@
 "use client";
 
 /**
- * IndustryCatalogue — Homepage Entrance to Industry Experiences
+ * IndustryCatalogue — Experience Catalogue
  *
  * Section ID: #experiences
- * Displays premium entrance cards for 5 industries:
- *  1. Café & Bakery ☕
- *  2. Restaurant & Dining 🍽
+ * Premium cover page entry points for 5 business experiences:
+ *  1. Café ☕
+ *  2. Restaurant 🍽
  *  3. Dental Clinic 🦷
  *  4. Medical Clinic 🏥
- *  5. Gym & Fitness 💪
+ *  5. Gym 💪
  *
- * Hover interactions are subtle. Clicking a card navigates directly to the dedicated page.
+ * Each card features strictly:
+ *  - Large photography
+ *  - Industry title
+ *  - One short sentence
+ *  - One CTA button
+ *  - Nothing else
+ *
+ * Clicking a card navigates directly to the complete experience page.
  */
 
 import * as React from "react";
 import Link from "next/link";
-import { m } from "framer-motion";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-interface IndustryItem {
-  id: string;
-  slug: string;
-  emoji: string;
-  badge: string;
-  title: string;
-  description: string;
-  accentColor: string;
-  bgGradient: string;
-  imageUrl: string;
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
 }
 
-const INDUSTRY_ITEMS: IndustryItem[] = [
+export interface CatalogueItem {
+  id: string;
+  slug: string;
+  number: string;
+  title: string;
+  sentence: string;
+  cta: string;
+  route: string;
+  imageUrl: string;
+  gridSpanClass: string;
+}
+
+export const CATALOGUE_ITEMS: CatalogueItem[] = [
   {
     id: "cafe",
     slug: "cafe",
-    emoji: "☕",
-    badge: "Café & Bakery",
-    title: "Artisan Coffee & QR Ordering",
-    description:
-      "Customers scan the QR code, order drinks, and pay from their table without waiting at the counter.",
-    accentColor: "#A0785A",
-    bgGradient: "radial-gradient(circle at 80% 20%, rgba(160, 120, 90, 0.15) 0%, rgba(9, 9, 11, 0.95) 70%)",
+    number: "01 / 05",
+    title: "Café",
+    sentence: "Less time taking orders.\nMore time making coffee.",
+    cta: "Explore Café Website",
+    route: "/experiences/cafe",
     imageUrl:
-      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1800&q=90",
+    gridSpanClass: "lg:col-span-2",
   },
   {
     id: "restaurant",
     slug: "restaurant",
-    emoji: "🍽",
-    badge: "Restaurant & Dining",
-    title: "Dining & Table Reservations",
-    description:
-      "Guests reserve tables online, explore your menu, and place orders directly to your kitchen.",
-    accentColor: "#E11D48",
-    bgGradient: "radial-gradient(circle at 80% 20%, rgba(225, 29, 72, 0.15) 0%, rgba(9, 9, 11, 0.95) 70%)",
+    number: "02 / 05",
+    title: "Restaurant",
+    sentence: "Let guests view menus and order right from their table.",
+    cta: "Explore Restaurant Website",
+    route: "/experiences/restaurant",
     imageUrl:
-      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1800&q=90",
+    gridSpanClass: "lg:col-span-2",
   },
   {
     id: "dental",
     slug: "dental",
-    emoji: "🦷",
-    badge: "Dental Clinic",
-    title: "Patient Care & Appointments",
-    description:
-      "Patients select dates and book appointments online. Your reception spends less time answering calls.",
-    accentColor: "#3B82F6",
-    bgGradient: "radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15) 0%, rgba(9, 9, 11, 0.95) 70%)",
+    number: "03 / 05",
+    title: "Dental Clinic",
+    sentence: "Patients book appointments online without needing to call.",
+    cta: "Explore Dental Website",
+    route: "/experiences/dental",
     imageUrl:
-      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&w=1800&q=90",
+    gridSpanClass: "lg:col-span-2",
   },
   {
     id: "medical",
-    slug: "medical",
-    emoji: "🏥",
-    badge: "Medical Clinic",
-    title: "Doctor Booking & Consultations",
-    description:
-      "Patients find the right specialist and pick a time slot online. Your daily schedule stays organised.",
-    accentColor: "#14B8A6",
-    bgGradient: "radial-gradient(circle at 80% 20%, rgba(20, 184, 166, 0.15) 0%, rgba(9, 9, 11, 0.95) 70%)",
+    slug: "medical-clinic",
+    number: "04 / 05",
+    title: "Medical Clinic",
+    sentence: "Patients find answers and book visits before stepping inside.",
+    cta: "Explore Medical Website",
+    route: "/experiences/medical-clinic",
     imageUrl:
-      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=1800&q=90",
+    gridSpanClass: "lg:col-span-3",
   },
   {
     id: "gym",
     slug: "gym",
-    emoji: "💪",
-    badge: "Gym & Fitness",
-    title: "Fitness Classes & Memberships",
-    description:
-      "Visitors explore membership plans, book trial sessions, and join online without desk delays.",
-    accentColor: "#6366F1",
-    bgGradient: "radial-gradient(circle at 80% 20%, rgba(99, 102, 241, 0.15) 0%, rgba(9, 9, 11, 0.95) 70%)",
+    number: "05 / 05",
+    title: "Gym",
+    sentence: "New members pick a plan and sign up in seconds.",
+    cta: "Explore Gym Website",
+    route: "/experiences/gym",
     imageUrl:
-      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1200&q=80",
+      "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1800&q=90",
+    gridSpanClass: "lg:col-span-3",
   },
 ];
 
 export function IndustryCatalogue() {
+  const sectionRef = React.useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = React.useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
+
+  React.useEffect(() => {
+    const prefersMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    const timer = setTimeout(() => {
+      setIsMounted(true);
+      setPrefersReducedMotion(prefersMotion);
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  React.useEffect(() => {
+    if (!isMounted || prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      // Orchestrated master timeline for Industry Catalogue section
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 78%",
+          toggleActions: "play none none none",
+        },
+      });
+
+      // 1. Section Header entrance
+      tl.fromTo(
+        ".js-catalogue-header",
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.85,
+          ease: "power4.out",
+        }
+      );
+
+      // 2. Cards stagger-reveal in overlap BEFORE header animation finishes
+      const cards = gsap.utils.toArray<HTMLElement>(".js-catalogue-card-container");
+      tl.fromTo(
+        cards,
+        { opacity: 0, y: 28 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+        },
+        "-=0.55"
+      );
+
+      // 3. Image clip-path unwrapping & scale-down synchronized across cards
+      cards.forEach((card, idx) => {
+        const img = card.querySelector(".js-catalogue-card-img");
+        if (img) {
+          tl.fromTo(
+            img,
+            {
+              clipPath: "inset(6% 6% 6% 6% round 2px)",
+              scale: 1.08,
+            },
+            {
+              clipPath: "inset(0% 0% 0% 0% round 2px)",
+              scale: 1.0,
+              duration: 1.1,
+              ease: "power4.out",
+            },
+            `-=${0.75 - idx * 0.05}` // Continuous fluid stagger overlap
+          );
+        }
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, [isMounted, prefersReducedMotion]);
+
   return (
     <section
+      ref={sectionRef}
       id="experiences"
-      className="relative py-28 sm:py-36 bg-background border-t border-zinc-800/60 overflow-hidden"
-      aria-label="Industry Catalogue"
+      className="relative py-36 sm:py-48 lg:py-56 bg-zinc-950 border-t border-zinc-900 overflow-hidden"
+      aria-label="Experience Catalogue"
     >
-      <div className="container-wide w-full relative z-10 space-y-16">
-        
+      <div className="container-wide w-full relative z-10 space-y-20 lg:space-y-24">
         {/* ── Section Header ───────────────────────────────────────────── */}
-        <div className="max-w-3xl space-y-5">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-[1px] bg-zinc-700" />
-            <span className="text-xs font-mono font-medium tracking-[0.25em] uppercase text-zinc-400">
-              Industry Catalogue
+        <div
+          className={cn(
+            "max-w-4xl space-y-6 js-catalogue-header",
+            isMounted && !prefersReducedMotion && "opacity-0"
+          )}
+        >
+          <div className="flex items-center gap-4">
+            <div className="w-12 h-[1px] bg-zinc-700" />
+            <span className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-zinc-400">
+              Experience Catalogue
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-display font-semibold text-white tracking-tight leading-[1.05]">
-            Choose your business.
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-display font-semibold text-white tracking-tight leading-[1.02]">
+            Try a website built for your industry.
           </h2>
 
-          <p className="text-zinc-400 text-base sm:text-lg leading-relaxed max-w-2xl">
-            Each experience below is a complete website built for a specific industry. Select yours to try it.
+          <p className="text-zinc-400 text-lg sm:text-2xl font-light leading-relaxed max-w-2xl">
+            Explore complete, production-grade applications tailored to different business models.
           </p>
         </div>
 
-        {/* ── Industry Cards Grid ──────────────────────────────────────── */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          {INDUSTRY_ITEMS.map((item, index) => (
-            <m.div
+        {/* ── Editorial Experience Cards Grid ───────────────────────────── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-8 lg:gap-10">
+          {CATALOGUE_ITEMS.map((item) => (
+            <div
               key={item.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.5, delay: index * 0.08 }}
               className={cn(
-                "group relative flex flex-col justify-between rounded-2xl overflow-hidden min-h-[380px] p-8",
-                "bg-zinc-900/60 border border-zinc-800/80 shadow-xl",
-                "transition-all duration-300 ease-out hover:border-zinc-700 hover:shadow-2xl hover:shadow-black/60"
+                "h-full js-catalogue-card-container",
+                isMounted && !prefersReducedMotion && "opacity-0",
+                item.gridSpanClass
               )}
-              style={{ background: item.bgGradient }}
             >
-              {/* Background Editorial Image with Dark Overlay */}
-              <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-20 transition-opacity duration-500 group-hover:opacity-30">
-                <img
-                  src={item.imageUrl}
-                  alt={item.badge}
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/80 to-transparent" />
-              </div>
+              <Link
+                href={item.route}
+                className={cn(
+                  "group relative flex flex-col justify-between rounded-sm p-1 overflow-hidden h-full min-h-[500px] sm:min-h-[560px]",
+                  "bg-zinc-950/90 border border-zinc-800/90 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9)]",
+                  "transition-all duration-700 ease-out hover:-translate-y-2 hover:border-zinc-500/50 hover:shadow-black/95 cursor-pointer block"
+                )}
+              >
+                {/* 1. Cinematic Film Frame Still */}
+                <div className="absolute inset-1 z-0 overflow-hidden pointer-events-none rounded-none">
+                  <img
+                    src={item.imageUrl}
+                    alt={item.title}
+                    className="w-full h-full object-cover contrast-[1.07] brightness-[0.97] saturate-[1.05] transition-transform duration-1000 ease-out group-hover:scale-105 js-catalogue-card-img"
+                    style={
+                      isMounted && !prefersReducedMotion
+                        ? { clipPath: "inset(6% 6% 6% 6% round 2px)" }
+                        : undefined
+                    }
+                  />
+                  {/* Subtle Radial Vignette Overlay */}
+                  <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_35%,rgba(9,9,11,0.85)_100%)] pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/75 to-zinc-950/20 group-hover:via-zinc-950/65 transition-colors duration-500" />
+                </div>
 
-              {/* Card Top Content */}
-              <div className="relative z-10 space-y-6">
-                {/* Badge & Emoji */}
-                <div className="flex items-center justify-between">
-                  <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-mono font-medium tracking-wider uppercase bg-zinc-900/90 text-zinc-300 border border-zinc-800/90">
-                    <span>{item.emoji}</span>
-                    <span>{item.badge}</span>
+                {/* 2. Film Frame Content Layout */}
+                <div className="relative z-10 flex flex-col justify-between h-full p-8 sm:p-10">
+                  <div className="flex items-center justify-between border-b border-zinc-800/60 pb-6">
+                    <h3 className="font-display text-3xl sm:text-4xl font-semibold text-white tracking-tight">
+                      {item.title}
+                    </h3>
+                    <span className="font-mono text-xs text-zinc-400 tracking-widest uppercase">
+                      {item.number}
+                    </span>
                   </div>
 
-                  <span
-                    className="w-2 h-2 rounded-full"
-                    style={{ backgroundColor: item.accentColor }}
-                  />
+                  {/* 3. One Editorial Sentence */}
+                  <div className="my-auto py-10">
+                    <p className="font-display text-2xl sm:text-3xl lg:text-4xl font-light text-zinc-100 leading-snug tracking-tight group-hover:text-white transition-colors duration-300 whitespace-pre-line">
+                      {item.sentence}
+                    </p>
+                  </div>
+
+                  {/* 4. Action CTA Indicator */}
+                  <div className="flex items-center justify-between pt-6 border-t border-zinc-800/60">
+                    <span className="font-mono text-xs text-zinc-300 font-medium tracking-wide uppercase group-hover:text-white transition-colors">
+                      {item.cta}
+                    </span>
+                    <div className="w-10 h-10 rounded-full bg-white/10 border border-white/20 flex items-center justify-center text-white group-hover:bg-white group-hover:text-zinc-950 transition-all duration-300">
+                      <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-0.5" />
+                    </div>
+                  </div>
                 </div>
-
-                {/* Title & Description */}
-                <div className="space-y-2.5">
-                  <h3 className="text-2xl font-display font-semibold text-white tracking-tight leading-snug group-hover:text-white transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-sm text-zinc-400 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-              </div>
-
-              {/* Card Bottom CTA Link */}
-              <div className="relative z-10 pt-8 mt-6 border-t border-zinc-800/60 flex items-center justify-between">
-                <Link
-                  href={`/experiences/${item.slug}`}
-                  className="inline-flex items-center gap-2 text-sm font-semibold text-white group-hover:text-white transition-colors outline-none focus-visible:ring-2 focus-visible:ring-white rounded-md"
-                >
-                  <span>Try It Yourself</span>
-                  <ArrowUpRight className="w-4 h-4 text-zinc-400 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-white" />
-                </Link>
-
-                <span className="text-[11px] font-mono text-zinc-500 uppercase tracking-widest">
-                  Real Website
-                </span>
-              </div>
-            </m.div>
+              </Link>
+            </div>
           ))}
         </div>
       </div>

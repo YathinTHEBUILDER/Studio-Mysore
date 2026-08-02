@@ -13,11 +13,13 @@ export interface DentalService {
 export interface DentalDoctor {
   id: string;
   name: string;
+  qualifications: string;
   role: string;
   specialty: string;
   experience: string;
   image: string;
   rating: number;
+  availableDays: string;
 }
 
 export interface DentalAppointment {
@@ -31,4 +33,15 @@ export interface DentalAppointment {
   timeSlot: string;
   insuranceProvider?: string;
   createdAt: string;
+}
+
+export interface DentalReview {
+  id: string;
+  patientName: string;
+  rating: number;
+  treatment: string;
+  doctorName: string;
+  comment: string;
+  date: string;
+  avatar: string;
 }

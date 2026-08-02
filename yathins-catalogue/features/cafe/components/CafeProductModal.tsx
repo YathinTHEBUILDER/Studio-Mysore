@@ -11,7 +11,7 @@ interface CafeProductModalProps {
   onAddToCart: (product: CafeProduct, quantity: number, options: { milk: string; sweetness: string; notes: string }) => void;
 }
 
-const MILK_OPTIONS = ["Whole Milk", "Oat Milk (+$0.60)", "Almond Milk (+$0.60)", "Skim Milk"];
+const MILK_OPTIONS = ["Whole Milk", "Oat Milk (+₹30)", "Almond Milk (+₹30)", "Skim Milk"];
 const SWEETNESS_OPTIONS = ["0%", "50%", "100% (Standard)"];
 
 export const CafeProductModal: React.FC<CafeProductModalProps> = ({
@@ -64,12 +64,16 @@ export const CafeProductModal: React.FC<CafeProductModalProps> = ({
           </button>
 
           {/* Product Header */}
-          <div className="flex gap-4 items-start pt-2">
-            <img
-              src={product.image}
-              alt={product.name}
-              className="w-24 h-24 rounded-2xl object-cover border border-zinc-800 shrink-0"
-            />
+          <div className="flex flex-col sm:flex-row gap-5 items-start pt-2">
+            <div className="relative w-full sm:w-44 aspect-square rounded-sm border border-amber-500/30 p-1 bg-stone-950 shadow-lg shrink-0 overflow-hidden group">
+              <img
+                src={product.image}
+                alt={product.name}
+                className="w-full h-full object-cover contrast-[1.07] brightness-[0.97] saturate-[1.05]"
+              />
+              <div className="absolute inset-0 bg-amber-900/10 mix-blend-soft-light pointer-events-none" />
+              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(9,9,11,0.75)_100%)] pointer-events-none" />
+            </div>
             <div className="space-y-1">
               {product.badge && (
                 <span className="text-[10px] font-mono uppercase tracking-widest px-2 py-0.5 rounded bg-amber-500/20 text-amber-400 border border-amber-500/30">
@@ -77,7 +81,7 @@ export const CafeProductModal: React.FC<CafeProductModalProps> = ({
                 </span>
               )}
               <h3 className="font-display text-xl font-semibold leading-tight">{product.name}</h3>
-              <span className="font-mono text-lg font-bold text-amber-400 block">${product.price.toFixed(2)}</span>
+              <span className="font-mono text-lg font-bold text-amber-400 block">₹{product.price.toLocaleString('en-IN')}</span>
             </div>
           </div>
 
@@ -163,7 +167,7 @@ export const CafeProductModal: React.FC<CafeProductModalProps> = ({
               className="flex-1 ml-4 py-3.5 px-6 rounded-xl bg-amber-500 text-zinc-950 hover:bg-amber-400 font-semibold text-sm transition-all flex items-center justify-center gap-2 shadow-lg shadow-amber-500/20"
             >
               <Check className="w-4 h-4" />
-              <span>Add to Order — ${(product.price * quantity).toFixed(2)}</span>
+              <span>Add to Order — ₹{(product.price * quantity).toLocaleString('en-IN')}</span>
             </button>
           </div>
         </m.div>

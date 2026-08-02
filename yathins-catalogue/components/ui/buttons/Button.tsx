@@ -4,13 +4,13 @@ import * as React from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { cva, type VariantProps } from "class-variance-authority";
 import { m, useReducedMotion } from "framer-motion";
-import { Loader2 } from "lucide-react";
+import { Loader2, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { springs } from "@/lib/tokens/transitions";
 
 const buttonVariants = cva(
   [
-    "inline-flex items-center justify-center rounded-[10px] text-sm font-medium transition-colors cursor-pointer select-none",
+    "inline-flex items-center justify-center rounded-[10px] text-sm font-medium transition-all duration-200 cursor-pointer select-none",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400 focus-visible:ring-offset-2 focus-visible:ring-offset-neutral-950",
     "disabled:pointer-events-none disabled:opacity-50 disabled:cursor-not-allowed",
     "active:opacity-90",
@@ -59,6 +59,7 @@ export interface ButtonProps
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   loading?: boolean;
+  success?: boolean;
   asChild?: boolean;
 }
 
@@ -72,6 +73,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       leftIcon,
       rightIcon,
       loading = false,
+      success = false,
       disabled = false,
       asChild = false,
       children,
@@ -87,11 +89,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <>
         {loading ? (
           <Loader2 className="h-4 w-4 animate-spin shrink-0 text-current" aria-hidden="true" />
+        ) : success ? (
+          <Check className="h-4 w-4 shrink-0 text-emerald-400" aria-hidden="true" />
         ) : (
           leftIcon && <span className="shrink-0 inline-flex items-center">{leftIcon}</span>
         )}
         {children && <span>{children}</span>}
-        {!loading && rightIcon && (
+        {!loading && !success && rightIcon && (
           <span className="shrink-0 inline-flex items-center">{rightIcon}</span>
         )}
       </>
@@ -113,11 +117,17 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <m.button
         ref={ref}
         disabled={isDisabled}
+        whileHover={
+          isDisabled || shouldReduceMotion ? undefined : { scale: 1.02 }
+        }
         whileTap={
-          isDisabled || shouldReduceMotion ? undefined : { scale: 0.98 }
+          isDisabled || shouldReduceMotion ? undefined : { scale: 0.97 }
         }
         transition={springs.snappy}
-        className={cn(buttonVariants({ variant, size, fullWidth, className }))}
+        className={cn(
+          buttonVariants({ variant, size, fullWidth, className }),
+          success && "border-emerald-500/50 text-emerald-300"
+        )}
         onClick={isDisabled ? undefined : onClick}
         {...props}
       >

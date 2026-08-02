@@ -9,6 +9,7 @@ export interface TastingCourseItem {
   image: string;
   winePairing?: string;
   dietary?: string[];
+  isSpecial?: boolean;
 }
 
 export interface RestaurantReservation {
@@ -24,4 +25,24 @@ export interface RestaurantReservation {
   depositAmount: number;
   dietaryNotes?: string;
   createdAt: string;
+}
+
+export interface ChefProfile {
+  name: string;
+  role: string;
+  experience: string;
+  philosophy: string;
+  signatureDish: string;
+  awards: string[];
+  image: string;
+}
+
+export interface RestaurantReview {
+  id: string;
+  author: string;
+  rating: number;
+  date: string;
+  comment: string;
+  occasion: string;
+  avatar: string;
 }

@@ -29,6 +29,27 @@ export interface CafeOrderDetails {
   subtotal: number;
   tax: number;
   total: number;
+  status?: "preparing" | "ready" | "completed";
   estimatedTime: string;
   createdAt: string;
+}
+
+export interface CafeStaff {
+  id: string;
+  name: string;
+  role: string;
+  experience: string;
+  bio: string;
+  favoriteBrew: string;
+  image: string;
+}
+
+export interface CafeReview {
+  id: string;
+  author: string;
+  rating: number;
+  date: string;
+  comment: string;
+  favoriteItem: string;
+  avatar: string;
 }

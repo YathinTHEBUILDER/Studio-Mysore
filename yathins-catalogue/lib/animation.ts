@@ -187,7 +187,7 @@ export const buttonHover = {
 
 /** Button tap / active — scale down with immediate spring response */
 export const buttonTap = {
-  scale: 0.98,
+  scale: 0.97,
   transition: springs.snappy,
 };
 
@@ -196,6 +196,22 @@ export const cardHover = {
   y: -4,
   transition: springs.gentle,
 };
+
+/** Chip hover — slight lift and scale */
+export const chipHover = {
+  scale: 1.04,
+  transition: springs.snappy,
+};
+
+/** Error shake keyframes for invalid inputs */
+export const errorShake: Variants = {
+  idle: { x: 0 },
+  shake: {
+    x: [-8, 8, -6, 6, -3, 3, 0],
+    transition: { duration: 0.4, ease: "easeInOut" },
+  },
+};
+
 
 // ---------------------------------------------------------------------------
 // Utility — Resolve variants based on reduced motion preference

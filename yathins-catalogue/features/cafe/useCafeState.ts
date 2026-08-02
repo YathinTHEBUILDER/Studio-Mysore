@@ -4,13 +4,49 @@ import * as React from "react";
 import { CafeCategory, CafeProduct, CafeCartItem, CafeOrderDetails } from "./types";
 import { CAFE_PRODUCTS } from "./data";
 
+const SAMPLE_INITIAL_ORDERS: CafeOrderDetails[] = [
+  {
+    orderId: "CAFE-8042",
+    customerName: "Rohan Sharma",
+    customerPhone: "+91 98765 43210",
+    orderType: "pickup",
+    items: [
+      { product: CAFE_PRODUCTS[0], quantity: 2, selectedMilk: "Oat Milk", selectedSweetness: "100%", specialInstructions: "Extra hot" },
+      { product: CAFE_PRODUCTS[3], quantity: 1, selectedMilk: "Whole Milk", selectedSweetness: "100%", specialInstructions: "" },
+    ],
+    subtotal: 580,
+    tax: 46.4,
+    total: 626.4,
+    status: "preparing",
+    estimatedTime: "10-15 mins",
+    createdAt: "10:14 AM",
+  },
+  {
+    orderId: "CAFE-8041",
+    customerName: "Priya Nair",
+    customerPhone: "+91 98123 45678",
+    orderType: "dine_in",
+    items: [
+      { product: CAFE_PRODUCTS[1], quantity: 1, selectedMilk: "Almond Milk", selectedSweetness: "50%", specialInstructions: "Table 4" },
+    ],
+    subtotal: 280,
+    tax: 22.4,
+    total: 302.4,
+    status: "ready",
+    estimatedTime: "5-8 mins",
+    createdAt: "10:08 AM",
+  },
+];
+
 export function useCafeState() {
+  const [viewMode, setViewMode] = React.useState<"customer" | "owner">("customer");
   const [selectedCategory, setSelectedCategory] = React.useState<CafeCategory | "all">("all");
   const [selectedProduct, setSelectedProduct] = React.useState<CafeProduct | null>(null);
   const [cart, setCart] = React.useState<CafeCartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = React.useState<boolean>(false);
   const [isCheckoutOpen, setIsCheckoutOpen] = React.useState<boolean>(false);
   const [confirmedOrder, setConfirmedOrder] = React.useState<CafeOrderDetails | null>(null);
+  const [allOrders, setAllOrders] = React.useState<CafeOrderDetails[]>(SAMPLE_INITIAL_ORDERS);
 
   const filteredProducts = React.useMemo(() => {
     if (selectedCategory === "all") return CAFE_PRODUCTS;
@@ -69,16 +105,20 @@ export function useCafeState() {
       subtotal: cartSubtotal,
       tax: cartTax,
       total: cartTotal,
+      status: "preparing",
       estimatedTime: orderType === "pickup" ? "10-15 mins" : "5-8 mins",
       createdAt: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
     setConfirmedOrder(order);
+    setAllOrders((prev) => [order, ...prev]);
     setCart([]);
     setIsCheckoutOpen(false);
     setIsCartOpen(false);
   };
 
   return {
+    viewMode,
+    setViewMode,
     selectedCategory,
     setSelectedCategory,
     selectedProduct,
@@ -95,6 +135,7 @@ export function useCafeState() {
     setIsCheckoutOpen,
     confirmedOrder,
     setConfirmedOrder,
+    allOrders,
     addToCart,
     removeFromCart,
     updateQuantity,

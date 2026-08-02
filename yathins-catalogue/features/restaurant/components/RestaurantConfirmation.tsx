@@ -63,7 +63,7 @@ export const RestaurantConfirmation: React.FC<RestaurantConfirmationProps> = ({
             {reservation.selectedCourses.map((c, idx) => (
               <div key={idx} className="py-2 flex justify-between">
                 <span className="text-zinc-300">{c.name}</span>
-                <span className="font-mono text-rose-400">${c.price}</span>
+                <span className="font-mono text-rose-400">₹{c.price.toLocaleString('en-IN')}</span>
               </div>
             ))}
           </div>

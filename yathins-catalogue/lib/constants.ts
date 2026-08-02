@@ -21,7 +21,7 @@ export const INDUSTRIES: Industry[] = [
     emoji: "☕",
     accentColor: "cafe-primary",
     description:
-      "Customers scan the QR code and order. Your staff stay focused on making great coffee.",
+      "Customers scan the QR code and order from their phone, keeping your staff focused on making great coffee.",
   },
   {
     id: "restaurant",
@@ -30,7 +30,7 @@ export const INDUSTRIES: Industry[] = [
     emoji: "🍽",
     accentColor: "restaurant-primary",
     description:
-      "Guests browse your menu and order from their table. Your team focus on serving food.",
+      "Guests browse your menu and order right from their table while your team focuses on serving food.",
   },
   {
     id: "dental",
@@ -39,7 +39,7 @@ export const INDUSTRIES: Industry[] = [
     emoji: "🦷",
     accentColor: "dental-primary",
     description:
-      "Patients book a time that works for them. Your receptionist spends less time answering calls.",
+      "Patients book appointments online at their convenience, so your front desk spends less time handling phone calls.",
   },
   {
     id: "medical",
@@ -48,7 +48,7 @@ export const INDUSTRIES: Industry[] = [
     emoji: "🏥",
     accentColor: "medical-primary",
     description:
-      "Patients pick a doctor and book online. Your front desk stays calm during busy hours.",
+      "Patients select a doctor and book visits online, keeping your reception calm during peak hours.",
   },
   {
     id: "gym",
@@ -57,7 +57,7 @@ export const INDUSTRIES: Industry[] = [
     emoji: "💪",
     accentColor: "gym-primary",
     description:
-      "People explore your plans and book trial sessions online. Your team spend more time coaching.",
+      "Visitors explore membership plans and book trial sessions online, giving your team more time to coach.",
   },
 ] as const;
 
@@ -65,9 +65,8 @@ export const INDUSTRIES: Industry[] = [
 // Navigation Links
 // ---------------------------------------------------------------------------
 export const NAV_LINKS: NavLink[] = [
-  { label: "Experiences", href: "/experiences" },
+  { label: "Experiences", href: "/#experiences" },
   { label: "How It Works", href: "/#how-it-works" },
-  { label: "About", href: "/#about" },
 ] as const;
 
 // ---------------------------------------------------------------------------

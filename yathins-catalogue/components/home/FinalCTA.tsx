@@ -1,65 +1,138 @@
 "use client";
 
-/**
- * FinalCTA — Homepage Final Conversion Section
- *
- * Section ID: #final-cta
- * Headline: Let's talk about your business.
- * Supporting copy: Tell us how your business works. We'll suggest what we'd build and why. No pressure. Just a conversation.
- * Primary CTA: Chat on WhatsApp
- */
-
 import * as React from "react";
 import { m } from "framer-motion";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import { buildWhatsAppUrl } from "@/lib/site-config";
 import { cn } from "@/lib/utils";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 export function FinalCTA() {
   const whatsappUrl = buildWhatsAppUrl(
-    "Hi Studio Mysore, I'd like to talk about a website for my business."
+    "Hi, I'd like to talk about a website for my business."
   );
+
+  const containerRef = React.useRef<HTMLDivElement>(null);
+  const [isMounted, setIsMounted] = React.useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = React.useState(false);
+
+  React.useEffect(() => {
+    const prefersMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+
+    const timer = setTimeout(() => {
+      setIsMounted(true);
+      setPrefersReducedMotion(prefersMotion);
+    }, 0);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  React.useEffect(() => {
+    if (!isMounted || prefersReducedMotion) return;
+
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
+          toggleActions: "play none none none",
+        },
+      });
+
+      tl.fromTo(
+        ".js-cta-eyebrow",
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.65, ease: "power3.out" }
+      )
+        .fromTo(
+          ".js-cta-title",
+          { opacity: 0, y: 22 },
+          { opacity: 1, y: 0, duration: 0.8, ease: "power4.out" },
+          "-=0.45"
+        )
+        .fromTo(
+          ".js-cta-copy",
+          { opacity: 0, y: 18 },
+          { opacity: 1, y: 0, duration: 0.75, ease: "power3.out" },
+          "-=0.55"
+        )
+        .fromTo(
+          ".js-cta-buttons",
+          { opacity: 0, y: 16 },
+          { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" },
+          "-=0.5"
+        )
+        .fromTo(
+          ".js-cta-badge",
+          { opacity: 0 },
+          { opacity: 1, duration: 0.6, ease: "power2.out" },
+          "-=0.4"
+        );
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [isMounted, prefersReducedMotion]);
 
   return (
     <section
+      ref={containerRef}
       id="final-cta"
-      className="relative py-28 sm:py-36 bg-background border-t border-zinc-800/60 overflow-hidden"
+      className="relative py-36 sm:py-48 lg:py-56 bg-background border-t border-zinc-900 overflow-hidden"
       aria-label="Final CTA — Let's talk"
     >
-      {/* Background Soft Glow */}
-      <div
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full pointer-events-none blur-[160px] opacity-10 bg-emerald-500"
-      />
-
       <div className="container-wide w-full relative z-10">
-        <m.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="max-w-4xl mx-auto rounded-3xl p-8 sm:p-14 md:p-20 bg-zinc-900/40 border border-zinc-800/80 shadow-2xl text-center space-y-8"
-        >
+        <div className="max-w-4xl mx-auto text-center space-y-10 sm:space-y-12">
           {/* Eyebrow */}
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-medium tracking-widest uppercase bg-zinc-900 text-zinc-400 border border-zinc-800">
-            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
-            Start A Conversation
+          <div
+            className={cn(
+              "flex items-center justify-center gap-4 js-cta-eyebrow",
+              isMounted && !prefersReducedMotion && "opacity-0"
+            )}
+          >
+            <div className="w-12 h-[1px] bg-zinc-700" />
+            <span className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-zinc-400">
+              Let&apos;s Talk
+            </span>
+            <div className="w-12 h-[1px] bg-zinc-700" />
           </div>
 
           {/* Headline */}
-          <h2 className="text-3xl sm:text-5xl lg:text-6xl font-display font-semibold text-white tracking-tight leading-[1.05]">
+          <h2
+            className={cn(
+              "text-4xl sm:text-6xl lg:text-7xl font-display font-semibold text-white tracking-tight leading-[1.02] js-cta-title",
+              isMounted && !prefersReducedMotion && "opacity-0"
+            )}
+          >
             Let&apos;s talk about your business.
           </h2>
 
           {/* Supporting Copy */}
-          <p className="text-zinc-400 text-base sm:text-xl leading-relaxed max-w-xl mx-auto">
-            Tell us how your business works. We&apos;ll show you what we can build and why. No pressure. Just an honest conversation.
+          <p
+            className={cn(
+              "text-zinc-400 text-lg sm:text-2xl font-light leading-relaxed max-w-2xl mx-auto js-cta-copy",
+              isMounted && !prefersReducedMotion && "opacity-0"
+            )}
+          >
+            Tell us how your business works. We&apos;ll build around that. No pressure, no sales pitch—just an honest conversation.
           </p>
 
-          {/* WhatsApp Action Button */}
-          <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
+          {/* WhatsApp Action Button & Email Option */}
+          <div
+            className={cn(
+              "pt-6 flex flex-col sm:flex-row items-center justify-center gap-4 js-cta-buttons",
+              isMounted && !prefersReducedMotion && "opacity-0"
+            )}
+          >
             <m.div
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.02, y: -1 }}
+              whileTap={{ scale: 0.98 }}
               transition={{ type: "spring", stiffness: 450, damping: 28 }}
             >
               <a
@@ -68,21 +141,50 @@ export function FinalCTA() {
                 rel="noopener noreferrer"
                 className={cn(
                   "inline-flex items-center justify-center gap-3",
-                  "px-8 py-4 rounded-xl",
-                  "bg-emerald-500 text-zinc-950",
-                  "text-sm font-semibold tracking-tight",
-                  "shadow-lg shadow-emerald-950/40",
-                  "transition-all duration-200 hover:bg-emerald-400",
-                  "outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  "px-9 py-4.5 rounded-full",
+                  "bg-white text-zinc-950",
+                  "text-xs font-mono font-semibold tracking-[0.15em] uppercase",
+                  "shadow-xl shadow-white/5",
+                  "transition-all duration-300 hover:bg-zinc-200 hover:shadow-white/10",
+                  "outline-none focus-visible:ring-1 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 )}
               >
-                <MessageCircle className="h-5 w-5 text-zinc-950" />
+                <MessageCircle className="h-4 w-4 text-zinc-950 fill-zinc-950" />
                 <span>Chat on WhatsApp</span>
                 <ArrowRight className="h-4 w-4 text-zinc-950" />
               </a>
             </m.div>
+
+            <a
+              href="mailto:yathin@studiomysore.com"
+              className={cn(
+                "inline-flex items-center justify-center gap-2",
+                "px-8 py-4.5 rounded-full",
+                "bg-zinc-900/80 text-zinc-300 border border-zinc-800",
+                "text-xs font-mono font-medium tracking-[0.15em] uppercase",
+                "transition-all duration-300 hover:bg-zinc-800 hover:text-white hover:border-zinc-700",
+                "outline-none focus-visible:ring-1 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              )}
+            >
+              <span>Email Founder Directly</span>
+            </a>
           </div>
-        </m.div>
+
+          {/* Guarantee pill */}
+          <div
+            className={cn(
+              "pt-4 flex items-center justify-center gap-6 text-xs text-zinc-500 font-mono js-cta-badge",
+              isMounted && !prefersReducedMotion && "opacity-0"
+            )}
+          >
+            <span className="flex items-center gap-2">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              Direct Founder Response within 2 Hours
+            </span>
+            <span>•</span>
+            <span>No Sales Reps</span>
+          </div>
+        </div>
       </div>
     </section>
   );

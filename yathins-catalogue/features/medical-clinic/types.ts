@@ -1,4 +1,4 @@
-export type MedicalDepartment = "general_medicine" | "pediatrics" | "dermatology" | "cardiology" | "telehealth";
+export type MedicalDepartment = "general_medicine" | "pediatrics" | "dermatology" | "cardiology" | "orthopedics" | "diagnostics";
 
 export interface MedicalDoctorProfile {
   id: string;
@@ -24,4 +24,25 @@ export interface MedicalAppointment {
   date: string;
   timeSlot: string;
   createdAt: string;
+}
+
+export interface HealthPackage {
+  id: string;
+  title: string;
+  category: string;
+  price: number;
+  testsIncluded: string[];
+  fastingRequired: boolean;
+  badge?: string;
+}
+
+export interface MedicalReview {
+  id: string;
+  patientName: string;
+  rating: number;
+  doctorName: string;
+  department: string;
+  comment: string;
+  date: string;
+  avatar: string;
 }

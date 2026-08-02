@@ -1,12 +1,12 @@
 /**
- * Home Page — Studio Mysore Catalogue
+ * Home Page — Studio Mysore Entrance
  *
- * Entrance architecture:
- *  1. HeroSection
- *  2. IndustryCatalogue
- *  3. HowWeWork
- *  4. FinalCTA
- *  5. Footer
+ * Sequence:
+ *  1. Hero (HeroSection)
+ *  2. Browse Experiences (IndustryCatalogue)
+ *  3. How We Work (HowWeWork)
+ *  4. Let's Talk (FinalCTA)
+ *  5. Footer (Footer)
  */
 
 import { HeroSection } from "@/components/hero";

@@ -63,22 +63,25 @@ export const NavLinks: React.FC<NavLinksProps> = ({
               if (onLinkClick) onLinkClick();
             }}
             className={cn(
-              "relative px-4 py-2 text-xs uppercase tracking-widest font-mono font-medium transition-colors duration-200 outline-none rounded-lg group focus-visible:ring-2 focus-visible:ring-zinc-400",
+              "relative px-4 py-2 text-[11px] uppercase tracking-[0.2em] font-mono font-medium transition-colors duration-300 outline-none rounded-md group focus-visible:ring-1 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-background",
               isHorizontal
                 ? "inline-flex items-center"
-                : "flex w-full items-center justify-between text-sm py-2.5",
+                : "flex w-full items-center justify-between text-xs py-3",
               isActive
                 ? "text-white"
-                : "text-zinc-400 hover:text-zinc-200"
+                : "text-zinc-400 hover:text-zinc-100"
             )}
           >
-            <span className="relative z-10">{link.label}</span>
+            <span className="relative z-10 flex items-center gap-1.5">
+              {isActive && <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />}
+              {link.label}
+            </span>
 
             {/* Active Pill Indicator for Desktop Nav */}
             {isHorizontal && isActive && (
               <m.div
                 layoutId="activeNav"
-                className="absolute inset-0 rounded-lg bg-zinc-800/80 border border-zinc-700/60"
+                className="absolute inset-0 rounded-md bg-zinc-900/90 border border-zinc-700/80 shadow-inner"
                 transition={{
                   type: "spring",
                   stiffness: 380,

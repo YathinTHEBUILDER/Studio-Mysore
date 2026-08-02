@@ -14,9 +14,13 @@ import { GymTrialBookingModal } from "@/features/gym/components/GymTrialBookingM
 import { GymConfirmation } from "@/features/gym/components/GymConfirmation";
 import { GymFacilitiesSection } from "@/features/gym/components/GymFacilitiesSection";
 import { GymCTA } from "@/features/gym/components/GymCTA";
+import { GymOwnerDashboard } from "@/features/gym/components/GymOwnerDashboard";
+import { SystemModeBar } from "@/components/experience/SystemModeBar";
 
 export default function GymExperiencePage() {
   const {
+    viewMode,
+    setViewMode,
     selectedTier,
     setSelectedTier,
     selectedTrainer,
@@ -38,52 +42,68 @@ export default function GymExperiencePage() {
       {/* Gym Header */}
       <GymNavbar onOpenTrial={() => setIsTrialModalOpen(true)} />
 
-      {/* Hero */}
-      <GymHero onOpenTrial={() => setIsTrialModalOpen(true)} />
+      {/* Dual System Mode Switcher */}
+      <SystemModeBar
+        viewMode={viewMode}
+        onToggleViewMode={setViewMode}
+        industryName="Fitness Club"
+        badgeText="Gate Attendance, Member Passes & Trainer OS"
+      />
 
-      {/* Main Body */}
-      <Container variant="wide" className="py-12 space-y-12">
-        {confirmedBooking ? (
-          <GymConfirmation
-            booking={confirmedBooking}
-            onReset={() => setConfirmedBooking(null)}
-          />
-        ) : (
-          <>
-            <GymMembershipTiers
-              tiers={tiers}
-              selectedTier={selectedTier}
-              onSelectTier={setSelectedTier}
-              onJoinTier={(t) => {
-                setSelectedTier(t);
-                setIsTrialModalOpen(true);
-              }}
-            />
+      {viewMode === "owner" ? (
+        <Container variant="wide" className="py-12">
+          <GymOwnerDashboard />
+        </Container>
+      ) : (
+        <>
+          {/* Hero */}
+          <GymHero onOpenTrial={() => setIsTrialModalOpen(true)} />
 
-            <GymClassTimetable
-              classes={classes}
-              selectedClass={selectedClass}
-              onSelectClass={setSelectedClass}
-              onBookClassSpot={(cls) => {
-                setSelectedClass(cls);
-                setIsTrialModalOpen(true);
-              }}
-            />
+          {/* Main Body */}
+          <Container variant="wide" className="py-12 space-y-12">
+            {confirmedBooking ? (
+              <GymConfirmation
+                booking={confirmedBooking}
+                onReset={() => setConfirmedBooking(null)}
+              />
+            ) : (
+              <>
+                <GymMembershipTiers
+                  tiers={tiers}
+                  selectedTier={selectedTier}
+                  onSelectTier={setSelectedTier}
+                  onJoinTier={(t) => {
+                    setSelectedTier(t);
+                    setIsTrialModalOpen(true);
+                  }}
+                />
 
-            <GymTrainerDirectory
-              trainers={trainers}
-              selectedTrainer={selectedTrainer}
-              onSelectTrainer={setSelectedTrainer}
-            />
-          </>
-        )}
-      </Container>
+                <GymClassTimetable
+                  classes={classes}
+                  selectedClass={selectedClass}
+                  onSelectClass={setSelectedClass}
+                  onBookClassSpot={(cls) => {
+                    setSelectedClass(cls);
+                    setIsTrialModalOpen(true);
+                  }}
+                />
 
-      {/* Facilities */}
-      <GymFacilitiesSection />
+                <GymTrainerDirectory
+                  trainers={trainers}
+                  selectedTrainer={selectedTrainer}
+                  onSelectTrainer={setSelectedTrainer}
+                />
+              </>
+            )}
+          </Container>
 
-      {/* Conversion CTA */}
-      <GymCTA />
+          {/* Facilities */}
+          <GymFacilitiesSection />
+
+          {/* Conversion CTA */}
+          <GymCTA />
+        </>
+      )}
 
       {/* Trial Booking Modal */}
       <GymTrialBookingModal

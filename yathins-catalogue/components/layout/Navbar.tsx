@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useScroll, useMotionValueEvent } from "framer-motion";
+import { m, useScroll, useMotionValueEvent, useReducedMotion } from "framer-motion";
 import { Menu } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { NAV_SCROLL_THRESHOLD } from "@/lib/constants";
@@ -18,11 +18,13 @@ export interface NavbarProps {
 /**
  * Navbar — Primary Persistent Header Component
  *
+ * Entrance timeline: 0.2s fade-in sequence
  * Implements transparent-to-glassmorphism transition upon scrolling 50px
  */
 export const Navbar: React.FC<NavbarProps> = ({ className }) => {
   const [isScrolled, setIsScrolled] = React.useState<boolean>(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState<boolean>(false);
+  const shouldReduceMotion = useReducedMotion();
 
   const { scrollY } = useScroll();
 
@@ -57,7 +59,7 @@ export const Navbar: React.FC<NavbarProps> = ({ className }) => {
             {/* Mobile Hamburger Toggle Button */}
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden p-2.5 rounded-xl bg-zinc-900 hover:bg-zinc-800 text-white border border-zinc-800 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-zinc-400"
+              className="lg:hidden p-2.5 rounded-sm bg-zinc-900/90 hover:bg-zinc-800 text-white border border-zinc-800 transition-colors outline-none focus-visible:ring-1 focus-visible:ring-white/80 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
               aria-label="Open mobile menu"
             >
               <Menu className="h-5 w-5" />

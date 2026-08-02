@@ -5,6 +5,7 @@ import { MedicalDepartment, MedicalDoctorProfile, MedicalAppointment } from "./t
 import { MEDICAL_DOCTORS } from "./data";
 
 export function useMedicalState() {
+  const [viewMode, setViewMode] = React.useState<"customer" | "owner">("customer");
   const [selectedDept, setSelectedDept] = React.useState<MedicalDepartment | "all">("all");
   const [selectedDoctor, setSelectedDoctor] = React.useState<MedicalDoctorProfile>(MEDICAL_DOCTORS[0]);
   const [consultationMode, setConsultationMode] = React.useState<"video" | "in_person">("video");
@@ -36,6 +37,8 @@ export function useMedicalState() {
   };
 
   return {
+    viewMode,
+    setViewMode,
     selectedDept,
     setSelectedDept,
     selectedDoctor,
