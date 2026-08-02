@@ -150,15 +150,15 @@ export function IndustryCatalogue() {
     <section
       ref={sectionRef}
       id="experiences"
-      className="relative py-[216px] sm:py-[256px] bg-zinc-950 overflow-hidden"
+      className="relative py-[288px] sm:py-[320px] bg-background border-t border-white/10 overflow-hidden"
       aria-label="Experience Catalogue"
     >
       <div className="w-full relative z-10 space-y-28 lg:space-y-[160px] px-6 sm:px-12 lg:px-[96px] max-w-7xl mx-auto">
         {/* ── Section Header ───────────────────────────────────────────── */}
         <div className="max-w-4xl space-y-6 js-catalogue-header">
           <div className="flex items-center gap-4">
-            <div className="w-12 h-[1px] bg-zinc-700" />
-            <span className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-zinc-400">
+            <div className="w-12 h-[1px] bg-white/20" />
+            <span className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-emerald-400">
               Experience Catalogue
             </span>
           </div>

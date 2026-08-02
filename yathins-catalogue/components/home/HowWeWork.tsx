@@ -157,15 +157,15 @@ export function HowWeWork() {
     <section
       ref={sectionRef}
       id="how-it-works"
-      className="relative py-[256px] sm:py-[288px] lg:py-[288px] bg-background border-t border-zinc-900 overflow-hidden"
+      className="relative py-[288px] sm:py-[320px] lg:py-[320px] bg-background border-t border-white/10 overflow-hidden"
       aria-label="How It Works — Process"
     >
       <div className="container-wide w-full relative z-10 space-y-24 lg:space-y-[120px]">
         {/* ── Section Header ───────────────────────────────────────────── */}
         <div className="max-w-4xl space-y-8">
           <div className="flex items-center gap-4 js-work-image">
-            <div className="w-12 h-[1px] bg-zinc-700" />
-            <span className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-zinc-400">
+            <div className="w-12 h-[1px] bg-white/20" />
+            <span className="text-xs font-mono font-medium tracking-[0.3em] uppercase text-emerald-400">
               How It Works
             </span>
           </div>
