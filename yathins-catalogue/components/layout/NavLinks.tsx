@@ -63,7 +63,7 @@ export const NavLinks: React.FC<NavLinksProps> = ({
               if (onLinkClick) onLinkClick();
             }}
             className={cn(
-              "font-['Inter',var(--font-inter),sans-serif] transition-all duration-[180ms] outline-none",
+              "font-['Inter',var(--font-inter),sans-serif] transition-[transform,opacity,color] duration-[180ms] outline-none",
               isHorizontal
                 ? "text-[15px] font-medium leading-none text-white opacity-75 hover:opacity-100 hover:-translate-y-[2px]"
                 : "text-[36px] sm:text-[48px] font-['Instrument_Sans',var(--font-instrument-sans),sans-serif] font-bold text-white hover:opacity-80 py-2",

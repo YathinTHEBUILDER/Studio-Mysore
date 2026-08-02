@@ -1,6 +1,12 @@
 export { Navbar } from "./Navbar";
 export type { NavbarProps } from "./Navbar";
 
+export { DesktopNavbar } from "./DesktopNavbar";
+export type { DesktopNavbarProps } from "./DesktopNavbar";
+
+export { MobileNavbar } from "./MobileNavbar";
+export type { MobileNavbarProps } from "./MobileNavbar";
+
 export { Logo } from "./Logo";
 export type { LogoProps } from "./Logo";
 

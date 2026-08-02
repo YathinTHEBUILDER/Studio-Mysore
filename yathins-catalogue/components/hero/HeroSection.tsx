@@ -152,51 +152,45 @@ export function HeroSection() {
       className="relative w-full h-[100vh] min-h-[720px] bg-[#050505] overflow-hidden select-none"
       aria-label="Hero — Editorial Magazine Cover"
     >
-      {/* ── Background: Very Subtle Monochrome Grain (2% opacity) ── */}
+      {/* ── Background: Very Subtle Monochrome Grain (Decorative Element: z-index -1) ── */}
       <div
-        className="pointer-events-none absolute inset-0 z-10 opacity-[0.02] mix-blend-overlay"
+        className="pointer-events-none absolute inset-0 z-[-1] opacity-[0.02] mix-blend-overlay"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`,
         }}
         aria-hidden="true"
       />
 
-      {/* ── Background: Very Subtle Radial Light behind Heading (5% opacity) ── */}
-      <div
-        className="pointer-events-none absolute top-10 left-10 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(255,255,255,1)_0%,transparent_70%)] opacity-[0.05] filter blur-3xl z-0"
-        aria-hidden="true"
-      />
-
-      {/* ── Container with 12-Column Grid (Max 1600px, 96px Horizontal Padding) ── */}
-      <div className="relative z-20 w-full h-full max-w-[1600px] mx-auto px-6 sm:px-12 lg:px-[96px] pt-[160px]">
+      {/* ── Container with 12-Column Grid (Hero Content: z-index 1) ── */}
+      <div className="relative z-[1] w-full h-full max-w-[1600px] mx-auto px-6 sm:px-12 lg:px-[96px] pt-[150px]">
         <div className="grid grid-cols-1 lg:grid-cols-12 w-full items-start">
           
           {/* ── Text Content: Columns 1–5 ── */}
           <div className="lg:col-span-5 flex flex-col justify-start space-y-10">
             
-            {/* Hero Heading: Instrument Sans 700, Desktop clamp(96px,8vw,128px), Tablet 72px, Mobile 48px, line-height 0.88, letter-spacing -0.06em */}
+            {/* Hero Heading: 20% larger size — clamp(115px,9.6vw,154px) desktop, 86px tablet, 58px mobile */}
             <h1
-              className="font-['Instrument_Sans',var(--font-instrument-sans),sans-serif] font-bold text-white leading-[0.88] tracking-[-0.06em] text-[48px] md:text-[72px] lg:text-[clamp(96px,8vw,128px)] js-hero-heading"
+              className="font-['Instrument_Sans',var(--font-instrument-sans),sans-serif] font-bold text-white leading-[0.88] tracking-[-0.06em] text-[58px] md:text-[86px] lg:text-[clamp(115px,9.6vw,154px)] js-hero-heading"
             >
               <span className="block">Built</span>
               <span className="block">around</span>
               <span className="block">you.</span>
             </h1>
 
-            {/* Body Copy: Inter font, 20px, line-height 1.7, max-width 540px */}
-            <p className="font-sans text-zinc-300 text-[20px] leading-[1.7] max-w-[540px] font-normal js-hero-body">
+            {/* Body Copy: Reduced max-width to ~45 characters */}
+            <p className="font-sans text-zinc-300 text-[19px] leading-[1.65] max-w-[45ch] font-normal js-hero-body">
               Explore complete working business applications designed for your exact workflow.
             </p>
 
-            {/* Buttons: 64px height, 999px border radius, gap 16px, 1.03 scale hover in 250ms */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-4 js-hero-buttons">
+            {/* Buttons: 52px height (reduced dominance), 999px border radius, gap 16px */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2 js-hero-buttons">
               {/* Primary Button */}
               <Link
                 href="/#experiences"
                 id="hero-primary-cta"
                 className={cn(
-                  "inline-flex items-center justify-center gap-4",
-                  "h-[64px] px-10 rounded-[999px]",
+                  "inline-flex items-center justify-center gap-3",
+                  "h-[52px] px-8 rounded-[999px]",
                   "bg-white text-black",
                   "text-sm font-medium tracking-wide",
                   "transition-transform duration-[250ms] ease-out hover:scale-[1.03]",
@@ -214,10 +208,10 @@ export function HeroSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={cn(
-                  "inline-flex items-center justify-center gap-4",
-                  "h-[64px] px-10 rounded-[999px]",
+                  "inline-flex items-center justify-center gap-3",
+                  "h-[52px] px-8 rounded-[999px]",
                   "bg-transparent text-white",
-                  "border border-white",
+                  "border border-white/80",
                   "text-sm font-medium tracking-wide",
                   "transition-transform duration-[250ms] ease-out hover:scale-[1.03]",
                   "shadow-none outline-none focus-visible:ring-1 focus-visible:ring-white"
@@ -236,13 +230,13 @@ export function HeroSection() {
           {/* ── Column 6: Empty Column ── */}
           <div className="hidden lg:block lg:col-span-1" aria-hidden="true" />
 
-          {/* ── Visual Content: Columns 7–12 (Bleeds outside container to right screen edge, ~70% Hero Height) ── */}
-          <div className="lg:col-span-6 w-full mt-10 lg:mt-0 js-hero-image">
-            <div className="w-full lg:w-[calc(100%+96px+max(0px,(100vw-1600px)/2))] h-[70vh] min-h-[480px] overflow-hidden">
+          {/* ── Visual Content: Columns 7–12 (Hero Image: z-index 0) ── */}
+          <div className="lg:col-span-6 w-full mt-10 lg:mt-0 js-hero-image relative z-[0]">
+            <div className="w-full lg:w-[calc(100%+96px+max(0px,(100vw-1600px)/2))] h-[80vh] min-h-[550px] overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1509785307050-d4066910ec1e?q=80&w=1800&auto=format&fit=crop"
                 alt="Studio Mysore Editorial Scene"
-                className="w-full h-full object-cover object-center rounded-none border-none shadow-none"
+                className="w-full h-full object-cover object-[50%_35%] scale-[1.12] rounded-none border-none shadow-none"
               />
             </div>
           </div>

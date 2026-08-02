@@ -32,31 +32,31 @@ const PROCESS_STEPS: ProcessStep[] = [
     step: "01",
     title: "Understand",
     description:
-      "Share your daily routine, staff workflow, and how your customers buy so everything is designed for your actual operation.",
+      "Share your daily routine and staff workflow so every screen is built for your actual operation.",
   },
   {
     step: "02",
     title: "Plan",
     description:
-      "A simple, clear customer flow is mapped out to help visitors take action quickly and save your team time.",
+      "A simple, clear customer flow is mapped out to drive quick actions and save your team time.",
   },
   {
     step: "03",
     title: "Design",
     description:
-      "Every screen is tailored specifically to your business with clear typography and simple, uncluttered layouts.",
+      "Uncluttered layouts tailored specifically to your business with clear visual hierarchy.",
   },
   {
     step: "04",
     title: "Build",
     description:
-      "Your website loads fast and works seamlessly across phones, tablets, and desktop screens.",
+      "Fast, responsive code engineered to run seamlessly across all phone, tablet, and desktop screens.",
   },
   {
     step: "05",
     title: "Support",
     description:
-      "Continuous support after launch keeps your website updated and running smoothly as your business grows.",
+      "Continuous post-launch care to keep your site optimized as your business grows.",
   },
 ];
 
@@ -157,7 +157,7 @@ export function HowWeWork() {
     <section
       ref={sectionRef}
       id="how-it-works"
-      className="relative py-[160px] sm:py-[192px] lg:py-[192px] bg-background border-t border-zinc-900 overflow-hidden"
+      className="relative py-[256px] sm:py-[288px] lg:py-[288px] bg-background border-t border-zinc-900 overflow-hidden"
       aria-label="How It Works — Process"
     >
       <div className="container-wide w-full relative z-10 space-y-24 lg:space-y-[120px]">
@@ -174,8 +174,8 @@ export function HowWeWork() {
             Built around your business.
           </h2>
 
-          <p className="text-zinc-400 text-lg sm:text-2xl font-light leading-relaxed max-w-[60ch] js-work-body">
-            Tell us how your business works, and your website gets built around your daily routine—not a generic template.
+          <p className="text-zinc-400 text-lg sm:text-2xl font-light leading-relaxed max-w-[45ch] js-work-body">
+            Tell us how your business works—your website gets built around your workflow.
           </p>
         </div>
 

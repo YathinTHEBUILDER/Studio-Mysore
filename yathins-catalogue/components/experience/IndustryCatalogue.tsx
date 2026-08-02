@@ -150,10 +150,10 @@ export function IndustryCatalogue() {
     <section
       ref={sectionRef}
       id="experiences"
-      className="relative py-[120px] sm:py-[160px] bg-zinc-950 overflow-hidden"
+      className="relative py-[216px] sm:py-[256px] bg-zinc-950 overflow-hidden"
       aria-label="Experience Catalogue"
     >
-      <div className="w-full relative z-10 space-y-24 lg:space-y-[120px] px-6 sm:px-12 lg:px-[96px] max-w-7xl mx-auto">
+      <div className="w-full relative z-10 space-y-28 lg:space-y-[160px] px-6 sm:px-12 lg:px-[96px] max-w-7xl mx-auto">
         {/* ── Section Header ───────────────────────────────────────────── */}
         <div className="max-w-4xl space-y-6 js-catalogue-header">
           <div className="flex items-center gap-4">
@@ -168,8 +168,8 @@ export function IndustryCatalogue() {
           </h2>
         </div>
 
-        {/* ── 85vh Full Editorial Magazine Experience Cards ── */}
-        <div className="flex flex-col gap-24 sm:gap-[120px] lg:gap-[160px] w-full">
+        {/* ── 85vh Full Editorial Magazine Experience Cards (+96px Spacing) ── */}
+        <div className="flex flex-col gap-36 sm:gap-[216px] lg:gap-[256px] w-full">
           {CATALOGUE_ITEMS.map((item) => (
             <div
               key={item.id}
@@ -179,8 +179,8 @@ export function IndustryCatalogue() {
                 href={item.route}
                 className="group relative block w-full h-full overflow-hidden no-underline cursor-pointer"
               >
-                {/* Large photograph: Image occupies ~75% of card height */}
-                <div className="relative w-full h-[75%] sm:h-[75vh] overflow-hidden">
+                {/* Large photograph: Image occupies ~78% of card height */}
+                <div className="relative w-full h-[78%] sm:h-[78vh] overflow-hidden">
                   {/* Image: scale 1 -> 1.05 in 0.4s */}
                   <img
                     src={item.imageUrl}

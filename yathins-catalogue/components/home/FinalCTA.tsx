@@ -113,7 +113,7 @@ export function FinalCTA() {
     <section
       ref={containerRef}
       id="final-cta"
-      className="relative py-[160px] sm:py-[192px] lg:py-[192px] bg-background border-t border-zinc-900 overflow-hidden"
+      className="relative py-[256px] sm:py-[288px] lg:py-[288px] bg-background border-t border-zinc-900 overflow-hidden"
       aria-label="Final CTA — Let's talk"
     >
       <div className="container-wide w-full relative z-10">
@@ -142,14 +142,14 @@ export function FinalCTA() {
             Let&apos;s talk about your business.
           </h2>
 
-          {/* Supporting Copy */}
+          {/* Supporting Copy: max-width ~45ch, streamlined text */}
           <p
             className={cn(
-              "text-zinc-400 text-lg sm:text-2xl font-light leading-relaxed max-w-[60ch] mx-auto js-cta-copy",
+              "text-zinc-400 text-lg sm:text-2xl font-light leading-relaxed max-w-[45ch] mx-auto js-cta-copy",
               isMounted && !prefersReducedMotion && "opacity-0"
             )}
           >
-            Tell us how your business works. We&apos;ll build around that. No pressure, no sales pitch—just an honest conversation.
+            Tell us how your business works—we&apos;ll build around that.
           </p>
 
           {/* WhatsApp Action Button & Email Option */}
